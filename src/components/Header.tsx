@@ -7,7 +7,7 @@ const Header = ({ navlink = '' }) => {
     return (
         <Navbar bg="dark" variant="dark" expand="md" sticky="top">
             <Container>
-                <Navbar.Brand href="#">
+                <Navbar.Brand href="/">
                     <img
                         src={logo}
                         alt="logo"
@@ -32,14 +32,22 @@ const Header = ({ navlink = '' }) => {
                         </Nav.Item>
                         <Link
                             to="/property"
-                            className={`nav-link mr-3 ${
+                            className={`nav-link mr-auto ${
                                 navlink === 'property' ? 'active' : null
                             }`}
                         >
                             Property
                         </Link>
+                        <Link
+                            to="#"
+                            className={`nav-link mr-3 ${
+                                navlink === 'faq' ? 'active' : null
+                            }`}
+                        >
+                            Faq
+                        </Link>
                     </Nav>
-                    <Button variant="primary" href="/daftar">
+                    <Button variant="primary" href="#">
                         Daftar
                     </Button>
                 </Navbar.Collapse>
