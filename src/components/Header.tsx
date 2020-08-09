@@ -1,21 +1,29 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { Navbar, Container, Button, Nav } from 'react-bootstrap'
-import logo from '../logo.svg'
+import logo from '../sample.png'
 
 const Header = ({ navlink = '' }) => {
     return (
-        <Navbar bg="dark" variant="dark" expand="md" sticky="top">
+        <Navbar
+            bg="dark"
+            variant="dark"
+            expand="md"
+            sticky="top"
+            className="nav-font"
+        >
             <Container>
-                <Navbar.Brand href="/">
+                <Navbar.Brand href="#">
                     <img
                         src={logo}
                         alt="logo"
                         className="d-inline-block"
-                        width="45"
-                        height="45"
+                        width="22"
+                        height="22"
                     />
-                    Tuan Tanah
+                    <span style={{ marginLeft: '2px' }} className="logo-font">
+                        {import.meta.env.SNOWPACK_PUBLIC_SITE_NAME}
+                    </span>
                 </Navbar.Brand>
                 <Navbar.Toggle />
                 <Navbar.Collapse className="justify-content-end">
@@ -47,7 +55,7 @@ const Header = ({ navlink = '' }) => {
                             Faq
                         </Link>
                     </Nav>
-                    <Button variant="primary" href="#">
+                    <Button variant="success" href="#">
                         Daftar
                     </Button>
                 </Navbar.Collapse>
