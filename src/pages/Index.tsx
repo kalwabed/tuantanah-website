@@ -2,12 +2,13 @@ import React from 'react'
 import { FcKey, FcLandscape, FcManager } from 'react-icons/fc'
 import { Container, Row, Col, Button } from 'react-bootstrap'
 
-import sample from '../sample.svg'
+import sample from '../hero.svg'
 import Header from '../components/Header'
 import { Link } from 'react-router-dom'
 
 const Index = () => {
-    document.title = 'Home | Tuan Tanah'
+    const { SNOWPACK_PUBLIC_SITE_NAME } = import.meta.env
+    document.title = `Home | ${SNOWPACK_PUBLIC_SITE_NAME}`
     window.scrollTo(0, 0)
     return (
         <>
@@ -16,13 +17,18 @@ const Index = () => {
                 <div className="my-3">
                     <Row>
                         <Col>
-                            <p className="h1 font-weight-bold">
+                            <p className="h2 font-weight-bold">
                                 Wujudkan Properti Impian Anda Bersama{' '}
-                                <span className="text-success">TuanTanah</span>
+                                <span className="text-success logo-font">
+                                    {SNOWPACK_PUBLIC_SITE_NAME}
+                                </span>
                             </p>
                             <p className="font-weight-light mb-4 text-wrap">
-                                TuanTanah adalah platform digital yang membantu
-                                anda mencari properti impian anda dengan praktis
+                                <span className="logo-font">
+                                    {SNOWPACK_PUBLIC_SITE_NAME}
+                                </span>{' '}
+                                adalah platform digital yang membantu anda
+                                mencari properti impian anda dengan praktis
                                 tanpa prasyarat akun atau yang lainnya.
                                 <br />
                                 Cari properti impian anda dan bangun bisnis anda
@@ -33,8 +39,9 @@ const Index = () => {
                                     <Button
                                         className="shadow-lg pr-4"
                                         size="lg"
+                                        variant="success"
                                     >
-                                        Get Started
+                                        Show Me
                                     </Button>
                                 </Link>
                             </div>
