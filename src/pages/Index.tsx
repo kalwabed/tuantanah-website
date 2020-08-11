@@ -17,9 +17,9 @@ const Index = () => {
             <main>
                 <Container>
                     <Hero refVisitorDealer={refVisitorDealer} />
-                    <hr className="my-3" />
-                    <SectionAdvantages />
+                    <div className="my-3" />
                 </Container>
+                <SectionAdvantages />
                 <SectionVisLer refVisitorDealer={refVisitorDealer} />
             </main>
         </>

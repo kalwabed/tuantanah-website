@@ -1,72 +1,41 @@
 import React from 'react'
-import { Row, Col } from 'react-bootstrap'
-
-import gambar from '../section1.svg'
-import gambar2 from '../section2.svg'
-import gambar3 from '../section3.svg'
-import { FaLongArrowAltRight } from 'react-icons/fa'
+import { IoIosRocket } from 'react-icons/io'
+import { Row, Col, Container } from 'react-bootstrap'
+import { FaTh, FaRegHandshake } from 'react-icons/fa'
 
 const SectionAdvantages = () => {
     return (
-        <section className="mb-3">
-            <Row>
-                <Col className="text-center mb-2" md={4} sm={3}>
-                    <span className="h3 font-weight-bold my-1 mx-auto">
-                        Pilih
-                    </span>
-                    <Row className="mt-2">
-                        <Col>
-                            <img
-                                src={gambar}
-                                alt="gambar"
-                                height="220"
-                                width="220"
-                            />
-                        </Col>
-                        <span className="d-md-block d-none h2">
-                            <FaLongArrowAltRight />
-                        </span>
-                    </Row>
-                    Cari properti pilihan anda
-                </Col>
-
-                <Col className="text-center" md={4} sm={3}>
-                    <span className="h3 font-weight-bold my-1 mx-auto">
-                        Verifikasi
-                    </span>
-                    <Row className="mt-2">
-                        <Col>
-                            <img
-                                src={gambar2}
-                                alt="gambar"
-                                height="220"
-                                width="220"
-                            />
-                        </Col>
-                        <span className="d-none d-md-block h2">
-                            <FaLongArrowAltRight />
-                        </span>
-                    </Row>
-                    Verifikasi berkas/dokumen properti
-                </Col>
-
-                <Col className="text-center" md={4} sm={3}>
-                    <span className="h3 font-weight-bold my-1 mx-auto">
-                        Sepakat
-                    </span>
-                    <Row className="mt-2">
-                        <Col>
-                            <img
-                                src={gambar3}
-                                alt="gambar"
-                                height="220"
-                                width="220"
-                            />
-                        </Col>
-                    </Row>
-                    Yeay! Properti itu jadi milik anda
-                </Col>
-            </Row>
+        <section className="section section-lg">
+            <Container>
+                <Row className="text-center">
+                    <Col md={4} sm={4}>
+                        <IoIosRocket size="120" />
+                        <h2 className="my-3">Cepat</h2>
+                        <p className="lead ">
+                            Tanpa harus mendaftar dulu dan mengisi ini dan itu,
+                            anda bisa langsung mencari properti anda!
+                        </p>
+                    </Col>
+                    <Col md={4} sm={4}>
+                        <FaTh size="120" />
+                        <h2 className="my-3">Kuantitas</h2>
+                        <p className="lead ">
+                            Menyediakan lebih dari 170 lahan/properti dari
+                            berbagai wilayah di Indonesia dan bekerja sama
+                            dengan lebih dari 15 perusahaan swasta
+                        </p>
+                    </Col>
+                    <Col md={4} sm={4}>
+                        <FaRegHandshake size="120" />
+                        <h2 className="my-3">Terpercaya</h2>
+                        <p className="lead ">
+                            <span className="logo-font">tuantanah</span> telah
+                            membantu lebih dari 73 transaksi properti di seluruh
+                            Indonesia
+                        </p>
+                    </Col>
+                </Row>
+            </Container>
         </section>
     )
 }

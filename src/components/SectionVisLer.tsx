@@ -14,7 +14,7 @@ const SectionVisLer = ({ refVisitorDealer }: refVisLer) => {
             ref={refVisitorDealer}
         >
             <Container>
-                <Row className="justify-content-center text-center mb-5">
+                <Row className="text-center mb-5">
                     <Col lg={10} xl={12}>
                         <h2 className="h1 font-weight-light mb-4">
                             Apa yang bisa anda lakukan bersama{' '}
