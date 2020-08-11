@@ -9,6 +9,15 @@ body {
   font-family: 'PT Mono', monospace;
 }
 
+.section {
+  position: relative;
+}
+
+.section-lg {
+  padding-top: 8rem;
+  padding-bottom: 8rem;
+}
+
 .logo-font {
   font-family: 'Righteous', cursive;
 }

@@ -1,12 +1,19 @@
 import React from 'react'
 import { FcKey, FcLandscape, FcManager } from 'react-icons/fc'
 import { Row, Col, Button } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
 
 import sample from '../hero.svg'
+import type { refVisLer } from '../types/index.types'
 
-const Hero = () => {
+const Hero = ({ refVisitorDealer }: refVisLer) => {
     const { SNOWPACK_PUBLIC_SITE_NAME } = import.meta.env
+    const showVisLer = () => {
+        window.scrollTo({
+            top: refVisitorDealer.current.offsetTop + 30,
+            behavior: 'smooth',
+        })
+    }
+
     return (
         <div className="my-3">
             <Row>
@@ -29,15 +36,14 @@ const Hero = () => {
                         sekarang!
                     </p>
                     <div className="mb-4" style={{ marginTop: 30 }}>
-                        <Link to="/property">
-                            <Button
-                                className="shadow-lg pr-4"
-                                size="lg"
-                                variant="success"
-                            >
-                                Show Me
-                            </Button>
-                        </Link>
+                        <Button
+                            className="shadow-lg pr-4"
+                            size="lg"
+                            variant="success"
+                            onClick={showVisLer}
+                        >
+                            Show Me
+                        </Button>
                     </div>
 
                     <Row className="mt-4">

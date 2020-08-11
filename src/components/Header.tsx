@@ -55,6 +55,9 @@ const Header = ({ navlink = '' }) => {
                             Faq
                         </Link>
                     </Nav>
+                    <Button className="mr-2" variant="outline-success" href="#">
+                        Masuk
+                    </Button>
                     <Button variant="success" href="#">
                         Daftar
                     </Button>
