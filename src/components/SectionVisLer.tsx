@@ -14,13 +14,13 @@ const SectionVisLer = ({ refVisitorDealer }: refVisLer) => {
             ref={refVisitorDealer}
         >
             <Container>
-                <Row className="justify-content-center text-center mb-5">
+                <Row className="text-center mb-5">
                     <Col lg={10} xl={12}>
                         <h2 className="h1 font-weight-light mb-4">
                             Apa yang bisa anda lakukan bersama{' '}
                             <span className="logo-font">tuantanah</span>?
                         </h2>
-                        <p className="lead px-xl-10">
+                        <p className="lead">
                             Jika anda sedang mencari properti yang cocok dengan
                             kebutuhan anda ataupun anda yang ingin mengiklankan
                             properti anda dengan mudah dan gratis maka{' '}

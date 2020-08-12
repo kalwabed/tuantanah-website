@@ -5,6 +5,7 @@ import { Container } from 'react-bootstrap'
 import Hero from '../components/Hero'
 import SectionAdvantages from '../components/SectionAdvantages'
 import SectionVisLer from '../components/SectionVisLer'
+import SectionFaq from '../components/SectionFaq'
 
 const Index = () => {
     const { SNOWPACK_PUBLIC_SITE_NAME } = import.meta.env
@@ -17,10 +18,11 @@ const Index = () => {
             <main>
                 <Container>
                     <Hero refVisitorDealer={refVisitorDealer} />
-                    <hr className="my-3" />
-                    <SectionAdvantages />
+                    <div className="my-3" />
                 </Container>
+                <SectionAdvantages />
                 <SectionVisLer refVisitorDealer={refVisitorDealer} />
+                <SectionFaq />
             </main>
         </>
     )
