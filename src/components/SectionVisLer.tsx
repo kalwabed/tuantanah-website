@@ -20,7 +20,7 @@ const SectionVisLer = ({ refVisitorDealer }: refVisLer) => {
                             Apa yang bisa anda lakukan bersama{' '}
                             <span className="logo-font">tuantanah</span>?
                         </h2>
-                        <p className="lead px-xl-10">
+                        <p className="lead">
                             Jika anda sedang mencari properti yang cocok dengan
                             kebutuhan anda ataupun anda yang ingin mengiklankan
                             properti anda dengan mudah dan gratis maka{' '}
