@@ -21,3 +21,41 @@ body {
 .logo-font {
   font-family: 'Righteous', cursive;
 }
+
+.footer {
+  padding-top: 8rem;
+  padding-bottom: 5rem;
+}
+
+.link-footer {
+  list-style: none;
+}
+
+.font-small {
+  font-size: .825rem;
+}
+
+hr {
+  border: 0;
+}
+
+.react-logo {
+  pointer-events: none;
+  margin-bottom: 1rem;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .react-logo {
+    animation: react-logo-spin infinite 20s linear;
+  }
+}
+
+@keyframes react-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+
+  to {
+    transform: rotate(360deg);
+  }
+}
