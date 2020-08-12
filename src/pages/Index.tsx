@@ -6,6 +6,7 @@ import Hero from '../components/Hero'
 import SectionAdvantages from '../components/SectionAdvantages'
 import SectionVisLer from '../components/SectionVisLer'
 import SectionFaq from '../components/SectionFaq'
+import Footer from '../components/Footer'
 
 const Index = () => {
     const { SNOWPACK_PUBLIC_SITE_NAME } = import.meta.env
@@ -24,6 +25,7 @@ const Index = () => {
                 <SectionVisLer refVisitorDealer={refVisitorDealer} />
                 <SectionFaq />
             </main>
+            <Footer />
         </>
     )
 }
