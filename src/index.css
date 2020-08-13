@@ -18,6 +18,15 @@ body {
   padding-bottom: 8rem;
 }
 
+.font-card {
+  font-size: .875rem;
+}
+
+.section-sm {
+  padding-top: 3rem;
+  padding-bottom: 3rem;
+}
+
 .logo-font {
   font-family: 'Righteous', cursive;
 }

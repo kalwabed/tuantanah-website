@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { Navbar, Container, Button, Nav } from 'react-bootstrap'
-import logo from '../sample.png'
+import logo from '../logo.png'
 
 const Header = ({ navlink = '' }) => {
     return (

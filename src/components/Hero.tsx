@@ -45,7 +45,6 @@ const Hero = ({ refVisitorDealer }: refVisLer) => {
                             Show Me
                         </Button>
                     </div>
-
                     <Row className="mt-4">
                         <Col>
                             <FcManager className="h3 mr-2" />

@@ -1,7 +1,7 @@
 import React from 'react'
 import { Container, Row, Col } from 'react-bootstrap'
 
-import gambar from '../sample.png'
+import gambar from '../logo.png'
 import { Link } from 'react-router-dom'
 import { IoLogoGithub, IoLogoInstagram, IoIosHeart } from 'react-icons/io'
 import { DiReact } from 'react-icons/di'
@@ -43,7 +43,7 @@ const Footer = () => {
                         </div>
                     </Col>
                     <Col></Col>
-                    <Col md={4}>
+                    <Col md={4} sm={4} className="d-none d-md-block">
                         <p className="font-weight-bold ">Pages</p>
                         <ul className="link-footer p-0 mb-0">
                             <li>
