@@ -3,6 +3,8 @@ import { Card, Col, Button } from 'react-bootstrap'
 
 import gambarprop from '../gambarprop.jpg'
 import StatusPropertyCheck from '../elements/StatusPropertyCheck'
+import { Link } from 'react-router-dom'
+import { IoIosHeartEmpty } from 'react-icons/io'
 
 const CardProperty = () => {
     return (
@@ -22,9 +24,18 @@ const CardProperty = () => {
                     <Card.Text className="mt-2 font-small">
                         Genteng, Banyuwangi
                     </Card.Text>
-                    <div className="justify-content-center d-flex">
-                        <Button size="sm" variant="success">
-                            Show Detail
+                    <div className="justify-content-between d-flex">
+                        <Link to="##">
+                            <Button size="sm" variant="success">
+                                Detail
+                            </Button>
+                        </Link>
+                        <Button
+                            className="ml-1"
+                            variant="outline-dark"
+                            size="sm"
+                        >
+                            <IoIosHeartEmpty />
                         </Button>
                     </div>
                 </Card.Body>

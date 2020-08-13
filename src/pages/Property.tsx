@@ -18,7 +18,7 @@ const Property = () => {
                     <ListProperty />
                 </Container>
             </main>
-            {/* <Footer /> */}
+            <Footer />
         </>
     )
 }
