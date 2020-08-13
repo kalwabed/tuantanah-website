@@ -6,7 +6,6 @@ import gambar2 from '../section5.svg'
 import type { refVisLer } from '../types/index.types'
 import { FaArrowRight, FaExternalLinkAlt } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
-import { Fade } from 'react-awesome-reveal'
 
 const SectionVisLer = ({ refVisitorDealer }: refVisLer) => {
     return (
@@ -16,22 +15,19 @@ const SectionVisLer = ({ refVisitorDealer }: refVisLer) => {
         >
             <Container>
                 <Row className="text-center mb-5">
-                    <Fade triggerOnce>
-                        <Col lg={10} xl={12}>
-                            <h2 className="h1 font-weight-light mb-4">
-                                Apa yang bisa anda lakukan bersama{' '}
-                                <span className="logo-font">tuantanah</span>?
-                            </h2>
-                            <p className="lead">
-                                Jika anda sedang mencari properti yang cocok
-                                dengan kebutuhan anda ataupun anda yang ingin
-                                mengiklankan properti anda dengan mudah dan
-                                gratis maka{' '}
-                                <span className="logo-font">tuantanah</span>{' '}
-                                adalah tempatnya
-                            </p>
-                        </Col>
-                    </Fade>
+                    <Col lg={10} xl={12}>
+                        <h2 className="h1 font-weight-light mb-4">
+                            Apa yang bisa anda lakukan bersama{' '}
+                            <span className="logo-font">tuantanah</span>?
+                        </h2>
+                        <p className="lead">
+                            Jika anda sedang mencari properti yang cocok dengan
+                            kebutuhan anda ataupun anda yang ingin mengiklankan
+                            properti anda dengan mudah dan gratis maka{' '}
+                            <span className="logo-font">tuantanah</span> adalah
+                            tempatnya
+                        </p>
+                    </Col>
                 </Row>
                 <Row>
                     <Col className="text-center mb-3" lg={6} md={6} sm={6}>

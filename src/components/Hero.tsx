@@ -1,7 +1,6 @@
 import React from 'react'
 import { FcKey, FcLandscape, FcManager } from 'react-icons/fc'
 import { Row, Col, Button } from 'react-bootstrap'
-import { Fade } from 'react-awesome-reveal'
 
 import sample from '../hero.svg'
 import type { refVisLer } from '../types/index.types'
@@ -37,16 +36,14 @@ const Hero = ({ refVisitorDealer }: refVisLer) => {
                         sekarang!
                     </p>
                     <div className="mb-4" style={{ marginTop: 30 }}>
-                        <Fade triggerOnce>
-                            <Button
-                                className="shadow-lg pr-4"
-                                size="lg"
-                                variant="success"
-                                onClick={showVisLer}
-                            >
-                                Show Me
-                            </Button>
-                        </Fade>
+                        <Button
+                            className="shadow-lg pr-4"
+                            size="lg"
+                            variant="success"
+                            onClick={showVisLer}
+                        >
+                            Show Me
+                        </Button>
                     </div>
                     <Row className="mt-4">
                         <Col>
@@ -79,14 +76,7 @@ const Hero = ({ refVisitorDealer }: refVisLer) => {
                     </Row>
                 </Col>
                 <Col className="d-none d-md-block">
-                    <Fade triggerOnce>
-                        <img
-                            src={sample}
-                            width="580"
-                            height="350"
-                            alt="sample"
-                        />
-                    </Fade>
+                    <img src={sample} width="580" height="350" alt="sample" />
                 </Col>
             </Row>
         </div>
