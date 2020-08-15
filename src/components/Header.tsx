@@ -55,12 +55,14 @@ const Header = ({ navlink = '' }) => {
                             Faq
                         </Link>
                     </Nav>
-                    <Button className="mr-2" variant="outline-success" href="#">
-                        Masuk
-                    </Button>
-                    <Button variant="success" href="#">
-                        Daftar
-                    </Button>
+                    <Link to="/signin">
+                        <Button className="mr-2" variant="outline-success">
+                            Masuk
+                        </Button>
+                    </Link>
+                    <Link to="signup">
+                        <Button variant="success">Daftar</Button>
+                    </Link>
                 </Navbar.Collapse>
             </Container>
         </Navbar>
