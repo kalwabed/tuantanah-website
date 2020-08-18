@@ -1,7 +1,7 @@
 import React from 'react'
 import { Card, Col, Button } from 'react-bootstrap'
 
-import gambarprop from '../gambarprop.jpg'
+import gambarprop from '../img/gambarprop.jpg'
 import StatusPropertyCheck from '../elements/StatusPropertyCheck'
 import { Link } from 'react-router-dom'
 import { IoIosHeartEmpty } from 'react-icons/io'

@@ -1,9 +1,9 @@
 import React from 'react'
 import { Row, Col } from 'react-bootstrap'
 
-import gambar from '../section1.svg'
-import gambar2 from '../section2.svg'
-import gambar3 from '../section3.svg'
+import gambar from '../img/section1.svg'
+import gambar2 from '../img/section2.svg'
+import gambar3 from '../img/section3.svg'
 import { FaLongArrowAltRight } from 'react-icons/fa'
 
 const SectionAdvantages = () => {

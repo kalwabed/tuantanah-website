@@ -1,7 +1,7 @@
 import React from 'react'
 import { Container, Row, Col } from 'react-bootstrap'
 
-import gambar from '../logo.png'
+import gambar from '../img/logo.png'
 import { Link } from 'react-router-dom'
 import { IoLogoGithub, IoLogoInstagram, IoIosHeart } from 'react-icons/io'
 import { DiReact } from 'react-icons/di'

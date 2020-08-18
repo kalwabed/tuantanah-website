@@ -6,7 +6,7 @@ import ListProperty from '../components/ListProperty'
 import SearchBarProperty from '../components/SearchBarProperty'
 
 const Property = () => {
-    document.title = `Property | ${import.meta.env.SNOWPACK_PUBLIC_SITE_NAME}`
+    document.title = `Property | tuantanah`
     window.scrollTo(0, 0)
 
     return (

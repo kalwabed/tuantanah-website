@@ -9,9 +9,8 @@ import SectionFaq from '../components/SectionFaq'
 import Footer from '../components/Footer'
 
 const Index = () => {
-    const { SNOWPACK_PUBLIC_SITE_NAME } = import.meta.env
     const refVisitorDealer = createRef()
-    document.title = `Home | ${SNOWPACK_PUBLIC_SITE_NAME}`
+    document.title = `Home | tuantanah`
     window.scrollTo(0, 0)
     return (
         <>

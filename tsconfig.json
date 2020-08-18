@@ -1,9 +1,8 @@
 {
-    "include": ["src", "types"],
+    "include": ["src/**/*", "types"],
     "exclude": ["node_modules"],
-    "extends": "@snowpack/app-scripts-react/tsconfig.base.json",
     "compilerOptions": {
-        "baseUrl": "./",
+        "baseUrl": "./src",
         "isolatedModules": true,
         "target": "ES5",
         "module": "ESNext",
@@ -23,6 +22,6 @@
         "suppressImplicitAnyIndexErrors": true,
         "allowSyntheticDefaultImports": true,
         "experimentalDecorators": true,
-        "paths": { "*": ["web_modules/.types/*"] }
+        "paths": { "~/*": ["./*"] }
     }
 }

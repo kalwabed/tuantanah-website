@@ -1,7 +1,7 @@
 import React from 'react'
 import { Container, Row, Col, Button } from 'react-bootstrap'
 
-import gambar from '../section6.svg'
+import gambar from '../img/section6.svg'
 import { Link } from 'react-router-dom'
 
 const SectionFaq = () => {
