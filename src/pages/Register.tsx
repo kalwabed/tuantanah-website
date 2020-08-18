@@ -6,6 +6,9 @@ import logo from '../logo.png'
 import '../auth.css'
 
 const Register = () => {
+    document.title = 'Sign Up | tuantanah'
+    window.scrollTo(0, 0)
+
     return (
         <section className="h-100">
             <Container className="h-100">

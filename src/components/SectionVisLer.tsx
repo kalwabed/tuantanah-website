@@ -73,9 +73,11 @@ const SectionVisLer = ({ refVisitorDealer }: refVisLer) => {
                                         ? Silahkan daftar dan ikuti arahan
                                         selanjutnya.
                                     </p>
-                                    <Button size="sm" variant="success">
-                                        Daftar <FaExternalLinkAlt />
-                                    </Button>
+                                    <Link to="/signup">
+                                        <Button size="sm" variant="success">
+                                            Daftar <FaExternalLinkAlt />
+                                        </Button>
+                                    </Link>
                                 </div>
                             </Card.Body>
                         </Card>

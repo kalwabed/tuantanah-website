@@ -3,9 +3,10 @@ import React, { useContext } from 'react'
 import { authContext } from '../contexts/Auth'
 
 const Dashboard = (props: any) => {
-    const { setToken } = useContext(authContext)
+    const { setToken, setIsAuthenticated } = useContext(authContext)
     const onLogout = () => {
         setToken()
+        setIsAuthenticated(false)
         props.history.push('/signin')
     }
 
