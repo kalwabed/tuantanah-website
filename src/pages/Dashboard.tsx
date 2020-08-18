@@ -1,9 +1,18 @@
-import React from 'react'
+import React, { useContext } from 'react'
 
-const Dashboard = () => {
+import { authContext } from '../contexts/Auth'
+
+const Dashboard = (props: any) => {
+    const { setToken } = useContext(authContext)
+    const onLogout = () => {
+        setToken()
+        props.history.push('/signin')
+    }
+
     return (
         <div>
             <h1>Dashboard</h1>
+            <button onClick={onLogout}>Logout</button>
         </div>
     )
 }
