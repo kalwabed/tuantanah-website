@@ -12,18 +12,22 @@ const Login = () => {
     const [email, setEmail] = useState<string>('')
     const [password, setPassword] = useState<string>('')
     const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false)
+    const [loading, setLoading] = useState<boolean>(false)
     const { setToken, setIsAuthenticated, token } = useContext(authContext)
 
     const handleSubmit = async (event: React.FormEvent<HTMLInputElement>) => {
         event.preventDefault()
+        setLoading(true)
         setValidated(true)
         const form = event.currentTarget
 
         // @ts-ignore
         if (form.checkValidity() === false) {
             event.stopPropagation()
+            setLoading(false)
         } else {
             const res = await fetchLogin({ email, password })
+            setLoading(false)
             if (res?.status === true) {
                 setValidated(false)
                 alert('success')
@@ -51,6 +55,7 @@ const Login = () => {
                         </div>
                         <div className="card-fat">
                             <Card.Body>
+                                {loading && <h1>Loading...</h1>}
                                 <Card.Title as="h4">Sign In</Card.Title>
                                 <Form
                                     noValidate
@@ -63,6 +68,7 @@ const Login = () => {
                                             required
                                             type="email"
                                             value={email}
+                                            disabled={loading}
                                             onChange={(e) =>
                                                 setEmail(e.currentTarget.value)
                                             }
@@ -79,6 +85,7 @@ const Login = () => {
                                         <Form.Control
                                             type="password"
                                             required
+                                            disabled={loading}
                                             value={password}
                                             onChange={(e) =>
                                                 setPassword(
@@ -98,6 +105,9 @@ const Login = () => {
                                             type="submit"
                                             variant="success"
                                             block
+                                            disabled={
+                                                password.length < 5 || loading
+                                            }
                                         >
                                             Sign In
                                         </Button>

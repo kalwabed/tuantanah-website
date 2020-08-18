@@ -1,17 +1,12 @@
 import type { IUser } from '../types/index.types'
 
-let endpoint: string = 'https://server-tuantanah.herokuapp.com/api'
-// if (process.env.NODE_ENV === 'production') {
-//     endpoint = 'https://server-tuantanah.herokuapp.com/api'
-// } else {
-//     endpoint = 'http://localhost:5000/api'
-// }
+const { SNOWPACK_PUBLIC_ENDPOINT } = import.meta.env
 
 // @ts-ignore
 export const fetchLogin = async ({ email, password }: IUser) => {
     try {
         const result = await (
-            await fetch(`${endpoint}/d/signin`, {
+            await fetch(`${SNOWPACK_PUBLIC_ENDPOINT}/d/signin`, {
                 method: 'post',
                 headers: {
                     'content-type': 'application/json',
