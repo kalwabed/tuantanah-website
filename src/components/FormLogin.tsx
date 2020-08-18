@@ -3,7 +3,7 @@ import { Row, Card, Form } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 
 import '../auth.css'
-import logo from '../logo.png'
+import logo from '../img/logo.png'
 import type { TLoginProps } from '../types/index.types'
 import ButtonLoading from '../elements/ButtonLoading'
 

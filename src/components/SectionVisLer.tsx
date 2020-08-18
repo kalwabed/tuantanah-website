@@ -1,8 +1,8 @@
 import React from 'react'
 import { Card, Row, Col, Container, Button } from 'react-bootstrap'
 
-import gambar1 from '../section4.svg'
-import gambar2 from '../section5.svg'
+import gambar1 from '../img/section4.svg'
+import gambar2 from '../img/section5.svg'
 import type { refVisLer } from '../types/index.types'
 import { FaArrowRight, FaExternalLinkAlt } from 'react-icons/fa'
 import { Link } from 'react-router-dom'

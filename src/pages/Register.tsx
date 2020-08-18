@@ -2,7 +2,7 @@ import React from 'react'
 import { Container, Row, Card, Form, Button } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 
-import logo from '../logo.png'
+import logo from '../img/logo.png'
 import '../auth.css'
 
 const Register = () => {

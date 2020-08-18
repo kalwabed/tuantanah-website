@@ -2,11 +2,10 @@ import React from 'react'
 import { FcKey, FcLandscape, FcManager } from 'react-icons/fc'
 import { Row, Col, Button } from 'react-bootstrap'
 
-import sample from '../hero.svg'
+import sample from '../img/hero.svg'
 import type { refVisLer } from '../types/index.types'
 
 const Hero = ({ refVisitorDealer }: refVisLer) => {
-    const { SNOWPACK_PUBLIC_SITE_NAME } = import.meta.env
     const showVisLer = () => {
         window.scrollTo({
             top: refVisitorDealer.current.offsetTop + 30,
@@ -21,16 +20,14 @@ const Hero = ({ refVisitorDealer }: refVisLer) => {
                     <p className="h2 font-weight-bold">
                         Wujudkan Properti Impian Anda Bersama{' '}
                         <span className="text-success logo-font">
-                            {SNOWPACK_PUBLIC_SITE_NAME}
+                            tuantanah
                         </span>
                     </p>
                     <p className="font-weight-light mb-4 text-wrap">
-                        <span className="logo-font">
-                            {SNOWPACK_PUBLIC_SITE_NAME}
-                        </span>{' '}
-                        adalah platform digital yang membantu anda mencari
-                        properti impian anda dengan praktis tanpa prasyarat akun
-                        atau yang lainnya.
+                        <span className="logo-font">tuantanah</span> adalah
+                        platform digital yang membantu anda mencari properti
+                        impian anda dengan praktis tanpa prasyarat akun atau
+                        yang lainnya.
                         <br />
                         Cari properti impian anda dan bangun bisnis anda
                         sekarang!

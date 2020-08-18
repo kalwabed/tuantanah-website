@@ -1,7 +1,7 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { Navbar, Container, Button, Nav } from 'react-bootstrap'
-import logo from '../logo.png'
+import logo from '../img/logo.png'
 
 const Header = ({ navlink = '' }) => {
     return (
@@ -22,7 +22,7 @@ const Header = ({ navlink = '' }) => {
                         height="22"
                     />
                     <span style={{ marginLeft: '2px' }} className="logo-font">
-                        {import.meta.env.SNOWPACK_PUBLIC_SITE_NAME}
+                        tuantanah
                     </span>
                 </Navbar.Brand>
                 <Navbar.Toggle />

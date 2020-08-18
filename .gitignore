@@ -1,5 +1,7 @@
 .build
 build
+dist
+.cache
 web_modules
 node_modules
 .env

@@ -1,12 +1,10 @@
 import type { IUser } from '../types/index.types'
 
-const { SNOWPACK_PUBLIC_ENDPOINT } = import.meta.env
-
 // @ts-ignore
 export const fetchLogin = async ({ email, password }: IUser) => {
     try {
         const result = await (
-            await fetch(`${SNOWPACK_PUBLIC_ENDPOINT}/d/signin`, {
+            await fetch(`${process.env.ENDPOINT}/d/signin`, {
                 method: 'post',
                 headers: {
                     'content-type': 'application/json',
