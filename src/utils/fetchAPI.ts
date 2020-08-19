@@ -16,7 +16,10 @@ export const fetchLogin = async ({ email, password }: IUserLogin) => {
         if (result.success === false) {
             return { status: false, msg: result.msg }
         }
-        return { status: true, token: result.token }
+        return {
+            status: true,
+            token: JSON.stringify(result.token).slice(1, -1),
+        }
     } catch (err) {
         console.error(err)
     }

@@ -12,6 +12,7 @@ export interface ICAuth {
     token: string | null
     setToken: any
     setIsAuthenticated: any
+    user: IApiUser
 }
 
 export type TLoginProps = {

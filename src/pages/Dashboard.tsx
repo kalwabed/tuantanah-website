@@ -1,15 +1,13 @@
-import React, { useContext, useEffect, useState } from 'react'
+import React, { useContext, useEffect } from 'react'
 
 import { authContext } from '../contexts/Auth'
 import verify from '../utils/Verify'
-import { IApiUser } from '../types/index.types'
 
 const Dashboard = (props: any) => {
-    const { setToken, setIsAuthenticated } = useContext(authContext)
-    const [user, setUser] = useState<IApiUser | any>({})
+    const { setToken, setIsAuthenticated, user } = useContext(authContext)
 
     useEffect(() => {
-        setUser(verify.User())
+        verify.User()
     }, [])
 
     const onLogout = () => {
@@ -22,6 +20,7 @@ const Dashboard = (props: any) => {
         <div>
             <h1>Dashboard</h1>
             <h2>Welcome {user.email}</h2>
+            <h3>Your role is {user.role == 1 ? 'admin' : 'user'}</h3>
             <button onClick={onLogout}>Logout</button>
         </div>
     )
