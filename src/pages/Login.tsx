@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react'
-
 import { Redirect } from 'react-router-dom'
+import cookies from 'js-cookie'
+
 import { fetchLogin } from '../utils/fetchAPI'
 import { authContext } from '../contexts/Auth'
 import FormLogin from '../components/FormLogin'
@@ -12,7 +13,7 @@ const Login = () => {
     const [email, setEmail] = useState<string>('')
     const [password, setPassword] = useState<string>('')
     const [loading, setLoading] = useState<boolean>(false)
-    const { setToken, setIsAuthenticated, token, isAuthenticated } = useContext(
+    const { setToken, setIsAuthenticated, isAuthenticated } = useContext(
         authContext
     )
 
@@ -30,17 +31,19 @@ const Login = () => {
             const res = await fetchLogin({ email, password })
             setLoading(false)
             if (res?.status === true) {
+                // SUKSES LOGIN
                 setValidated(false)
-                setToken(res.token)
+                setToken(res.token, true)
                 setIsAuthenticated(true)
             } else {
+                // GAGAL LOGIN
                 setPassword('')
                 alert(res?.msg)
             }
         }
     }
 
-    if (isAuthenticated || token) {
+    if (isAuthenticated || cookies.get('key')) {
         return <Redirect to="/dashboard" />
     }
 

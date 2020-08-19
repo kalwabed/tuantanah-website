@@ -2,7 +2,7 @@ export type refVisLer = {
     refVisitorDealer: null | any
 }
 
-export interface IUser {
+export interface IUserLogin {
     email: string
     password: string
 }
@@ -30,4 +30,9 @@ export interface IBtnLoadingProps {
     fill: string
     password: string
     loading: boolean
+}
+
+export interface IApiUser {
+    email: string
+    role: number
 }

@@ -1,7 +1,7 @@
-import type { IUser } from '../types/index.types'
+import type { IUserLogin } from '../types/index.types'
 
 // @ts-ignore
-export const fetchLogin = async ({ email, password }: IUser) => {
+export const fetchLogin = async ({ email, password }: IUserLogin) => {
     try {
         const result = await (
             await fetch(`${process.env.ENDPOINT}/d/signin`, {
