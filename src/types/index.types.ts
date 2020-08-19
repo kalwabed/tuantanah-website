@@ -2,6 +2,15 @@ export type refVisLer = {
     refVisitorDealer: null | any
 }
 
+export interface IServerResponse {
+    response: {
+        msg: string
+        errorCode: number
+    }
+    token: string
+    success: boolean
+}
+
 export interface IUserLogin {
     email: string
     password: string

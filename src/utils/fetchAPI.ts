@@ -1,9 +1,9 @@
-import type { IUserLogin } from '../types/index.types'
+import type { IUserLogin, IServerResponse } from '../types/index.types'
 
 // @ts-ignore
 export const fetchLogin = async ({ email, password }: IUserLogin) => {
     try {
-        const result = await (
+        const result: IServerResponse = await (
             await fetch(`${process.env.ENDPOINT}/d/signin`, {
                 method: 'post',
                 headers: {
@@ -14,7 +14,11 @@ export const fetchLogin = async ({ email, password }: IUserLogin) => {
         ).json()
 
         if (result.success === false) {
-            return { status: false, msg: result.msg }
+            return {
+                status: false,
+                msg: result.response.msg,
+                errorCode: result.response.errorCode,
+            }
         }
         return {
             status: true,
@@ -24,3 +28,5 @@ export const fetchLogin = async ({ email, password }: IUserLogin) => {
         console.error(err)
     }
 }
+
+//? errorCode = 400:bad req, 401:unauthorized
