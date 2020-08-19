@@ -4,6 +4,8 @@ import { authContext } from '../contexts/Auth'
 import verify from '../utils/Verify'
 
 const Dashboard = (props: any) => {
+    document.title = 'Dashboard | tuantanah'
+    window.scrollTo(0, 0)
     const { setToken, setIsAuthenticated, user } = useContext(authContext)
 
     useEffect(() => {
