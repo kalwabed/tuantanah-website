@@ -1,5 +1,6 @@
 import React, { useContext } from 'react'
 import { Route, Redirect } from 'react-router-dom'
+import cookies from 'js-cookie'
 
 import { authContext } from '../contexts/Auth'
 
@@ -11,12 +12,12 @@ const PrivateRoutes = ({
     exact: boolean
     path: string
 }) => {
-    const { isAuthenticated, token } = useContext(authContext)
+    const { isAuthenticated } = useContext(authContext)
     return (
         <Route
             {...rest}
             render={(routeProps) =>
-                isAuthenticated || token ? (
+                isAuthenticated || cookies.get('key') ? (
                     <Component {...routeProps} />
                 ) : (
                     <Redirect

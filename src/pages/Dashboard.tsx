@@ -1,17 +1,19 @@
 import React, { useContext, useEffect } from 'react'
 
 import { authContext } from '../contexts/Auth'
-import tokenVerify from '../utils/tokenVerify'
+import verify from '../utils/Verify'
 
 const Dashboard = (props: any) => {
-    const { setToken, setIsAuthenticated } = useContext(authContext)
+    document.title = 'Dashboard | tuantanah'
+    window.scrollTo(0, 0)
+    const { setToken, setIsAuthenticated, user } = useContext(authContext)
 
     useEffect(() => {
-        tokenVerify()
+        verify.User()
     }, [])
 
     const onLogout = () => {
-        setToken()
+        setToken(null, false)
         setIsAuthenticated(false)
         props.history.push('/signin')
     }
@@ -19,6 +21,8 @@ const Dashboard = (props: any) => {
     return (
         <div>
             <h1>Dashboard</h1>
+            <h2>Welcome {user.email}</h2>
+            <h3>Your role is {user.role == 1 ? 'admin' : 'user'}</h3>
             <button onClick={onLogout}>Logout</button>
         </div>
     )

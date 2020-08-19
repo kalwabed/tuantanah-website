@@ -2,7 +2,16 @@ export type refVisLer = {
     refVisitorDealer: null | any
 }
 
-export interface IUser {
+export interface IServerResponse {
+    response: {
+        msg: string
+        errorCode: number
+    }
+    token: string
+    success: boolean
+}
+
+export interface IUserLogin {
     email: string
     password: string
 }
@@ -12,6 +21,7 @@ export interface ICAuth {
     token: string | null
     setToken: any
     setIsAuthenticated: any
+    user: IApiUser
 }
 
 export type TLoginProps = {
@@ -30,4 +40,9 @@ export interface IBtnLoadingProps {
     fill: string
     password: string
     loading: boolean
+}
+
+export interface IApiUser {
+    email: string
+    role: number
 }
