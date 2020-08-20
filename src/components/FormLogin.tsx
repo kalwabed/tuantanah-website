@@ -45,9 +45,7 @@ const FormLogin: React.FC<TLoginProps> = ({
                                     <Form.Control.Feedback type="invalid">
                                         Mohon sertakan email yang valid!
                                     </Form.Control.Feedback>
-                                    <Form.Control.Feedback>
-                                        Terlihat bagus!
-                                    </Form.Control.Feedback>
+                                    <Form.Control.Feedback type="valid" />
                                 </Form.Group>
                                 <Form.Group>
                                     <Form.Label>Password</Form.Label>
@@ -63,9 +61,7 @@ const FormLogin: React.FC<TLoginProps> = ({
                                     <Form.Control.Feedback type="invalid">
                                         Mohon sertakan password yang valid!
                                     </Form.Control.Feedback>
-                                    <Form.Control.Feedback>
-                                        Terlihat bagus!
-                                    </Form.Control.Feedback>
+                                    <Form.Control.Feedback type="valid" />
                                 </Form.Group>
                                 <Form.Group className="m-0">
                                     <ButtonLoading

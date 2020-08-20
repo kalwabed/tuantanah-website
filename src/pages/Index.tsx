@@ -1,4 +1,5 @@
-import React, { createRef } from 'react'
+import React, { createRef, useEffect } from 'react'
+import { toast } from 'react-toastify'
 
 import Header from '../components/Header'
 import { Container } from 'react-bootstrap'
@@ -8,10 +9,13 @@ import SectionVisLer from '../components/SectionVisLer'
 import SectionFaq from '../components/SectionFaq'
 import Footer from '../components/Footer'
 
-const Index = () => {
+const Index = (props: any) => {
     const refVisitorDealer = createRef()
     document.title = `Home | tuantanah`
     window.scrollTo(0, 0)
+    useEffect(() => {
+        toast.dismiss()
+    }, [props.history])
     return (
         <>
             <Header navlink="/" />

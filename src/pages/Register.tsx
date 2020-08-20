@@ -1,85 +1,80 @@
-import React from 'react'
-import { Container, Row, Card, Form, Button } from 'react-bootstrap'
-import { Link } from 'react-router-dom'
+import React, { useState, useEffect } from 'react'
 
-import logo from '../img/logo.png'
 import '../auth.css'
+import FormRegister from '../components/FormRegister'
+import { fetchRegister } from '../utils/fetchAPI'
+import { toast } from 'react-toastify'
 
-const Register = () => {
+const Register = (props: any) => {
     document.title = 'Sign Up | tuantanah'
     window.scrollTo(0, 0)
+    useEffect(() => {
+        toast.dismiss()
+    }, [props.history])
+    const [loading, setLoading] = useState<boolean>(false)
+    const [validated, setValidated] = useState<boolean>(false)
+    const [fullName, setFullName] = useState<string>('')
+    const [email, setEmail] = useState<string>('')
+    const [password, setPassword] = useState<string>('')
+    const [check, setCheck] = useState<boolean>(false)
+    const [repeatPassword, setRepeatPassword] = useState<string>('')
+
+    const handleSubmit = async (e: React.FormEvent<HTMLInputElement>) => {
+        const form = e.currentTarget
+        e.preventDefault()
+        toast.dismiss()
+        setLoading(true)
+        setValidated(true)
+
+        if (form.checkValidity() === false) {
+            e.stopPropagation()
+            setLoading(false)
+        } else {
+            const res = await fetchRegister({
+                email,
+                password,
+                repeatPassword,
+                fullName,
+            })
+            setLoading(false)
+            if (res.success === true) {
+                // SUKSES
+                setValidated(false)
+                toast.success(res.msg)
+                setEmail('')
+                setFullName('')
+                setPassword('')
+                setRepeatPassword('')
+                setCheck(false)
+            } else {
+                setRepeatPassword('')
+                if (res.errorCode === 400) {
+                    toast.warning(res.msg)
+                } else {
+                    toast.info(res.msg)
+                }
+            }
+        }
+    }
 
     return (
-        <section className="h-100">
-            <Container className="h-100">
-                <Row className="justify-content-md-center h-100">
-                    <div className="card-wrapper">
-                        <div className="brand">
-                            <img src={logo} alt="logo" />
-                        </div>
-                        <div className="card-fat">
-                            <Card.Body>
-                                <Card.Title as="h4">Sign Up</Card.Title>
-                                <Form>
-                                    <Form.Group>
-                                        <Form.Label>Fullname</Form.Label>
-                                        <Form.Control required type="text" />
-                                    </Form.Group>
-
-                                    <Form.Group>
-                                        <Form.Label>Email Address</Form.Label>
-                                        <Form.Control required type="email" />
-                                    </Form.Group>
-
-                                    <Form.Group>
-                                        <Form.Label>Password</Form.Label>
-                                        <Form.Control
-                                            required
-                                            type="password"
-                                        />
-                                    </Form.Group>
-
-                                    <Form.Group>
-                                        <Form.Label>Repeat Password</Form.Label>
-                                        <Form.Control
-                                            required
-                                            type="password"
-                                        />
-                                    </Form.Group>
-
-                                    <Form.Group>
-                                        <Form.Check
-                                            custom
-                                            id="checkbox"
-                                            type="checkbox"
-                                            label="Agree with our Terms and Conditions"
-                                        />
-                                    </Form.Group>
-
-                                    <Form.Group className="m-0">
-                                        <Button
-                                            variant="success"
-                                            block
-                                            type="submit"
-                                        >
-                                            Sign Up
-                                        </Button>
-                                    </Form.Group>
-
-                                    <div className="mt-4 text-center">
-                                        already have an account?{' '}
-                                        <Link to="/signin">sign in</Link>
-                                    </div>
-                                    <p className="text-center">
-                                        go back to <Link to="/">home</Link>
-                                    </p>
-                                </Form>
-                            </Card.Body>
-                        </div>
-                    </div>
-                </Row>
-            </Container>
-        </section>
+        <>
+            <FormRegister
+                check={check}
+                loading={loading}
+                handleSubmit={handleSubmit}
+                setFullName={setFullName}
+                email={email}
+                validated={validated}
+                setEmail={setEmail}
+                setPassword={setPassword}
+                repeatPassword={repeatPassword}
+                setRepeatPassword={setRepeatPassword}
+                password={password}
+                fullName={fullName}
+                setCheck={setCheck}
+            />
+        </>
     )
 }
 

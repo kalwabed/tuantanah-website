@@ -34,6 +34,15 @@ export type TLoginProps = {
     setPassword: any
 }
 
+export type TRegisterProps = TLoginProps & {
+    fullName: string
+    setFullName: any
+    repeatPassword: string
+    setRepeatPassword: any
+    check: boolean
+    setCheck: any
+}
+
 export interface IBtnLoadingProps {
     type: string
     block: boolean
@@ -45,4 +54,9 @@ export interface IBtnLoadingProps {
 export interface IApiUser {
     email: string
     role: number
+}
+
+export interface IUserRegister extends IUserLogin {
+    repeatPassword: string
+    fullName: string
 }

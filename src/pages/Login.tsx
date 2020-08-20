@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import { Redirect } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import cookies from 'js-cookie'
@@ -7,9 +7,13 @@ import { fetchLogin } from '../utils/fetchAPI'
 import { authContext } from '../contexts/Auth'
 import FormLogin from '../components/FormLogin'
 
-const Login = () => {
+const Login = (props: any) => {
     document.title = 'Sign In | tuantanah'
     window.scrollTo(0, 0)
+    useEffect(() => {
+        toast.dismiss()
+    }, [props.history])
+
     const [validated, setValidated] = useState<boolean>(false)
     const [email, setEmail] = useState<string>('')
     const [password, setPassword] = useState<string>('')
@@ -32,7 +36,7 @@ const Login = () => {
         } else {
             const res = await fetchLogin({ email, password })
             setLoading(false)
-            if (res?.status === true) {
+            if (res?.success === true) {
                 // SUKSES LOGIN
                 setValidated(false)
                 setToken(res.token, true)
