@@ -17,21 +17,30 @@ export interface IUserLogin {
 }
 
 export interface ICAuth {
-    isAuthenticated: boolean
-    token: string | null
-    setToken: any
-    setIsAuthenticated: any
+    readonly isAuthenticated: boolean
+    readonly token: string | null
+    setToken: (data: string | null, setCoookie: boolean) => void
+    setIsAuthenticated: (isAuthenticated: boolean) => void
     user: IApiUser
 }
 
 export type TLoginProps = {
     loading: boolean
     validated: boolean
-    handleSubmit: any
+    handleSubmit: (event: React.FormEvent<HTMLInputElement>) => void
     email: string
-    setEmail: any
+    setEmail: (email: string) => void
     password: string
-    setPassword: any
+    setPassword: (password: string) => void
+}
+
+export type TRegisterProps = TLoginProps & {
+    fullName: string
+    setFullName: (fullName: string) => void
+    repeatPassword: string
+    setRepeatPassword: (repeatPassword: string) => void
+    check: boolean
+    setCheck: (check: boolean) => void
 }
 
 export interface IBtnLoadingProps {
@@ -45,4 +54,9 @@ export interface IBtnLoadingProps {
 export interface IApiUser {
     email: string
     role: number
+}
+
+export interface IUserRegister extends IUserLogin {
+    repeatPassword: string
+    fullName: string
 }

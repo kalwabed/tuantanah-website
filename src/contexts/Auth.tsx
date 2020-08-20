@@ -38,7 +38,7 @@ const Auth = (props: any) => {
         )
     }
 
-    const setAuthToken = (data: string, setCookie: boolean) => {
+    const setAuthToken = (data: string | null, setCookie: boolean) => {
         // TOKEN
         if (!data) localStorage.removeItem('token')
         else localStorage.setItem('token', data)
@@ -49,7 +49,7 @@ const Auth = (props: any) => {
             cookies.set('key', createCookieValue(), cookieConf)
         } else cookies.remove('key')
         // --------
-        setToken(data)
+        setToken(data!)
     }
 
     return (
