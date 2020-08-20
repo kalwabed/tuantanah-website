@@ -10,7 +10,7 @@ import SectionFaq from '../components/SectionFaq'
 import Footer from '../components/Footer'
 
 const Index = (props: any) => {
-    const refVisitorDealer = createRef<HTMLInputElement>()
+    const refVisitorDealer = createRef<HTMLDivElement>()
     document.title = `Home | tuantanah`
     window.scrollTo(0, 0)
     useEffect(() => {

@@ -43,6 +43,7 @@ const FormRegister: React.FC<TRegisterProps> = ({
                                             required
                                             disabled={loading}
                                             type="text"
+                                            placeholder="i.e John Bejo"
                                             onChange={(e) =>
                                                 setFullName(
                                                     e.currentTarget.value
@@ -63,6 +64,7 @@ const FormRegister: React.FC<TRegisterProps> = ({
                                             required
                                             disabled={loading}
                                             type="email"
+                                            placeholder="i.e example@do.it"
                                             value={email}
                                             onChange={(e) =>
                                                 setEmail(e.currentTarget.value)
@@ -81,6 +83,7 @@ const FormRegister: React.FC<TRegisterProps> = ({
                                             required
                                             disabled={loading}
                                             type="password"
+                                            placeholder="min. 5 chars"
                                             value={password}
                                             onChange={(e) =>
                                                 setPassword(
@@ -101,6 +104,7 @@ const FormRegister: React.FC<TRegisterProps> = ({
                                             required
                                             disabled={loading}
                                             type="password"
+                                            placeholder="repeat your password"
                                             value={repeatPassword}
                                             onChange={(e) =>
                                                 setRepeatPassword(

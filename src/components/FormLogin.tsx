@@ -35,6 +35,7 @@ const FormLogin: React.FC<TLoginProps> = ({
                                     <Form.Label>Email Address</Form.Label>
                                     <Form.Control
                                         required
+                                        autoFocus
                                         type="email"
                                         value={email}
                                         disabled={loading}

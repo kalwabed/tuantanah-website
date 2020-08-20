@@ -17,9 +17,9 @@ export interface IUserLogin {
 }
 
 export interface ICAuth {
-    isAuthenticated: boolean
-    token: string | null
-    setToken: (data: string, setCoookie: boolean) => void
+    readonly isAuthenticated: boolean
+    readonly token: string | null
+    setToken: (data: string | null, setCoookie: boolean) => void
     setIsAuthenticated: (isAuthenticated: boolean) => void
     user: IApiUser
 }
