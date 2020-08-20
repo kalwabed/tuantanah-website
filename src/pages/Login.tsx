@@ -39,7 +39,7 @@ const Login = (props: any) => {
             if (res?.success === true) {
                 // SUKSES LOGIN
                 setValidated(false)
-                setToken(res.token, true)
+                setToken(res.token!, true)
                 setIsAuthenticated(true)
             } else {
                 // GAGAL LOGIN
