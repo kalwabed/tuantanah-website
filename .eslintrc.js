@@ -2,26 +2,35 @@ module.exports = {
     env: {
         es6: true,
         node: true,
-        jest: true,
+        browser: true,
     },
-    extends: 'eslint:recommended',
+    extends: [
+        'eslint:recommended',
+        'plugin:@typescript-eslint/recommended',
+        'plugin:react/recommended',
+        'prettier/@typescript-eslint',
+        'plugin:prettier/recommended',
+    ],
     parser: '@typescript-eslint/parser',
-    plugins: ['@typescript-eslint'],
+    plugins: ['react', 'prettier', '@typescript-eslint'],
     parserOptions: {
         ecmaVersion: 2017,
         sourceType: 'module',
+    },
+    settings: {
+        react: {
+            pragma: 'React',
+            version: 'detect',
+        },
     },
     rules: {
         indent: ['error', 4],
         'linebreak-style': ['error', 'unix'],
         quotes: ['error', 'single'],
         'no-console': 'warn',
-        'no-unused-vars': 'off',
-        '@typescript-eslint/no-unused-vars': [
-            'error',
-            { vars: 'all', args: 'after-used', ignoreRestSiblings: false },
-        ],
-        '@typescript-eslint/explicit-function-return-type': 'warn', // Consider using explicit annotations for object literals and function return types even when they can be inferred.
+        'no-unused-vars': 'warn',
+        '@typescript-eslint/explicit-function-return-type': 0,
+        '@typescript-eslint/explicit-module-boundary-types': 0,
         'no-empty': 'warn',
     },
 }

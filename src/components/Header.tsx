@@ -1,7 +1,9 @@
+/* eslint-disable react/prop-types */
 import React from 'react'
 import { Link } from 'react-router-dom'
 import { Navbar, Container, Button, Nav } from 'react-bootstrap'
 import logo from '../img/logo.png'
+import { IoIosLogIn } from 'react-icons/io'
 
 const Header = ({ navlink = '' }) => {
     return (
@@ -56,12 +58,13 @@ const Header = ({ navlink = '' }) => {
                         </Link>
                     </Nav>
                     <Link to="/signin">
-                        <Button className="mr-2" variant="outline-success">
-                            Masuk
+                        <Button
+                            size="sm"
+                            className="ml-2"
+                            variant="outline-success"
+                        >
+                            masuk sebagai penjual <IoIosLogIn />
                         </Button>
-                    </Link>
-                    <Link to="signup">
-                        <Button variant="success">Daftar</Button>
                     </Link>
                 </Navbar.Collapse>
             </Container>

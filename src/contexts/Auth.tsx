@@ -21,7 +21,9 @@ const Auth = (props: any) => {
         // SET USER
         if (token) {
             try {
-                setUser(jwt.verify(token, String(process.env.SECRET_KEY)))
+                setUser(
+                    jwt.verify(token, String(process.env.SECRET_KEY)) as string
+                )
             } catch (err) {
                 process.exit(1)
             }
@@ -30,7 +32,6 @@ const Auth = (props: any) => {
 
     const createCookieValue = (): string => {
         // untuk isi value dari cookie
-        console.log(process.env.CLIENT_SECRET)
         return jwt.sign(
             { secret: String(process.env.COOKIE_SECRET) },
             String(process.env.CLIENT_SECRET),

@@ -5,10 +5,11 @@ import cookies from 'js-cookie'
 
 import { fetchLogin } from '../utils/fetchAPI'
 import { authContext } from '../contexts/Auth'
-import FormLogin from '../components/FormLogin'
+import FormLogin from '../components/authentication/FormLogin'
+import BannerDevelopment from '../elements/BannerDevelopment'
 
 const Login = (props: any) => {
-    document.title = 'Sign In | tuantanah'
+    document.title = 'Signin | tuantanah'
     window.scrollTo(0, 0)
     useEffect(() => {
         toast.dismiss()
@@ -29,7 +30,6 @@ const Login = (props: any) => {
         setValidated(true)
         const form = event.currentTarget
 
-        // @ts-ignore
         if (form.checkValidity() === false) {
             event.stopPropagation()
             setLoading(false)
@@ -61,6 +61,7 @@ const Login = (props: any) => {
 
     return (
         <>
+            <BannerDevelopment />
             <FormLogin
                 handleSubmit={handleSubmit}
                 validated={validated}

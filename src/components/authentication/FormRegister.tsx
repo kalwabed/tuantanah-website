@@ -1,10 +1,11 @@
+/* eslint-disable react/prop-types */
 import React from 'react'
 import { Container, Row, Card, Form } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 
-import logo from '../img/logo.png'
-import { TRegisterProps } from '../types/index.types'
-import ButtonLoading from '../elements/ButtonLoading'
+import logo from '../../img/logo.png'
+import { TRegisterProps } from '../../types/index.types'
+import ButtonLoading from '../../elements/ButtonLoading'
 
 const FormRegister: React.FC<TRegisterProps> = ({
     loading,
@@ -31,7 +32,9 @@ const FormRegister: React.FC<TRegisterProps> = ({
                         </div>
                         <div className="card-fat">
                             <Card.Body>
-                                <Card.Title as="h4">Sign Up</Card.Title>
+                                <Card.Title as="h4">
+                                    Create an tuantanah account
+                                </Card.Title>
                                 <Form
                                     noValidate
                                     validated={validated}
@@ -59,7 +62,7 @@ const FormRegister: React.FC<TRegisterProps> = ({
                                     </Form.Group>
 
                                     <Form.Group>
-                                        <Form.Label>Email Address</Form.Label>
+                                        <Form.Label>Email address</Form.Label>
                                         <Form.Control
                                             required
                                             disabled={loading}
@@ -99,7 +102,9 @@ const FormRegister: React.FC<TRegisterProps> = ({
                                     </Form.Group>
 
                                     <Form.Group>
-                                        <Form.Label>Repeat Password</Form.Label>
+                                        <Form.Label>
+                                            Confirm password
+                                        </Form.Label>
                                         <Form.Control
                                             required
                                             disabled={loading}
@@ -124,7 +129,7 @@ const FormRegister: React.FC<TRegisterProps> = ({
                                             checked={check}
                                             id="checkbox"
                                             type="checkbox"
-                                            label="Agree with our Terms and Conditions"
+                                            label="Agree with our terms and conditions"
                                         />
                                         <Form.Control.Feedback type="invalid" />
                                     </Form.Group>

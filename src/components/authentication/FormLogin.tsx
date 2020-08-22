@@ -1,11 +1,12 @@
+/* eslint-disable react/prop-types */
 import React from 'react'
 import { Row, Card, Form } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 
-import '../auth.css'
-import logo from '../img/logo.png'
-import type { TLoginProps } from '../types/index.types'
-import ButtonLoading from '../elements/ButtonLoading'
+import '../../auth.css'
+import logo from '../../img/logo.png'
+import type { TLoginProps } from '../../types/index.types'
+import ButtonLoading from '../../elements/ButtonLoading'
 
 const FormLogin: React.FC<TLoginProps> = ({
     loading,
@@ -25,7 +26,7 @@ const FormLogin: React.FC<TLoginProps> = ({
                     </div>
                     <div className="card-fat">
                         <Card.Body>
-                            <Card.Title as="h4">Sign In</Card.Title>
+                            <Card.Title as="h4">Sign in</Card.Title>
                             <Form
                                 noValidate
                                 validated={validated}
@@ -74,7 +75,7 @@ const FormLogin: React.FC<TLoginProps> = ({
                                     />
                                 </Form.Group>
                                 <div className="mt-4 text-center">
-                                    don't have an account?{' '}
+                                    don&apos;t have an account?{' '}
                                     <Link to="/signup">sign up</Link>
                                 </div>
                                 <p className="text-center">

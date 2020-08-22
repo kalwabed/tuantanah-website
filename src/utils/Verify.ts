@@ -12,7 +12,7 @@ export default {
         try {
             return jwt.verify(token, String(process.env.SECRET_KEY))
         } catch (err) {
-            console.log(err)
+            alert(err)
             process.exit(1)
         }
     },

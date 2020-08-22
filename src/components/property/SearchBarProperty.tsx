@@ -2,7 +2,7 @@ import React from 'react'
 import { Form, Col, FormControl, Button, Badge } from 'react-bootstrap'
 import { IoIosHeart } from 'react-icons/io'
 
-import logo from '../img/logo.png'
+import logo from '../../img/logo.png'
 
 const SearchBarProperty = () => {
     const searchOnSubmit = (e: React.FormEvent<HTMLInputElement>): void => {

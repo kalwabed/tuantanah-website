@@ -4,7 +4,6 @@ import type {
     IUserRegister,
 } from '../types/index.types'
 
-// @ts-ignore
 export const fetchLogin = async ({ email, password }: IUserLogin) => {
     try {
         const result: IServerResponse = await (
@@ -29,24 +28,37 @@ export const fetchLogin = async ({ email, password }: IUserLogin) => {
             token: JSON.stringify(result.token).slice(1, -1),
         }
     } catch (err) {
-        console.error(err)
+        alert(err)
+        return
     }
 }
 
-// @ts-ignore
 export const fetchRegister = async ({
     email,
     password,
     repeatPassword,
     fullName,
 }: IUserRegister) => {
+    if (process.env.NODE_ENV === 'production') {
+        return {
+            success: false,
+            msg: 'you cannot register now. admin page is under construction.',
+            errorCode: 401,
+        }
+    }
+
     const result: IServerResponse = await (
         await fetch(`${process.env.ENDPOINT}/d/signup`, {
             method: 'post',
             headers: {
                 'content-type': 'application/json',
             },
-            body: JSON.stringify({ email, password, repeatPassword, fullName }),
+            body: JSON.stringify({
+                email,
+                password,
+                repeatPassword,
+                fullName,
+            }),
         })
     ).json()
 
@@ -57,7 +69,6 @@ export const fetchRegister = async ({
             errorCode: result.response.errorCode,
         }
     }
-
     return {
         success: true,
         msg: result.response.msg,

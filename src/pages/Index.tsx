@@ -3,21 +3,23 @@ import { toast } from 'react-toastify'
 
 import Header from '../components/Header'
 import { Container } from 'react-bootstrap'
-import Hero from '../components/Hero'
-import SectionAdvantages from '../components/SectionAdvantages'
-import SectionVisLer from '../components/SectionVisLer'
-import SectionFaq from '../components/SectionFaq'
+import Hero from '../components/home/Hero'
+import SectionAdvantages from '../components/home/SectionAdvantages'
+import SectionVisLer from '../components/home/SectionVisLer'
+import SectionFaq from '../components/home/SectionFaq'
 import Footer from '../components/Footer'
+import BannerDevelopment from '../elements/BannerDevelopment'
 
 const Index = (props: any) => {
     const refVisitorDealer = createRef<HTMLDivElement>()
-    document.title = `Home | tuantanah`
+    document.title = 'Home | tuantanah'
     window.scrollTo(0, 0)
     useEffect(() => {
         toast.dismiss()
     }, [props.history])
     return (
         <>
+            <BannerDevelopment />
             <Header navlink="/" />
             <main>
                 <Container>

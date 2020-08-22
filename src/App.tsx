@@ -8,6 +8,7 @@ import Login from './pages/Login'
 import Register from './pages/Register'
 import Dashboard from './pages/Dashboard'
 import PrivateRoute from './utils/PrivateRoutes'
+import PropertyDetail from './pages/PropertyDetail'
 
 function App() {
     return (
@@ -15,7 +16,8 @@ function App() {
             <Router>
                 <Switch>
                     <Route exact path="/" component={Index} />
-                    <Route path="/property" component={Property} />
+                    <Route exact path="/property" component={Property} />
+                    <Route path="/property/:id" component={PropertyDetail} />
                     <PrivateRoute
                         exact
                         path="/dashboard"
@@ -25,10 +27,6 @@ function App() {
                         <Route exact path="/signin" component={Login} />
                         <Route path="/signup" component={Register} />
                     </div>
-                    {/* <Route
-                        path="*"
-                        render={() => <h1>404 page not found</h1>}
-                    /> */}
                 </Switch>
             </Router>
         </>

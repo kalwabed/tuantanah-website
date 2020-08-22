@@ -1,9 +1,9 @@
 import React from 'react'
-import { FcKey, FcLandscape, FcManager } from 'react-icons/fc'
+import { FcKey, FcManager, FcGlobe } from 'react-icons/fc'
 import { Row, Col, Button } from 'react-bootstrap'
 
-import sample from '../img/hero.svg'
-import type { refVisLer } from '../types/index.types'
+import sample from '../../img/hero.svg'
+import type { refVisLer } from '../../types/index.types'
 
 const Hero = ({ refVisitorDealer }: refVisLer) => {
     const showVisLer = () => {
@@ -62,11 +62,11 @@ const Hero = ({ refVisitorDealer }: refVisLer) => {
                             </h6>
                         </Col>
                         <Col>
-                            <FcLandscape className="h3 mr-2" />
+                            <FcGlobe className="h3 mr-2" />
                             <h6 className="mt-3">
                                 58+{' '}
                                 <span className="text-muted font-weight-light">
-                                    cities
+                                    regions
                                 </span>
                             </h6>
                         </Col>

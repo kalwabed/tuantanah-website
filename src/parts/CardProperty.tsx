@@ -25,7 +25,7 @@ const CardProperty = () => {
                         Genteng, Banyuwangi
                     </Card.Text>
                     <div className="justify-content-between d-flex">
-                        <Link to="##">
+                        <Link to="/property/123">
                             <Button size="sm" variant="success">
                                 Detail
                             </Button>

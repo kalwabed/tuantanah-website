@@ -1,5 +1,5 @@
 import React from 'react'
-import CardProperty from '../parts/CardProperty'
+import CardProperty from '../../parts/CardProperty'
 import { Row } from 'react-bootstrap'
 
 const ListProperty = () => {

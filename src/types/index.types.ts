@@ -1,5 +1,5 @@
 export type refVisLer = {
-    refVisitorDealer: null | any
+    refVisitorDealer: any | null
 }
 
 export interface IServerResponse {
