@@ -5,7 +5,7 @@ import cookies from 'js-cookie'
 
 import { fetchLogin } from '../utils/fetchAPI'
 import { authContext } from '../contexts/Auth'
-import FormLogin from '../components/FormLogin'
+import FormLogin from '../components/authentication/FormLogin'
 import BannerDevelopment from '../elements/BannerDevelopment'
 
 const Login = (props: any) => {

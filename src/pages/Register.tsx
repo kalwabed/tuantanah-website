@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
+import { toast } from 'react-toastify'
 
 import '../auth.css'
-import FormRegister from '../components/FormRegister'
+import FormRegister from '../components/authentication/FormRegister'
 import { fetchRegister } from '../utils/fetchAPI'
-import { toast } from 'react-toastify'
 import BannerDevelopment from '../elements/BannerDevelopment'
 
 const Register = (props: any) => {

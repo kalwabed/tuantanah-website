@@ -3,9 +3,9 @@ import React from 'react'
 import { Container, Row, Card, Form } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 
-import logo from '../img/logo.png'
-import { TRegisterProps } from '../types/index.types'
-import ButtonLoading from '../elements/ButtonLoading'
+import logo from '../../img/logo.png'
+import { TRegisterProps } from '../../types/index.types'
+import ButtonLoading from '../../elements/ButtonLoading'
 
 const FormRegister: React.FC<TRegisterProps> = ({
     loading,

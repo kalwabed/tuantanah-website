@@ -3,10 +3,10 @@ import React from 'react'
 import { Row, Card, Form } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 
-import '../auth.css'
-import logo from '../img/logo.png'
-import type { TLoginProps } from '../types/index.types'
-import ButtonLoading from '../elements/ButtonLoading'
+import '../../auth.css'
+import logo from '../../img/logo.png'
+import type { TLoginProps } from '../../types/index.types'
+import ButtonLoading from '../../elements/ButtonLoading'
 
 const FormLogin: React.FC<TLoginProps> = ({
     loading,

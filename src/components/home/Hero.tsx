@@ -2,8 +2,8 @@ import React from 'react'
 import { FcKey, FcManager, FcGlobe } from 'react-icons/fc'
 import { Row, Col, Button } from 'react-bootstrap'
 
-import sample from '../img/hero.svg'
-import type { refVisLer } from '../types/index.types'
+import sample from '../../img/hero.svg'
+import type { refVisLer } from '../../types/index.types'
 
 const Hero = ({ refVisitorDealer }: refVisLer) => {
     const showVisLer = () => {
