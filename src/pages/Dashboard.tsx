@@ -15,7 +15,7 @@ const Dashboard = (props: any) => {
     const onLogout = () => {
         setToken(null, false)
         setIsAuthenticated(false)
-        props.history.push('/signin')
+        props.history.push('/')
     }
 
     return (

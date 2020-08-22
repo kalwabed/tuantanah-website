@@ -1,5 +1,5 @@
 export type refVisLer = {
-    refVisitorDealer: unknown
+    refVisitorDealer: any | null
 }
 
 export interface IServerResponse {
@@ -21,7 +21,7 @@ export interface ICAuth {
     readonly token: string | null
     setToken: (data: string | null, setCoookie: boolean) => void
     setIsAuthenticated: (isAuthenticated: boolean) => void
-    user: IApiUser | string
+    user: IApiUser
 }
 
 export type TLoginProps = {

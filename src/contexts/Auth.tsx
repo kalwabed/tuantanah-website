@@ -9,7 +9,7 @@ export const authContext = createContext<ICAuth>(undefined!)
 const Auth = (props: any) => {
     const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false)
     const [token, setToken] = useState(localStorage.getItem('token')!)
-    const [user, setUser] = useState<IApiUser | string>('')
+    const [user, setUser] = useState<IApiUser | any>({})
 
     const secure = process.env.NODE_ENV === 'production' ? true : false
     const cookieConf = {

@@ -57,18 +57,13 @@ const Header = ({ navlink = '' }) => {
                             Faq
                         </Link>
                     </Nav>
-                    <Link to="signup">
-                        <Button size="sm" variant="success">
-                            Daftar
-                        </Button>
-                    </Link>
                     <Link to="/signin">
                         <Button
                             size="sm"
                             className="ml-2"
                             variant="outline-success"
                         >
-                            Masuk <IoIosLogIn />
+                            masuk sebagai penjual <IoIosLogIn />
                         </Button>
                     </Link>
                 </Navbar.Collapse>
