@@ -8,6 +8,7 @@ import SectionAdvantages from '../components/SectionAdvantages'
 import SectionVisLer from '../components/SectionVisLer'
 import SectionFaq from '../components/SectionFaq'
 import Footer from '../components/Footer'
+import BannerDevelopment from '../elements/BannerDevelopment'
 
 const Index = (props: any) => {
     const refVisitorDealer = createRef<HTMLDivElement>()
@@ -18,6 +19,7 @@ const Index = (props: any) => {
     }, [props.history])
     return (
         <>
+            <BannerDevelopment />
             <Header navlink="/" />
             <main>
                 <Container>

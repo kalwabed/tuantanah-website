@@ -39,13 +39,26 @@ export const fetchRegister = async ({
     repeatPassword,
     fullName,
 }: IUserRegister) => {
+    if (process.env.NODE_ENV === 'production') {
+        return {
+            success: false,
+            msg: 'you cannot register now. admin page is under construction.',
+            errorCode: 401,
+        }
+    }
+
     const result: IServerResponse = await (
         await fetch(`${process.env.ENDPOINT}/d/signup`, {
             method: 'post',
             headers: {
                 'content-type': 'application/json',
             },
-            body: JSON.stringify({ email, password, repeatPassword, fullName }),
+            body: JSON.stringify({
+                email,
+                password,
+                repeatPassword,
+                fullName,
+            }),
         })
     ).json()
 
@@ -56,7 +69,6 @@ export const fetchRegister = async ({
             errorCode: result.response.errorCode,
         }
     }
-
     return {
         success: true,
         msg: result.response.msg,

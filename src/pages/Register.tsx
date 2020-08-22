@@ -4,9 +4,10 @@ import '../auth.css'
 import FormRegister from '../components/FormRegister'
 import { fetchRegister } from '../utils/fetchAPI'
 import { toast } from 'react-toastify'
+import BannerDevelopment from '../elements/BannerDevelopment'
 
 const Register = (props: any) => {
-    document.title = 'Sign Up | tuantanah'
+    document.title = 'Signup | tuantanah'
     window.scrollTo(0, 0)
     useEffect(() => {
         toast.dismiss()
@@ -59,6 +60,7 @@ const Register = (props: any) => {
 
     return (
         <>
+            <BannerDevelopment />
             <FormRegister
                 check={check}
                 loading={loading}

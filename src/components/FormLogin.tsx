@@ -26,7 +26,7 @@ const FormLogin: React.FC<TLoginProps> = ({
                     </div>
                     <div className="card-fat">
                         <Card.Body>
-                            <Card.Title as="h4">Sign In</Card.Title>
+                            <Card.Title as="h4">Sign in</Card.Title>
                             <Form
                                 noValidate
                                 validated={validated}
