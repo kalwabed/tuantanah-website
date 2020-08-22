@@ -1,3 +1,4 @@
+/* eslint-disable no-constant-condition */
 import React from 'react'
 import { Badge } from 'react-bootstrap'
 import { IoMdSquareOutline, IoMdCheckbox } from 'react-icons/io'
@@ -9,7 +10,7 @@ const StatusPropertyCheck = () => {
                 {10 > 2 ? <IoMdCheckbox /> : <IoMdSquareOutline />} NEGO
             </Badge>
             <Badge variant="dark">
-                {10 < 2 ? <IoMdCheckbox /> : <IoMdSquareOutline />} SHM
+                {10 >= 2 ? <IoMdCheckbox /> : <IoMdSquareOutline />} SHM
             </Badge>
         </>
     )

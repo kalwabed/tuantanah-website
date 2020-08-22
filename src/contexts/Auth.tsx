@@ -9,7 +9,7 @@ export const authContext = createContext<ICAuth>(undefined!)
 const Auth = (props: any) => {
     const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false)
     const [token, setToken] = useState(localStorage.getItem('token')!)
-    const [user, setUser] = useState<IApiUser | any>({})
+    const [user, setUser] = useState<IApiUser | string>('')
 
     const secure = process.env.NODE_ENV === 'production' ? true : false
     const cookieConf = {
@@ -21,7 +21,9 @@ const Auth = (props: any) => {
         // SET USER
         if (token) {
             try {
-                setUser(jwt.verify(token, String(process.env.SECRET_KEY)))
+                setUser(
+                    jwt.verify(token, String(process.env.SECRET_KEY)) as string
+                )
             } catch (err) {
                 process.exit(1)
             }
@@ -30,7 +32,6 @@ const Auth = (props: any) => {
 
     const createCookieValue = (): string => {
         // untuk isi value dari cookie
-        console.log(process.env.CLIENT_SECRET)
         return jwt.sign(
             { secret: String(process.env.COOKIE_SECRET) },
             String(process.env.CLIENT_SECRET),

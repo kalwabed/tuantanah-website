@@ -4,7 +4,6 @@ import type {
     IUserRegister,
 } from '../types/index.types'
 
-// @ts-ignore
 export const fetchLogin = async ({ email, password }: IUserLogin) => {
     try {
         const result: IServerResponse = await (
@@ -29,11 +28,11 @@ export const fetchLogin = async ({ email, password }: IUserLogin) => {
             token: JSON.stringify(result.token).slice(1, -1),
         }
     } catch (err) {
-        console.error(err)
+        alert(err)
+        return
     }
 }
 
-// @ts-ignore
 export const fetchRegister = async ({
     email,
     password,

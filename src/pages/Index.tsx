@@ -11,7 +11,7 @@ import Footer from '../components/Footer'
 
 const Index = (props: any) => {
     const refVisitorDealer = createRef<HTMLDivElement>()
-    document.title = `Home | tuantanah`
+    document.title = 'Home | tuantanah'
     window.scrollTo(0, 0)
     useEffect(() => {
         toast.dismiss()

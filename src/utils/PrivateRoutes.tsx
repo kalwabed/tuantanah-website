@@ -8,7 +8,7 @@ const PrivateRoutes = ({
     component: Component,
     ...rest
 }: {
-    component: any
+    component: React.ComponentClass
     exact: boolean
     path: string
 }) => {

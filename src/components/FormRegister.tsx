@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React from 'react'
 import { Container, Row, Card, Form } from 'react-bootstrap'
 import { Link } from 'react-router-dom'

@@ -29,7 +29,6 @@ const Login = (props: any) => {
         setValidated(true)
         const form = event.currentTarget
 
-        // @ts-ignore
         if (form.checkValidity() === false) {
             event.stopPropagation()
             setLoading(false)

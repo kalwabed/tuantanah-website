@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React from 'react'
 import { Row, Card, Form } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
@@ -74,7 +75,7 @@ const FormLogin: React.FC<TLoginProps> = ({
                                     />
                                 </Form.Group>
                                 <div className="mt-4 text-center">
-                                    don't have an account?{' '}
+                                    don&apos;t have an account?{' '}
                                     <Link to="/signup">sign up</Link>
                                 </div>
                                 <p className="text-center">
