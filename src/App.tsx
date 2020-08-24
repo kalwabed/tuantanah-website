@@ -10,7 +10,7 @@ import Dashboard from './pages/Dashboard'
 import PrivateRoute from './utils/PrivateRoutes'
 import PropertyDetail from './pages/PropertyDetail'
 
-function App() {
+const App = () => {
     return (
         <>
             <Router>

@@ -15,18 +15,23 @@ const Header = ({ navlink = '' }) => {
             className="nav-font"
         >
             <Container>
-                <Navbar.Brand href="#">
-                    <img
-                        src={logo}
-                        alt="logo"
-                        className="d-inline-block"
-                        width="22"
-                        height="22"
-                    />
-                    <span style={{ marginLeft: '2px' }} className="logo-font">
-                        tuantanah
-                    </span>
-                </Navbar.Brand>
+                <Link to="/">
+                    <Navbar.Brand>
+                        <img
+                            src={logo}
+                            alt="logo"
+                            className="d-inline-block"
+                            width="22"
+                            height="22"
+                        />
+                        <span
+                            style={{ marginLeft: '2px' }}
+                            className="logo-font"
+                        >
+                            tuantanah
+                        </span>
+                    </Navbar.Brand>
+                </Link>
                 <Navbar.Toggle />
                 <Navbar.Collapse className="justify-content-end">
                     <Nav>

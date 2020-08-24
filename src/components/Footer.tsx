@@ -46,26 +46,17 @@ const Footer = () => {
                         <p className="font-weight-bold ">Pages</p>
                         <ul className="link-footer p-0 mb-0">
                             <li>
-                                <Link
-                                    to=""
-                                    className="text-decoration-none text-light"
-                                >
+                                <Link to="" className="newlink">
                                     About us
                                 </Link>
                             </li>
                             <li>
-                                <Link
-                                    to=""
-                                    className="text-decoration-none text-light"
-                                >
+                                <Link to="" className="newlink">
                                     Contact us
                                 </Link>
                             </li>
                             <li>
-                                <Link
-                                    to=""
-                                    className="text-decoration-none text-light"
-                                >
+                                <Link to="" className="newlink">
                                     Faq
                                 </Link>
                             </li>

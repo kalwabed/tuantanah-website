@@ -8,8 +8,8 @@ const SectionGalery = () => {
         <section className="section mt-2">
             <Container>
                 <Row>
-                    <Col>
-                        <h1>Galeri</h1>
+                    <Col as="h2">
+                        Gallery <span className="divider"></span>
                     </Col>
                 </Row>
                 <Row>
