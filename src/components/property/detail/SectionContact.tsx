@@ -20,19 +20,19 @@ const SectionContact = () => {
                 <Card style={{ width: '100%', height: '120%' }}>
                     <Card.Body>
                         <Row className="mb-auto">
-                            <Col as="h5">
+                            <Col as="h5" xs={12} md={4}>
                                 <AiOutlineWhatsApp size="1.2em" />
                                 <a href="#" className="newlink ml-1">
                                     Abdul
                                 </a>
                             </Col>
-                            <Col as="h5">
+                            <Col as="h5" xs={12} md={4}>
                                 <AiOutlineFacebook size="1.2em" />
                                 <a href="#" className="newlink ml-1">
                                     Karim
                                 </a>
                             </Col>
-                            <Col as="h5">
+                            <Col as="h5" xs={12} md={4}>
                                 <AiOutlineMail size="1.2em" />
                                 <a href="#" className="newlink ml-1">
                                     Utsman

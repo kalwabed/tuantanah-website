@@ -15,22 +15,46 @@ const SectionGalery = () => {
                 <Row>
                     <Col className="my-1" xs={12} md={3}>
                         <Card>
-                            <Card.Img src={gambar} alt="gambar" width="100%" />
+                            <Card.Img
+                                src={gambar}
+                                className="img-gallery"
+                                alt="gambar"
+                                width="100%"
+                                onClick={() => window.open(gambar, '_blank')}
+                            />
                         </Card>
                     </Col>
                     <Col className="my-1" xs={12} md={3}>
                         <Card>
-                            <Card.Img src={gambar} alt="gambar" width="100%" />
+                            <Card.Img
+                                src={gambar}
+                                className="img-gallery"
+                                alt="gambar"
+                                width="100%"
+                                onClick={() => window.open(gambar, '_blank')}
+                            />
                         </Card>
                     </Col>
                     <Col className="my-1" xs={12} md={3}>
                         <Card>
-                            <Card.Img src={gambar} alt="gambar" width="100%" />
+                            <Card.Img
+                                src={gambar}
+                                className="img-gallery"
+                                alt="gambar"
+                                width="100%"
+                                onClick={() => window.open(gambar, '_blank')}
+                            />
                         </Card>
                     </Col>
                     <Col className="my-1" xs={12} md={3}>
                         <Card>
-                            <Card.Img src={gambar} alt="gambar" width="100%" />
+                            <Card.Img
+                                src={gambar}
+                                alt="gambar"
+                                className="img-gallery"
+                                width="100%"
+                                onClick={() => window.open(gambar, '_blank')}
+                            />
                         </Card>
                     </Col>
                 </Row>
