@@ -11,19 +11,27 @@ const SectionAbout = () => {
                 <Row>
                     <Col xs={12} md={7} className="mt-4">
                         <Card>
-                            <Card.Img src={gambar} alt="gambar" width="100%" />
+                            <Card.Img
+                                src={gambar}
+                                alt="gambar"
+                                width="100%"
+                                onClick={() => window.open(gambar, '_blank')}
+                                className="img-gallery"
+                            />
                         </Card>
                     </Col>
                     <Col className="text-wrap" xs={12} md={5}>
                         <Card bg="light" border="light">
                             <Card.Body>
-                                <h5 className="h4">
-                                    Perumahan Padang Pasir Regency
-                                </h5>
-                                <p className="h6">
-                                    Marketing Padang Pasir Regency
-                                </p>
-                                <p>Genteng, Banyuwangi</p>
+                                <div className="border-bottom">
+                                    <h5 className="h4">
+                                        Perumahan Padang Pasir Regency
+                                    </h5>
+                                    <p className="h6">
+                                        Marketing Padang Pasir Regency
+                                    </p>
+                                    <p>Genteng, Banyuwangi</p>
+                                </div>
                                 <h2>
                                     30x50{' '}
                                     <span className="font-weight-light">
@@ -45,7 +53,7 @@ const SectionAbout = () => {
                                 <ul>
                                     <li>Model: perumahan</li>
                                     <li>Stok: 18 unit</li>
-                                    <li>DP: 3,5 Juta / 3thn </li>
+                                    <li>DP: 3,5 Juta / 3thn</li>
                                     <li>Cicilan: 15 ribu / hari</li>
                                 </ul>
                             </Card.Body>
