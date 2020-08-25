@@ -47,7 +47,7 @@ const Footer = () => {
                         <ul className="link-footer p-0 mb-0">
                             <li>
                                 <Link
-                                    to=""
+                                    to="/"
                                     className="text-decoration-none text-light"
                                 >
                                     About us
@@ -55,7 +55,7 @@ const Footer = () => {
                             </li>
                             <li>
                                 <Link
-                                    to=""
+                                    to="/"
                                     className="text-decoration-none text-light"
                                 >
                                     Contact us
@@ -63,7 +63,7 @@ const Footer = () => {
                             </li>
                             <li>
                                 <Link
-                                    to=""
+                                    to="/"
                                     className="text-decoration-none text-light"
                                 >
                                     Faq

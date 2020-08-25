@@ -4,6 +4,7 @@ import Header from '../components/Header'
 import SectionGalery from '../components/property/detail/SectionGallery'
 import SectionDescription from '../components/property/detail/SectionDescription'
 import Footer from '../components/Footer'
+import SectionContact from '../components/property/detail/SectionContact'
 
 const PropertyDetail = () => {
     document.title = 'Perumahan Padang Pasir Regency | tuantanah'
@@ -15,6 +16,7 @@ const PropertyDetail = () => {
             <SectionAbout />
             <SectionGalery />
             <SectionDescription />
+            <SectionContact />
             <Footer />
         </>
     )
