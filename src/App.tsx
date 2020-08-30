@@ -9,28 +9,29 @@ import Register from './pages/Register'
 import Dashboard from './pages/Dashboard'
 import PrivateRoute from './utils/PrivateRoutes'
 import PropertyDetail from './pages/PropertyDetail'
+import PropertyProvider from './contexts/Properties'
 
 const App = () => {
-    return (
-        <>
-            <Router>
-                <Switch>
-                    <Route exact path="/" component={Index} />
-                    <Route exact path="/property" component={Property} />
-                    <Route path="/property/:id" component={PropertyDetail} />
-                    <PrivateRoute
-                        exact
-                        path="/dashboard"
-                        component={Dashboard}
-                    />
-                    <div className="my-login-page">
-                        <Route exact path="/signin" component={Login} />
-                        <Route path="/signup" component={Register} />
-                    </div>
-                </Switch>
-            </Router>
-        </>
-    )
+	return (
+		<Router>
+			<Switch>
+				<PropertyProvider>
+					<Route exact path='/' component={Index} />
+					<Route exact path='/property' component={Property} />
+					<Route path='/property/:id' component={PropertyDetail} />
+					<PrivateRoute
+						exact
+						path='/dashboard'
+						component={Dashboard}
+					/>
+					<div className='my-login-page'>
+						<Route exact path='/signin' component={Login} />
+						<Route path='/signup' component={Register} />
+					</div>
+				</PropertyProvider>
+			</Switch>
+		</Router>
+	)
 }
 
 export default App

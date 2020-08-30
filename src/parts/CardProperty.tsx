@@ -26,10 +26,7 @@ const CardProperty: React.FC<Property> = ({
 					<div className='d-md-flex justify-content-between'>
 						<Card.Title>{size}</Card.Title>
 						<div>
-							<StatusPropertyCheck
-								nego={status.negotiation}
-								shm={status.shm}
-							/>
+							<StatusPropertyCheck {...status} />
 						</div>
 					</div>
 					<Card.Text className='font-weight-bold'>{title}</Card.Text>

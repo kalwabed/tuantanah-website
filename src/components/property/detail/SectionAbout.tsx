@@ -1,13 +1,18 @@
 /* eslint-disable react/prop-types */
-import React, { useContext } from 'react'
+import React from 'react'
 import { Row, Col, Container, Card } from 'react-bootstrap'
 
 import StatusPropertyCheck from '../../../elements/StatusPropertyCheck'
-import { propertiesContext } from '../../../contexts/Properties'
+import { Property } from '../../../types/index.types'
 
-const SectionAbout = () => {
-	const { showProperties } = useContext(propertiesContext)
-
+const SectionAbout: React.FC<Property> = ({
+	title,
+	mainPicture,
+	size,
+	price,
+	status,
+	location,
+}) => {
 	return (
 		<section className='section'>
 			<Container>
@@ -15,14 +20,11 @@ const SectionAbout = () => {
 					<Col xs={12} md={7} className='mt-4'>
 						<Card>
 							<Card.Img
-								src={showProperties.mainPicture}
+								src={mainPicture}
 								alt='gambar'
 								width='100%'
 								onClick={() =>
-									window.open(
-										showProperties.mainPicture,
-										'_blank',
-									)
+									window.open(mainPicture, '_blank')
 								}
 								className='img-gallery'
 							/>
@@ -32,16 +34,14 @@ const SectionAbout = () => {
 						<Card bg='light' border='light'>
 							<Card.Body>
 								<div className='border-bottom'>
-									<h5 className='h4'>
-										{showProperties.title}
-									</h5>
+									<h5 className='h4'>{title}</h5>
 									<p className='h6'>
 										Marketing Padang Pasir Regency
 									</p>
-									<p>{showProperties.location}</p>
+									<p>{location}</p>
 								</div>
 								<h2>
-									{showProperties.size}{' '}
+									{size}{' '}
 									<span className='font-weight-light'>
 										hektare
 									</span>
@@ -52,13 +52,10 @@ const SectionAbout = () => {
 									<span className='font-weight-light'>
 										Rp.
 									</span>{' '}
-									{showProperties.price} Juta
+									{price} Juta
 								</h2>
 								<p>
-									<StatusPropertyCheck
-										shm={showProperties.status.shm}
-										nego={showProperties.status.negotiation}
-									/>
+									<StatusPropertyCheck {...status} />
 								</p>
 								<hr />
 								<ul>

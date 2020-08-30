@@ -5,14 +5,14 @@ import { IoMdSquareOutline, IoMdCheckbox } from 'react-icons/io'
 
 type props = {
 	shm: boolean
-	nego: boolean
+	negotiation: boolean
 }
 
-const StatusPropertyCheck = ({ shm, nego }: props) => {
+const StatusPropertyCheck = ({ shm, negotiation }: props) => {
 	return (
 		<>
 			<Badge variant='light' className='mr-1'>
-				{nego ? <IoMdCheckbox /> : <IoMdSquareOutline />} NEGO
+				{negotiation ? <IoMdCheckbox /> : <IoMdSquareOutline />} NEGO
 			</Badge>
 			<Badge variant='light'>
 				{shm ? <IoMdCheckbox /> : <IoMdSquareOutline />} SHM

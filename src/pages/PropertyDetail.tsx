@@ -18,9 +18,9 @@ const PropertyDetail = () => {
 			<Header navlink='' />
 			{!isLoading && (
 				<>
-					<SectionAbout />
+					<SectionAbout {...showProperties} />
 					<SectionGalery />
-					<SectionDescription />
+					<SectionDescription {...showProperties} />
 					<SectionContact />
 				</>
 			)}

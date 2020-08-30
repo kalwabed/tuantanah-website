@@ -1,5 +1,6 @@
 import cookies from 'js-cookie'
 import jwt from 'jsonwebtoken'
+import { v5 } from 'uuid'
 
 import type {
 	IUserLogin,
@@ -82,6 +83,14 @@ const decode = (token: string) => {
 	return jwt.verify(token, String(process.env.SECRET_KEY))
 }
 
+const setTokenIdentity = (token: string) => {
+	cookies.set('exp_props', v5('Is Secure', process.env.UUID_NAMESPACE!), {
+		expires: 1 / 48,
+		secure: true,
+	}) // expire in 30 minutes
+	localStorage.setItem('props', token)
+}
+
 export const fetchAllProperty = async () => {
 	let result: any = '' || null
 	try {
@@ -91,9 +100,7 @@ export const fetchAllProperty = async () => {
 			).json()
 			const token = JSON.stringify(data).slice(1, -1)
 
-			cookies.set('exp_props', '130402', { expires: 1, secure: true })
-			localStorage.setItem('props', token)
-
+			setTokenIdentity(token)
 			result = decode(token)
 			return result.property.map((prop: any) => prop)
 		} else {
@@ -104,15 +111,5 @@ export const fetchAllProperty = async () => {
 		console.error(err)
 	}
 }
-
-// const localCookie = (value: string[]) => {
-// 	const propsCookie = cookies.get('exp_prop')
-// 	if (!propsCookie) {
-// 		localStorage.clear()
-// 		cookies.set('exp_props', btoa('kalwabed'), { expires: 1 })
-// 		return false
-// 	}
-// 	return true
-// }
 
 //? errorCode = 400:bad req, 401:unauthorized
