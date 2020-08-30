@@ -1,10 +1,13 @@
-import React from 'react'
+/* eslint-disable react/prop-types */
+import React, { useContext } from 'react'
 import { Row, Col, Container, Card } from 'react-bootstrap'
 
-import gambar from '../../../img/gambarprop.jpg'
 import StatusPropertyCheck from '../../../elements/StatusPropertyCheck'
+import { propertiesContext } from '../../../contexts/Properties'
 
 const SectionAbout = () => {
+	const { showProperties } = useContext(propertiesContext)
+
 	return (
 		<section className='section'>
 			<Container>
@@ -12,10 +15,15 @@ const SectionAbout = () => {
 					<Col xs={12} md={7} className='mt-4'>
 						<Card>
 							<Card.Img
-								src={gambar}
+								src={showProperties.mainPicture}
 								alt='gambar'
 								width='100%'
-								onClick={() => window.open(gambar, '_blank')}
+								onClick={() =>
+									window.open(
+										showProperties.mainPicture,
+										'_blank',
+									)
+								}
 								className='img-gallery'
 							/>
 						</Card>
@@ -25,15 +33,15 @@ const SectionAbout = () => {
 							<Card.Body>
 								<div className='border-bottom'>
 									<h5 className='h4'>
-										Perumahan Padang Pasir Regency
+										{showProperties.title}
 									</h5>
 									<p className='h6'>
 										Marketing Padang Pasir Regency
 									</p>
-									<p>Genteng, Banyuwangi</p>
+									<p>{showProperties.location}</p>
 								</div>
 								<h2>
-									30x50{' '}
+									{showProperties.size}{' '}
 									<span className='font-weight-light'>
 										hektare
 									</span>
@@ -44,10 +52,13 @@ const SectionAbout = () => {
 									<span className='font-weight-light'>
 										Rp.
 									</span>{' '}
-									100 Juta
+									{showProperties.price} Juta
 								</h2>
 								<p>
-									<StatusPropertyCheck />
+									<StatusPropertyCheck
+										shm={showProperties.status.shm}
+										nego={showProperties.status.negotiation}
+									/>
 								</p>
 								<hr />
 								<ul>

@@ -29,6 +29,8 @@ export interface CProperties {
 	setIsLoading: (isLoading: boolean) => void
 	readonly properties: [Property]
 	setProperties: (property: string[]) => void
+	readonly showProperties: Property
+	getOneProperty: (id: string) => void
 }
 
 export type TLoginProps = {
@@ -69,6 +71,7 @@ export interface IUserRegister extends IUserLogin {
 }
 
 export interface Property {
+	_id: string
 	title: string
 	description: string
 	location: string
@@ -78,5 +81,10 @@ export interface Property {
 	status: {
 		shm: boolean
 		negotiation: boolean
+	}
+	userId: {
+		fullName: string
+		email: string
+		propertyId: string[]
 	}
 }

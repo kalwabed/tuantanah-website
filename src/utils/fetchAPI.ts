@@ -93,11 +93,12 @@ export const fetchAllProperty = async () => {
 
 			cookies.set('exp_props', '130402', { expires: 1, secure: true })
 			localStorage.setItem('props', token)
+
 			result = decode(token)
-			return result.property
+			return result.property.map((prop: any) => prop)
 		} else {
 			result = decode(localStorage.getItem('props')!)
-			return result.property
+			return result.property.map((prop: any) => prop)
 		}
 	} catch (err) {
 		console.error(err)
