@@ -1,6 +1,6 @@
 import cookies from 'js-cookie'
 import jwt from 'jsonwebtoken'
-import { v5 } from 'uuid'
+import { v4 } from 'uuid'
 
 import type {
 	IUserLogin,
@@ -84,7 +84,7 @@ const decode = (token: string) => {
 }
 
 const setTokenIdentity = (token: string) => {
-	cookies.set('exp_props', v5('Is Secure', process.env.UUID_NAMESPACE!), {
+	cookies.set('exp_props', v4(), {
 		expires: 1 / 48,
 		secure: true,
 	}) // expire in 30 minutes
