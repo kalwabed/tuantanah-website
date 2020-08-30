@@ -1,62 +1,90 @@
 export type refVisLer = {
-    refVisitorDealer: any | null
+	refVisitorDealer: any | null
 }
 
 export interface IServerResponse {
-    response: {
-        msg: string
-        errorCode: number
-    }
-    token: string
-    success: boolean
+	response: {
+		msg: string
+		errorCode: number
+	}
+	token: string
+	success: boolean
 }
 
 export interface IUserLogin {
-    email: string
-    password: string
+	email: string
+	password: string
 }
 
 export interface ICAuth {
-    readonly isAuthenticated: boolean
-    readonly token: string | null
-    setToken: (data: string | null, setCoookie: boolean) => void
-    setIsAuthenticated: (isAuthenticated: boolean) => void
-    user: IApiUser
+	readonly isAuthenticated: boolean
+	readonly token: string | null
+	setToken: (data: string | null, setCoookie: boolean) => void
+	setIsAuthenticated: (isAuthenticated: boolean) => void
+	user: IApiUser
+}
+
+export interface CProperties {
+	readonly isLoading: boolean
+	setIsLoading: (isLoading: boolean) => void
+	readonly properties: [Property]
+	setProperties: (property: string[]) => void
+	readonly showProperties: Property
+	getOneProperty: (id: string) => void
 }
 
 export type TLoginProps = {
-    loading: boolean
-    validated: boolean
-    handleSubmit: (event: React.FormEvent<HTMLInputElement>) => void
-    email: string
-    setEmail: (email: string) => void
-    password: string
-    setPassword: (password: string) => void
+	loading: boolean
+	validated: boolean
+	handleSubmit: (event: React.FormEvent<HTMLInputElement>) => void
+	email: string
+	setEmail: (email: string) => void
+	password: string
+	setPassword: (password: string) => void
 }
 
 export type TRegisterProps = TLoginProps & {
-    fullName: string
-    setFullName: (fullName: string) => void
-    repeatPassword: string
-    setRepeatPassword: (repeatPassword: string) => void
-    check: boolean
-    setCheck: (check: boolean) => void
+	fullName: string
+	setFullName: (fullName: string) => void
+	repeatPassword: string
+	setRepeatPassword: (repeatPassword: string) => void
+	check: boolean
+	setCheck: (check: boolean) => void
 }
 
 export interface IBtnLoadingProps {
-    type: string
-    block: boolean
-    fill: string
-    password: string
-    loading: boolean
+	type: string
+	block: boolean
+	fill: string
+	password: string
+	loading: boolean
 }
 
 export interface IApiUser {
-    email: string
-    role: number
+	email: string
+	role: number
 }
 
 export interface IUserRegister extends IUserLogin {
-    repeatPassword: string
-    fullName: string
+	repeatPassword: string
+	fullName: string
+}
+
+export interface Property {
+	_id: string
+	title: string
+	description: string
+	location: string
+	mainPicture: string
+	price: number
+	size: string
+	status: {
+		shm: boolean
+		negotiation: boolean
+	}
+	userId: {
+		fullName: string
+		email: string
+		propertyId: string[]
+	}
 }

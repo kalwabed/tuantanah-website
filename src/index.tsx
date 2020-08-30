@@ -8,21 +8,21 @@ import './index.css'
 import AuthProvider from './contexts/Auth'
 
 ReactDOM.render(
-    <React.StrictMode>
-        <AuthProvider>
-            <App />
-            <ToastContainer
-                position="top-center"
-                autoClose={false}
-                newestOnTop={false}
-                closeOnClick
-                rtl={false}
-                limit={1}
-                transition={Slide}
-                pauseOnFocusLoss
-                draggable
-            />
-        </AuthProvider>
-    </React.StrictMode>,
-    document.getElementById('root')
+	<React.StrictMode>
+		<AuthProvider>
+			<App />
+			<ToastContainer
+				position='top-center'
+				autoClose={false}
+				newestOnTop={false}
+				closeOnClick
+				rtl={false}
+				limit={1}
+				transition={Slide}
+				pauseOnFocusLoss
+				draggable
+			/>
+		</AuthProvider>
+	</React.StrictMode>,
+	document.getElementById('root'),
 )
