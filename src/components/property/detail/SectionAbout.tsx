@@ -4,6 +4,7 @@ import { Row, Col, Container, Card } from 'react-bootstrap'
 
 import StatusPropertyCheck from '../../../elements/StatusPropertyCheck'
 import { Property } from '../../../types/index.types'
+import LazyLoad from 'react-lazyload'
 
 const SectionAbout: React.FC<Property> = ({
 	title,
@@ -19,15 +20,15 @@ const SectionAbout: React.FC<Property> = ({
 				<Row>
 					<Col xs={12} md={7} className='mt-4'>
 						<Card>
-							<Card.Img
-								src={mainPicture}
-								alt='gambar'
-								width='100%'
-								onClick={() =>
-									window.open(mainPicture, '_blank')
-								}
-								className='img-gallery'
-							/>
+							<LazyLoad height={100} once>
+								<Card.Img
+									src={mainPicture}
+									alt='gambar'
+									width='100%'
+									onClick={() => window.open(mainPicture, '_blank')}
+									className='img-gallery'
+								/>
+							</LazyLoad>
 						</Card>
 					</Col>
 					<Col className='text-wrap' xs={12} md={5}>
@@ -35,35 +36,26 @@ const SectionAbout: React.FC<Property> = ({
 							<Card.Body>
 								<div className='border-bottom'>
 									<h5 className='h4'>{title}</h5>
-									<p className='h6'>
-										Marketing Padang Pasir Regency
-									</p>
+									<p className='h6'>Marketing Padang Pasir Regency</p>
 									<p>{location}</p>
 								</div>
 								<h2>
-									{size}{' '}
-									<span className='font-weight-light'>
-										hektare
-									</span>
+									{size} <span className='font-weight-light'>hektare</span>
 								</h2>
 								{/* <Badge>CICILAN</Badge> */}
 								{/*jika pakai konsep cicilan maka akifkan badge diatas  */}
 								<h2>
-									<span className='font-weight-light'>
-										Rp.
-									</span>{' '}
-									{price} Juta
+									<span className='font-weight-light'>Rp.</span> {price} Juta
 								</h2>
 								<p>
 									<StatusPropertyCheck {...status} />
 								</p>
-								<hr />
-								<ul>
+								{/* <ul>
 									<li>Model: perumahan</li>
 									<li>Stok: 18 unit</li>
 									<li>DP: 3,5 Juta / 3thn</li>
 									<li>Cicilan: 15 ribu / hari</li>
-								</ul>
+								</ul> */}
 							</Card.Body>
 						</Card>
 					</Col>
