@@ -13,6 +13,7 @@ const SectionAbout: React.FC<Property> = ({
 	price,
 	status,
 	location,
+	userId,
 }) => {
 	return (
 		<section className='section'>
@@ -36,16 +37,18 @@ const SectionAbout: React.FC<Property> = ({
 							<Card.Body>
 								<div className='border-bottom'>
 									<h5 className='h4'>{title}</h5>
-									<p className='h6'>Marketing Padang Pasir Regency</p>
+									<p className='h6'>{userId.fullName}</p>
 									<p>{location}</p>
 								</div>
 								<h2>
-									{size} <span className='font-weight-light'>hektare</span>
+									{size}
+									<span className='font-weight-light'>hektare</span>
 								</h2>
 								{/* <Badge>CICILAN</Badge> */}
 								{/*jika pakai konsep cicilan maka akifkan badge diatas  */}
 								<h2>
-									<span className='font-weight-light'>Rp.</span> {price} Juta
+									<span className='font-weight-light'>Rp.</span>
+									{price} Juta
 								</h2>
 								<p>
 									<StatusPropertyCheck {...status} />

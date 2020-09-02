@@ -84,7 +84,10 @@ export interface Property {
 	}
 	userId: {
 		fullName: string
-		email: string
-		propertyId: string[]
 	}
+	gallery: [
+		{
+			imageUrl: string
+		},
+	]
 }

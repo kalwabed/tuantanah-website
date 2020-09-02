@@ -19,7 +19,7 @@ const PropertyDetail = () => {
 			{!isLoading && (
 				<>
 					<SectionAbout {...showProperties} />
-					<SectionGalery />
+					<SectionGalery {...showProperties} />
 					<SectionDescription {...showProperties} />
 					<SectionContact />
 				</>
