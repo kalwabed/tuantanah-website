@@ -5,6 +5,7 @@ import { Row, Container, Col, Card } from 'react-bootstrap'
 import { Property } from '../../../types/index.types'
 
 const SectionGalery: React.FC<Property> = ({ gallery }) => {
+	if (!gallery) return null
 	return (
 		<section className='section mt-2'>
 			<Container>
@@ -17,7 +18,7 @@ const SectionGalery: React.FC<Property> = ({ gallery }) => {
 					{gallery.length < 1 && (
 						<Col className='my-1' xs={12} md={3}>
 							<Card>
-								<h3 className='text-center'>Image is undefined</h3>
+								<h4 className='text-center'>Image is unavailable</h4>
 							</Card>
 						</Col>
 					)}

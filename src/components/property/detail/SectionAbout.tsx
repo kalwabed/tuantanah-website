@@ -15,6 +15,8 @@ const SectionAbout: React.FC<Property> = ({
 	location,
 	userId,
 }) => {
+	// fix bux yang gak load saat user return
+	if (!userId) return null
 	return (
 		<section className='section'>
 			<Container>
@@ -41,8 +43,7 @@ const SectionAbout: React.FC<Property> = ({
 									<p>{location}</p>
 								</div>
 								<h2>
-									{size}
-									<span className='font-weight-light'>hektare</span>
+									{size} <span className='font-weight-light'>hektare</span>
 								</h2>
 								{/* <Badge>CICILAN</Badge> */}
 								{/*jika pakai konsep cicilan maka akifkan badge diatas  */}
