@@ -36,7 +36,7 @@ const SectionVisLer = ({ refVisitorDealer }: refVisLer) => {
 							<Card.Body className='p-5'>
 								<h3 className='h2 font-weight-bold'>Visitor</h3>
 								<LazyLoad offset={80} once height={150}>
-									<Fade direction='top'>
+									<Fade direction='up'>
 										<img
 											src={gambar1}
 											alt='visitor illustration'
@@ -64,7 +64,7 @@ const SectionVisLer = ({ refVisitorDealer }: refVisLer) => {
 							<Card.Body className='p-5'>
 								<h3 className='h2 font-weight-bold'>Dealer</h3>
 								<LazyLoad offset={80} once height={150}>
-									<Fade direction='top'>
+									<Fade direction='up'>
 										<img
 											src={gambar2}
 											alt='dealer illustration'
