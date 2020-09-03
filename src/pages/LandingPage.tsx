@@ -33,7 +33,7 @@ const Index = (props: any) => {
 				<SectionVisLer refVisitorDealer={refVisitorDealer} />
 				<SectionFaq />
 			</main>
-			<LazyLoad once height={300} offset={100}>
+			<LazyLoad once height={300} offset={200}>
 				<Footer />
 			</LazyLoad>
 		</>

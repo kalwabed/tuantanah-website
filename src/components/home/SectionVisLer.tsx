@@ -2,11 +2,12 @@ import React from 'react'
 import { Card, Row, Col, Container, Button } from 'react-bootstrap'
 import { FaArrowRight, FaExternalLinkAlt } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
+import LazyLoad from 'react-lazyload'
 
 import gambar1 from '../../img/section4.svg'
 import gambar2 from '../../img/section5.svg'
 import type { refVisLer } from '../../types/index.types'
-import LazyLoad from 'react-lazyload'
+import { Fade } from 'react-awesome-reveal'
 
 const SectionVisLer = ({ refVisitorDealer }: refVisLer) => {
 	return (
@@ -35,12 +36,14 @@ const SectionVisLer = ({ refVisitorDealer }: refVisLer) => {
 							<Card.Body className='p-5'>
 								<h3 className='h2 font-weight-bold'>Visitor</h3>
 								<LazyLoad offset={80} once height={150}>
-									<img
-										src={gambar1}
-										alt='visitor illustration'
-										width='210'
-										height='210'
-									/>
+									<Fade direction='top'>
+										<img
+											src={gambar1}
+											alt='visitor illustration'
+											width='210'
+											height='210'
+										/>
+									</Fade>
 								</LazyLoad>
 								<div className='text-justify'>
 									<p className='mt-2'>
@@ -61,12 +64,14 @@ const SectionVisLer = ({ refVisitorDealer }: refVisLer) => {
 							<Card.Body className='p-5'>
 								<h3 className='h2 font-weight-bold'>Dealer</h3>
 								<LazyLoad offset={80} once height={150}>
-									<img
-										src={gambar2}
-										alt='dealer illustration'
-										width='210'
-										height='210'
-									/>
+									<Fade direction='top'>
+										<img
+											src={gambar2}
+											alt='dealer illustration'
+											width='210'
+											height='210'
+										/>
+									</Fade>
 								</LazyLoad>
 								<div className='text-justify'>
 									<p className='mt-2'>

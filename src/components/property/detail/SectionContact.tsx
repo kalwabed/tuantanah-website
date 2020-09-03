@@ -19,7 +19,7 @@ const SectionContact = () => {
 					</Col>
 				</Row>
 				<Card style={{ width: '100%', height: '120%' }}>
-					<LazyLoad once height={50} offset={30}>
+					<LazyLoad once height={100} offset={30}>
 						<Card.Body>
 							<Row className='mb-auto'>
 								<Col as='h5' xs={12} md={4}>
