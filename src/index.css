@@ -71,11 +71,20 @@ body {
   background-position: 0px 100%;
 }
 
+.img-gallery {
+  height: 100%;
+}
+
 .img-gallery:hover {
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
   transition: 0.3s;
   opacity: 0.9;
   cursor: pointer;
+}
+
+.hover-shadow:hover {
+  box-shadow: 0 .5rem 1rem rgba(0, 0, 0, .15);
+  transition: all 120ms ease-in-out 0s;
 }
 
 .divider {

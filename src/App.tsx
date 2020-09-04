@@ -1,7 +1,7 @@
 import React from 'react'
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
 
-import Index from './pages/Index'
+import LandingPage from './pages/LandingPage'
 import Property from './pages/Property'
 import './App.css'
 import Login from './pages/Login'
@@ -16,14 +16,10 @@ const App = () => {
 		<Router>
 			<Switch>
 				<PropertyProvider>
-					<Route exact path='/' component={Index} />
+					<Route exact path='/' component={LandingPage} />
 					<Route exact path='/property' component={Property} />
 					<Route path='/property/:id' component={PropertyDetail} />
-					<PrivateRoute
-						exact
-						path='/dashboard'
-						component={Dashboard}
-					/>
+					<PrivateRoute exact path='/dashboard' component={Dashboard} />
 					<div className='my-login-page'>
 						<Route exact path='/signin' component={Login} />
 						<Route path='/signup' component={Register} />

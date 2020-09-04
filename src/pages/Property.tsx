@@ -30,7 +30,7 @@ const Property = () => {
 				<Container>
 					<SearchBarProperty />
 					{isLoading && (
-						<div className='text-center'>
+						<div className='text-center my-4'>
 							<Spinner animation='grow' variant='success' />
 						</div>
 					)}
