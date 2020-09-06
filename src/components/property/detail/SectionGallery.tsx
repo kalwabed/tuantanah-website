@@ -16,6 +16,7 @@ const SectionGalery: React.FC<Property> = ({ gallery }) => {
 						Gallery <span className='divider'></span>
 					</Col>
 				</Row>
+
 				{gallery.length < 1 && (
 					<Col className='my-1' xs={12} md={3}>
 						<Card>
@@ -23,11 +24,18 @@ const SectionGalery: React.FC<Property> = ({ gallery }) => {
 						</Card>
 					</Col>
 				)}
-				<Fade className='row' direction='right' triggerOnce cascade>
-					{gallery.map((img, i) => (
-						<Col className='my-1' xs={12} md={3} key={i}>
+
+				<Row>
+					<Fade
+						className='col-12 col-md-3 my-1'
+						direction='right'
+						triggerOnce
+						cascade
+					>
+						{gallery.map((img, i) => (
 							<LazyLoad
 								once
+								key={i}
 								height={50}
 								placeholder={<Spinner animation='border' />}
 							>
@@ -46,9 +54,9 @@ const SectionGalery: React.FC<Property> = ({ gallery }) => {
 									/>
 								</Card>
 							</LazyLoad>
-						</Col>
-					))}
-				</Fade>
+						))}
+					</Fade>
+				</Row>
 			</Container>
 		</section>
 	)

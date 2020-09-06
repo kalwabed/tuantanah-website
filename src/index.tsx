@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom'
 import App from './App'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import 'react-toastify/dist/ReactToastify.min.css'
+import 'gridjs/dist/theme/mermaid.css'
 import './index.css'
 import AuthProvider from './contexts/Auth'
 

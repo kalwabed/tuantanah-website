@@ -9,6 +9,7 @@ const Properties = ({ children }: any) => {
 	const [isLoading, setIsLoading] = useState<boolean>(false)
 	const [properties, setProperties] = useState<string[] | any>([])
 	const [showProperties, setShowProperties] = useState<Property | any>({})
+	const [propertyById, setPropertyById] = useState<Property | any>([])
 
 	useEffect(() => {
 		// untuk tetap dinamis saat browser mulai kembali
@@ -35,6 +36,18 @@ const Properties = ({ children }: any) => {
 		}
 	}
 
+	const getPropertyById = async (_id: string) => {
+		try {
+			setIsLoading(true)
+			const props = await fetchAllProperty()
+			const data = props.filter((prop: Property) => prop.userId._id === _id)
+			if (data) setPropertyById(data)
+			setIsLoading(false)
+		} catch (err) {
+			console.error(err)
+		}
+	}
+
 	return (
 		<propertiesContext.Provider
 			value={{
@@ -44,6 +57,9 @@ const Properties = ({ children }: any) => {
 				properties,
 				showProperties,
 				getOneProperty,
+				getPropertyById,
+				propertyById,
+				setPropertyById,
 			}}
 		>
 			{children}

@@ -30,7 +30,10 @@ export interface CProperties {
 	readonly properties: [Property]
 	setProperties: (property: string[]) => void
 	readonly showProperties: Property
+	readonly propertyById: Property[]
 	getOneProperty: (id: string) => void
+	getPropertyById: (_id: string) => void
+	setPropertyById: (value: string[]) => void
 }
 
 export type TLoginProps = {
@@ -61,8 +64,10 @@ export interface IBtnLoadingProps {
 }
 
 export interface IApiUser {
+	_id: string
 	email: string
 	role: number
+	fullName: string
 }
 
 export interface IUserRegister extends IUserLogin {
@@ -83,6 +88,7 @@ export interface Property {
 		negotiation: boolean
 	}
 	userId: {
+		_id: string
 		fullName: string
 	}
 	gallery: [
@@ -90,4 +96,6 @@ export interface Property {
 			imageUrl: string
 		},
 	]
+	createdAt: string
+	updatedAt: string
 }

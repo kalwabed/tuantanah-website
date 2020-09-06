@@ -1,6 +1,6 @@
 import React from 'react'
 import { FcKey, FcManager, FcGlobe } from 'react-icons/fc'
-import { Row, Col, Button } from 'react-bootstrap'
+import { Row, Col, Button, Spinner } from 'react-bootstrap'
 
 import sample from '../../img/hero.svg'
 import type { refVisLer } from '../../types/index.types'
@@ -23,9 +23,9 @@ const Hero = ({ refVisitorDealer }: refVisLer) => {
 						<span className='text-success logo-font'>tuantanah</span>
 					</p>
 					<p className='font-weight-light mb-4 text-wrap'>
-						<span className='logo-font'>tuantanah</span>
-						adalah platform digital yang membantu anda mencari properti impian
-						anda dengan praktis tanpa prasyarat akun atau yang lainnya.
+						<span className='logo-font'>tuantanah</span> adalah platform digital
+						yang membantu anda mencari properti impian anda dengan praktis tanpa
+						prasyarat akun atau yang lainnya.
 						<br />
 						Cari properti impian anda dan bangun bisnis anda sekarang!
 					</p>
@@ -63,7 +63,11 @@ const Hero = ({ refVisitorDealer }: refVisLer) => {
 					</Row>
 				</Col>
 				<Col className='d-none d-md-block'>
-					<LazyLoad once height={200}>
+					<LazyLoad
+						once
+						height={200}
+						placeholder={<Spinner animation='grow' />}
+					>
 						<img src={sample} width='580' height='350' alt='image' />
 					</LazyLoad>
 				</Col>
