@@ -1,11 +1,24 @@
 import React, { useContext } from 'react'
-import { Grid } from 'gridjs-react'
-import { Container } from 'react-bootstrap'
+import { Grid, _ } from 'gridjs-react'
+import { Container, Button, Badge } from 'react-bootstrap'
 import { propertiesContext } from '../../contexts/Properties'
-import { html, h } from 'gridjs'
+import { html } from 'gridjs'
+import { IoMdTrash, IoMdSearch, IoMdCreate } from 'react-icons/io'
 
 const Table = () => {
 	const { propertyById } = useContext(propertiesContext)
+
+	const onDelete = (id: string) => {
+		alert(`deleting id ${id}`)
+	}
+
+	const onDetail = (id: string) => {
+		alert(`detail id ${id}`)
+	}
+
+	const onUpdate = (id: string) => {
+		alert(`update id ${id}`)
+	}
 
 	if (propertyById.length < 1) return null
 	return (
@@ -17,7 +30,49 @@ const Table = () => {
 					prop.title,
 					prop.size,
 					prop.location,
-					prop._id,
+					_(
+						<>
+							<Badge
+								variant={prop.status.negotiation ? 'success' : 'secondary'}
+							>
+								nego
+							</Badge>
+							<Badge
+								variant={prop.status.shm ? 'success' : 'secondary'}
+								className='ml-1'
+							>
+								shm
+							</Badge>
+						</>,
+					),
+					_(
+						<>
+							<Button
+								className='mr-1'
+								size='sm'
+								variant='info'
+								onClick={() => onDetail(prop._id)}
+							>
+								<IoMdSearch />
+							</Button>
+							<Button
+								className='mx-1'
+								size='sm'
+								variant='warning'
+								onClick={() => onUpdate(prop._id)}
+							>
+								<IoMdCreate />
+							</Button>
+							<Button
+								className='ml-1'
+								size='sm'
+								variant='danger'
+								onClick={() => onDelete(prop._id)}
+							>
+								<IoMdTrash />
+							</Button>
+						</>,
+					),
 				])}
 				columns={[
 					{ name: '#', width: '1%' },
@@ -27,22 +82,10 @@ const Table = () => {
 						width: '7%',
 					},
 					'Title',
-					'Size',
+					{ name: 'Size', width: '3%' },
 					'Location',
-					{
-						name: 'Actions',
-						formatter: (row, cell) => {
-							return h(
-								'button',
-								{
-									className: 'btn btn-danger btn-sm',
-									onClick: () => alert(`Deleting ${row}`),
-								},
-								'Delete',
-							)
-						},
-						width: '5%',
-					},
+					{ name: 'Status', width: '7%' },
+					'Actions',
 				]}
 				search={true}
 				pagination={{ enabled: true, limit: 10 }}

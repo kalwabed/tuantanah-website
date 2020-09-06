@@ -11,9 +11,12 @@ const Dashboard = (props: any) => {
 	document.title = 'Dashboard | tuantanah'
 	window.scrollTo(0, 0)
 	const { setToken, setIsAuthenticated, user } = useContext(authContext)
-	const { propertyById, getPropertyById, isLoading } = useContext(
-		propertiesContext,
-	)
+	const {
+		propertyById,
+		getPropertyById,
+		isLoading,
+		setPropertyById,
+	} = useContext(propertiesContext)
 
 	useEffect(() => {
 		verify.User()
@@ -23,6 +26,7 @@ const Dashboard = (props: any) => {
 	const onLogout = () => {
 		setToken(null, false)
 		setIsAuthenticated(false)
+		setPropertyById([])
 		props.history.push('/')
 	}
 

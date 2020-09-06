@@ -1,5 +1,5 @@
 import React from 'react'
-import { Card, Row, Col, Container, Button } from 'react-bootstrap'
+import { Card, Row, Col, Container, Button, Spinner } from 'react-bootstrap'
 import { FaArrowRight, FaExternalLinkAlt } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 import LazyLoad from 'react-lazyload'
@@ -35,7 +35,12 @@ const SectionVisLer = ({ refVisitorDealer }: refVisLer) => {
 						<Card bg='secondary' text='light'>
 							<Card.Body className='p-5'>
 								<h3 className='h2 font-weight-bold'>Visitor</h3>
-								<LazyLoad offset={80} once height={150}>
+								<LazyLoad
+									offset={80}
+									once
+									placeholder={<Spinner animation='border' />}
+									height={150}
+								>
 									<Fade direction='up'>
 										<img
 											src={gambar1}
@@ -63,7 +68,12 @@ const SectionVisLer = ({ refVisitorDealer }: refVisLer) => {
 						<Card bg='secondary' text='light'>
 							<Card.Body className='p-5'>
 								<h3 className='h2 font-weight-bold'>Dealer</h3>
-								<LazyLoad offset={80} once height={150}>
+								<LazyLoad
+									offset={80}
+									once
+									placeholder={<Spinner animation='border' />}
+									height={150}
+								>
 									<Fade direction='up'>
 										<img
 											src={gambar2}

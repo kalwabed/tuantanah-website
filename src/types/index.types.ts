@@ -33,6 +33,7 @@ export interface CProperties {
 	readonly propertyById: Property[]
 	getOneProperty: (id: string) => void
 	getPropertyById: (_id: string) => void
+	setPropertyById: (value: string[]) => void
 }
 
 export type TLoginProps = {

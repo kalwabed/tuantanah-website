@@ -59,6 +59,7 @@ const Properties = ({ children }: any) => {
 				getOneProperty,
 				getPropertyById,
 				propertyById,
+				setPropertyById,
 			}}
 		>
 			{children}

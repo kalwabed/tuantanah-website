@@ -21,9 +21,7 @@ const Auth = (props: any) => {
 		// SET USER
 		if (token) {
 			try {
-				setUser(
-					jwt.verify(token, String(process.env.SECRET_KEY)) as string,
-				)
+				setUser(jwt.verify(token, String(process.env.SECRET_KEY)) as string)
 			} catch (err) {
 				process.exit(1)
 			}
@@ -48,7 +46,10 @@ const Auth = (props: any) => {
 		if (setCookie && !cookies.get('key')) {
 			// jika setCookie true dan cookie 'key' tidak ada
 			cookies.set('key', createCookieValue(), cookieConf)
-		} else cookies.remove('key')
+		} else {
+			cookies.remove('key')
+			setUser({})
+		}
 		// --------
 		setToken(data!)
 	}
