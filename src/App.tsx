@@ -9,6 +9,7 @@ import Register from './pages/Register'
 import Dashboard from './pages/Dashboard'
 import PrivateRoute from './utils/PrivateRoutes'
 import PropertyDetail from './pages/PropertyDetail'
+import AddProperty from './pages/AddProperty'
 import PropertyProvider from './contexts/Properties'
 
 const App = () => {
@@ -20,6 +21,11 @@ const App = () => {
 					<Route exact path='/property' component={Property} />
 					<Route path='/property/:id' component={PropertyDetail} />
 					<PrivateRoute exact path='/dashboard' component={Dashboard} />
+					<PrivateRoute
+						exact
+						path='/dashboard/property'
+						component={AddProperty}
+					/>
 					<div className='my-login-page'>
 						<Route exact path='/signin' component={Login} />
 						<Route path='/signup' component={Register} />
