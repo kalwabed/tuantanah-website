@@ -1,7 +1,8 @@
 import React, { useContext } from 'react'
 import { IoMdRocket } from 'react-icons/io'
-import { Container, Card, Spinner } from 'react-bootstrap'
+import { Container, Card } from 'react-bootstrap'
 import { useQuery } from 'react-query'
+import 'react-quill/dist/quill.snow.css'
 
 import AddPropertyForm from '../components/dashboard/AddPropertyForm'
 import Header from '../components/dashboard/Header'
@@ -19,7 +20,7 @@ const AddProperty = () => {
 				<Card>
 					<Card.Header>Add property</Card.Header>
 					<Card.Body>
-						{isLoading && <Spinner animation='grow' />}
+						{isLoading && <p>Loading...</p>}
 						{!isLoading && <AddPropertyForm user={user} dataProvinsi={data} />}
 					</Card.Body>
 					<Card.Footer className='text-center'>

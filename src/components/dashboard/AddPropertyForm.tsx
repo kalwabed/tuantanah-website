@@ -4,8 +4,10 @@ import { useForm } from 'react-hook-form'
 import { ErrorMessage } from '@hookform/error-message'
 import { Form, Col, Button, Badge, InputGroup } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
-import { IApiUser } from '../../types/index.types'
 import { useQuery } from 'react-query'
+import Quill from 'react-quill'
+
+import { IApiUser } from '../../types/index.types'
 import { fetchKotaByProv } from '../../utils/fetchAPI'
 
 type Inputs = {
@@ -43,9 +45,11 @@ const AddPropertyForm = ({
 	user: IApiUser
 	dataProvinsi: dataProvinsi
 }) => {
+	// BEGIN ----------------------------
 	const { setValue, register, handleSubmit, errors } = useForm<Inputs>()
 	const [isPanjangLebar, setIsPanjangLebar] = useState(false)
 	const [kota, setKota] = useState<number>(11)
+	const [description, setDescription] = useState('')
 	const { data, isFetching, isLoading, isError } = useQuery(
 		['kota', kota],
 		fetchKotaByProv,
@@ -56,7 +60,7 @@ const AddPropertyForm = ({
 		console.log(data)
 	}
 
-	if (isError) return alert('An error is appeared. Please refresh the page.')
+	if (isError) return <span>An error has been appearred!</span>
 	return (
 		<>
 			<Form onSubmit={handleSubmit(onSubmit)}>
@@ -93,7 +97,6 @@ const AddPropertyForm = ({
 				</Form.Row>
 
 				{/* lokasi */}
-				{/* TODO tembak API wilayah indonesia */}
 				<Form.Row>
 					<Form.Group as={Col} controlId='select-provinsi'>
 						<Form.Label>Provinsi</Form.Label>
@@ -241,24 +244,26 @@ const AddPropertyForm = ({
 				</Form.Row>
 
 				{/* Deskripsi */}
-				{/* TODO pakai text WYSIWYG */}
 				<Form.Row>
-					<Form.Group as={Col}>
+					<Form.Group as={Col} className='h-100'>
 						<Form.Label>Deskripsi</Form.Label>
-						<Form.Control type='fieldset' ref={register()} name='deskripsi' />
+						<Quill theme='snow' value={description} onChange={setDescription} />
 					</Form.Group>
 				</Form.Row>
 
-				<div className='mt-2'>
-					<Link to='/dashboard'>
-						<Button className='mr-2' variant='secondary'>
-							Back
+				{/* Tombol submit & cancel */}
+				<Form.Row className='mt-2'>
+					<Form.Group as={Col}>
+						<Link to='/dashboard'>
+							<Button className='mr-2' variant='secondary'>
+								Back
+							</Button>
+						</Link>
+						<Button className='' variant='success' type='submit'>
+							Submit
 						</Button>
-					</Link>
-					<Button className='' variant='success' type='submit'>
-						Submit
-					</Button>
-				</div>
+					</Form.Group>
+				</Form.Row>
 			</Form>
 		</>
 	)
