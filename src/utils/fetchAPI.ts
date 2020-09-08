@@ -112,4 +112,18 @@ export const fetchAllProperty = async () => {
 	}
 }
 
+export const fetchProvinsi = async () => {
+	return await (
+		await fetch('https://dev.farizdotid.com/api/daerahindonesia/provinsi')
+	).json()
+}
+
+export const fetchKotaByProv = async (key: string, id: number) => {
+	return await (
+		await fetch(
+			`https://dev.farizdotid.com/api/daerahindonesia/kota?id_provinsi=${id}`,
+		)
+	).json()
+}
+
 //? errorCode = 400:bad req, 401:unauthorized

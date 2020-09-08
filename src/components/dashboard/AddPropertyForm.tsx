@@ -5,6 +5,8 @@ import { ErrorMessage } from '@hookform/error-message'
 import { Form, Col, Button, Badge, InputGroup } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { IApiUser } from '../../types/index.types'
+import { useQuery } from 'react-query'
+import { fetchKotaByProv } from '../../utils/fetchAPI'
 
 type Inputs = {
 	fullName: string
@@ -19,15 +21,38 @@ type Inputs = {
 	nego: boolean
 }
 
-const AddPropertyForm = ({ user }: { user: IApiUser }) => {
+type dataProvinsi = {
+	provinsi: [
+		{
+			id: number
+			nama: string
+		},
+	]
+}
+
+type kotaKab = {
+	id: number
+	id_provinsi: string
+	nama: string
+}
+
+const AddPropertyForm = ({
+	user,
+	dataProvinsi,
+}: {
+	user: IApiUser
+	dataProvinsi: dataProvinsi
+}) => {
 	const { setValue, register, handleSubmit, errors } = useForm<Inputs>()
 	const [isPanjangLebar, setIsPanjangLebar] = useState(false)
+	const [kota, setKota] = useState<number>(11)
+	const { data } = useQuery(['kota', kota], fetchKotaByProv)
+	// TODO implementasi isFetching, isLoading, dll. tempatkan di tempat yang strategis
 
 	const onSubmit = (data: Inputs) => {
 		setValue('title', '')
 		console.log(data)
 	}
-
 	return (
 		<>
 			<Form onSubmit={handleSubmit(onSubmit)}>
@@ -64,6 +89,7 @@ const AddPropertyForm = ({ user }: { user: IApiUser }) => {
 				</Form.Row>
 
 				{/* lokasi */}
+				{/* TODO tembak API wilayah indonesia */}
 				<Form.Row>
 					<Form.Group as={Col} controlId='select-provinsi'>
 						<Form.Label>Provinsi</Form.Label>
@@ -71,7 +97,15 @@ const AddPropertyForm = ({ user }: { user: IApiUser }) => {
 							<option value='' disabled>
 								-- Provinsi --
 							</option>
-							<option value='14'>Jawa Timur</option>
+							{dataProvinsi.provinsi.map(prov => (
+								<option
+									key={prov.id}
+									value={prov.id}
+									onClick={() => setKota(prov.id)}
+								>
+									{prov.nama}
+								</option>
+							))}
 						</Form.Control>
 					</Form.Group>
 					<Form.Group as={Col} controlId='select-kota'>
@@ -80,7 +114,12 @@ const AddPropertyForm = ({ user }: { user: IApiUser }) => {
 							<option value='' disabled>
 								-- Kota --
 							</option>
-							<option value='20'>Banyuwangi</option>
+							{data &&
+								data.kota_kabupaten.map((kota: kotaKab) => (
+									<option key={kota.id} value={kota.id}>
+										{kota.nama}
+									</option>
+								))}
 						</Form.Control>
 					</Form.Group>
 				</Form.Row>
@@ -179,6 +218,15 @@ const AddPropertyForm = ({ user }: { user: IApiUser }) => {
 							label='Negosiasi?'
 							type='checkbox'
 						/>
+					</Form.Group>
+				</Form.Row>
+
+				{/* Deskripsi */}
+				{/* TODO pakai text WYSIWYG */}
+				<Form.Row>
+					<Form.Group as={Col}>
+						<Form.Label>Deskripsi</Form.Label>
+						<Form.Control type='fieldset' ref={register()} name='deskripsi' />
 					</Form.Group>
 				</Form.Row>
 
