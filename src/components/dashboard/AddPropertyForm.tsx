@@ -46,13 +46,17 @@ const AddPropertyForm = ({
 	const { setValue, register, handleSubmit, errors } = useForm<Inputs>()
 	const [isPanjangLebar, setIsPanjangLebar] = useState(false)
 	const [kota, setKota] = useState<number>(11)
-	const { data } = useQuery(['kota', kota], fetchKotaByProv)
-	// TODO implementasi isFetching, isLoading, dll. tempatkan di tempat yang strategis
+	const { data, isFetching, isLoading, isError } = useQuery(
+		['kota', kota],
+		fetchKotaByProv,
+	)
 
 	const onSubmit = (data: Inputs) => {
 		setValue('title', '')
 		console.log(data)
 	}
+
+	if (isError) return alert('An error is appeared. Please refresh the page.')
 	return (
 		<>
 			<Form onSubmit={handleSubmit(onSubmit)}>
@@ -93,7 +97,13 @@ const AddPropertyForm = ({
 				<Form.Row>
 					<Form.Group as={Col} controlId='select-provinsi'>
 						<Form.Label>Provinsi</Form.Label>
-						<Form.Control ref={register()} name='provinsi' as='select' custom>
+						<Form.Control
+							ref={register()}
+							name='provinsi'
+							as='select'
+							custom
+							disabled={isLoading}
+						>
 							<option value='' disabled>
 								-- Provinsi --
 							</option>
@@ -110,7 +120,13 @@ const AddPropertyForm = ({
 					</Form.Group>
 					<Form.Group as={Col} controlId='select-kota'>
 						<Form.Label>Kota/kabupaten</Form.Label>
-						<Form.Control ref={register()} name='kota' as='select' custom>
+						<Form.Control
+							ref={register()}
+							name='kota'
+							as='select'
+							custom
+							disabled={isLoading}
+						>
 							<option value='' disabled>
 								-- Kota --
 							</option>
@@ -121,6 +137,9 @@ const AddPropertyForm = ({
 									</option>
 								))}
 						</Form.Control>
+						{isFetching && (
+							<span className='text-secondary'>Refreshing...</span>
+						)}
 					</Form.Group>
 				</Form.Row>
 

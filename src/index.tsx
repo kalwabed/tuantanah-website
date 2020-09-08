@@ -14,7 +14,9 @@ ReactDOM.render(
 	<React.StrictMode>
 		<AuthProvider>
 			<App />
-			<ReactQueryDevtools initialIsOpen={false} />
+			{process.env.NODE_ENV === 'development' && (
+				<ReactQueryDevtools initialIsOpen={false} />
+			)}
 			<ToastContainer
 				position='top-center'
 				autoClose={false}
