@@ -21,6 +21,18 @@ type Inputs = {
 	harga?: number
 	mainPicture: string
 	nego: boolean
+	kontak1?: string
+	kontak2?: string
+	kontak3?: string
+	kontak4?: string
+	checkKontak1?: number | string
+	checkKontak2?: number | string
+	checkKontak3?: number | string
+	checkKontak4?: number | string
+	userKontak1?: string
+	userKontak2?: string
+	userKontak3?: string
+	userKontak4?: string
 }
 
 type dataProvinsi = {
@@ -46,7 +58,7 @@ const AddPropertyForm = ({
 	dataProvinsi: dataProvinsi
 }) => {
 	// BEGIN ----------------------------
-	const { setValue, register, handleSubmit, errors } = useForm<Inputs>()
+	const { setValue, watch, register, handleSubmit, errors } = useForm<Inputs>()
 	const [isPanjangLebar, setIsPanjangLebar] = useState(false)
 	const [kota, setKota] = useState<number>(11)
 	const [description, setDescription] = useState('')
@@ -101,7 +113,7 @@ const AddPropertyForm = ({
 					<Form.Group as={Col} controlId='select-provinsi'>
 						<Form.Label>Provinsi</Form.Label>
 						<Form.Control
-							ref={register()}
+							ref={register({ required: 'Please provide a valid provinsi' })}
 							name='provinsi'
 							as='select'
 							custom
@@ -119,12 +131,19 @@ const AddPropertyForm = ({
 									{prov.nama}
 								</option>
 							))}
+							<ErrorMessage
+								name='provinsi'
+								errors={errors}
+								render={({ message }) => (
+									<Badge variant='danger'>{message}</Badge>
+								)}
+							/>
 						</Form.Control>
 					</Form.Group>
 					<Form.Group as={Col} controlId='select-kota'>
 						<Form.Label>Kota/kabupaten</Form.Label>
 						<Form.Control
-							ref={register()}
+							ref={register({ required: 'Please provide a valid kota' })}
 							name='kota'
 							as='select'
 							custom
@@ -143,6 +162,13 @@ const AddPropertyForm = ({
 						{isFetching && (
 							<span className='text-secondary'>Refreshing...</span>
 						)}
+						<ErrorMessage
+							name='kota'
+							errors={errors}
+							render={({ message }) => (
+								<Badge variant='danger'>{message}</Badge>
+							)}
+						/>
 					</Form.Group>
 				</Form.Row>
 
@@ -154,7 +180,11 @@ const AddPropertyForm = ({
 							<Form.Control
 								disabled={isPanjangLebar}
 								type='number'
-								ref={register()}
+								ref={
+									!isPanjangLebar
+										? register({ required: 'Please provide a valid luas' })
+										: register()
+								}
 								name='luas'
 								placeholder='e.g 15'
 							/>
@@ -162,6 +192,13 @@ const AddPropertyForm = ({
 								<InputGroup.Text>Hektar</InputGroup.Text>
 							</InputGroup.Append>
 						</InputGroup>
+						<ErrorMessage
+							name='luas'
+							errors={errors}
+							render={({ message }) => (
+								<Badge variant='danger'>{message}</Badge>
+							)}
+						/>
 					</Form.Group>
 				</Form.Row>
 
@@ -184,9 +221,20 @@ const AddPropertyForm = ({
 						<Form.Control
 							type='number'
 							disabled={!isPanjangLebar}
-							ref={register()}
+							ref={
+								isPanjangLebar
+									? register({ required: 'Please provide a valid panjang' })
+									: register()
+							}
 							name='panjang'
 							placeholder='e.g 10'
+						/>
+						<ErrorMessage
+							name='panjang'
+							errors={errors}
+							render={({ message }) => (
+								<Badge variant='danger'>{message}</Badge>
+							)}
 						/>
 					</Form.Group>
 					<Form.Group controlId='input-lebar' as={Col}>
@@ -194,9 +242,20 @@ const AddPropertyForm = ({
 						<Form.Control
 							type='number'
 							disabled={!isPanjangLebar}
-							ref={register()}
+							ref={
+								isPanjangLebar
+									? register({ required: 'Please provide a valid lebar' })
+									: register()
+							}
 							name='lebar'
 							placeholder='e.g 12'
+						/>
+						<ErrorMessage
+							name='lebar'
+							errors={errors}
+							render={({ message }) => (
+								<Badge variant='danger'>{message}</Badge>
+							)}
 						/>
 					</Form.Group>
 				</Form.Row>
@@ -208,7 +267,7 @@ const AddPropertyForm = ({
 						<InputGroup>
 							<Form.Control
 								type='number'
-								ref={register()}
+								ref={register({ required: 'Please provide a valid harga' })}
 								name='harga'
 								placeholder='e.g 79'
 							/>
@@ -216,6 +275,13 @@ const AddPropertyForm = ({
 								<InputGroup.Text>Juta</InputGroup.Text>
 							</InputGroup.Append>
 						</InputGroup>
+						<ErrorMessage
+							name='harga'
+							errors={errors}
+							render={({ message }) => (
+								<Badge variant='danger'>{message}</Badge>
+							)}
+						/>
 					</Form.Group>
 					<Form.Group controlId='input-foto' as={Col}>
 						<Form.Label>Foto utama</Form.Label>
@@ -223,8 +289,17 @@ const AddPropertyForm = ({
 							id='mainpic-file'
 							name='mainPicture'
 							label='Unggah foto'
-							ref={register()}
+							ref={register({
+								required: 'Please provide a valid main picture',
+							})}
 							custom
+						/>
+						<ErrorMessage
+							name='mainPicture'
+							errors={errors}
+							render={({ message }) => (
+								<Badge variant='danger'>{message}</Badge>
+							)}
 						/>
 					</Form.Group>
 				</Form.Row>
@@ -248,6 +323,151 @@ const AddPropertyForm = ({
 					<Form.Group as={Col} className='h-100'>
 						<Form.Label>Deskripsi</Form.Label>
 						<Quill theme='snow' value={description} onChange={setDescription} />
+					</Form.Group>
+				</Form.Row>
+
+				{/* Kontak */}
+				<Form.Label>Kontak</Form.Label>
+				<Form.Row>
+					{/* Kontak 1 */}
+					<Form.Group as={Col} controlId='check-kontak1'>
+						<Form.Control
+							as='select'
+							name='checkKontak1'
+							ref={register()}
+							custom
+						>
+							<option value='0'>Kosong</option>
+							<option value='1'>Whatsapp</option>
+							<option value='2'>Facebook</option>
+							<option value='3'>Email</option>
+						</Form.Control>
+						<Form.Control
+							name='kontak1'
+							ref={register()}
+							disabled={watch('checkKontak1') == 0 ? true : false}
+							placeholder={
+								watch('checkKontak1') == 1
+									? '628xxxxxxxxx'
+									: watch('checkKontak1') == 2
+									? 'Facebook username'
+									: watch('checkKontak1') == 3
+									? 'your@email.com'
+									: ''
+							}
+						/>
+						<Form.Control
+							className='mt-1'
+							name='userKontak1'
+							ref={register()}
+							placeholder='Nama tampilan'
+							disabled={watch('checkKontak1') == 0 ? true : false}
+						/>
+					</Form.Group>
+					{/* Kontak 2 */}
+					<Form.Group as={Col} controlId='check-kontak2'>
+						<Form.Control
+							as='select'
+							name='checkKontak2'
+							ref={register()}
+							custom
+						>
+							<option value='0'>Kosong</option>
+							<option value='1'>Whatsapp</option>
+							<option value='2'>Facebook</option>
+							<option value='3'>Email</option>
+						</Form.Control>
+						<Form.Control
+							name='kontak2'
+							ref={register()}
+							disabled={watch('checkKontak2') == 0 ? true : false}
+							placeholder={
+								watch('checkKontak2') == 1
+									? '628xxxxxxxxx'
+									: watch('checkKontak2') == 2
+									? 'Facebook username'
+									: watch('checkKontak2') == 3
+									? 'your@email.com'
+									: ''
+							}
+						/>
+						<Form.Control
+							className='mt-1'
+							name='userKontak2'
+							ref={register()}
+							placeholder='Nama tampilan'
+							disabled={watch('checkKontak2') == 0 ? true : false}
+						/>
+					</Form.Group>
+					{/* Kontak 3 */}
+					<Form.Group as={Col} controlId='check-kontak3'>
+						<Form.Control
+							as='select'
+							name='checkKontak3'
+							ref={register()}
+							custom
+						>
+							<option value='0'>Kosong</option>
+							<option value='1'>Whatsapp</option>
+							<option value='2'>Facebook</option>
+							<option value='3'>Email</option>
+						</Form.Control>
+						<Form.Control
+							name='kontak3'
+							ref={register()}
+							disabled={watch('checkKontak3') == 0 ? true : false}
+							placeholder={
+								watch('checkKontak3') == 1
+									? '628xxxxxxxxx'
+									: watch('checkKontak3') == 2
+									? 'Facebook username'
+									: watch('checkKontak3') == 3
+									? 'your@email.com'
+									: ''
+							}
+						/>
+						<Form.Control
+							className='mt-1'
+							name='userKontak3'
+							ref={register()}
+							placeholder='Nama tampilan'
+							disabled={watch('checkKontak3') == 0 ? true : false}
+						/>
+					</Form.Group>
+					{/* Kontak 4 */}
+					<Form.Group as={Col} controlId='check-kontak4'>
+						<Form.Control
+							as='select'
+							name='checkKontak4'
+							ref={register()}
+							custom
+						>
+							<option value='0'>Kosong</option>
+							<option value='1'>Whatsapp</option>
+							<option value='2'>Facebook</option>
+							<option value='3'>Email</option>
+						</Form.Control>
+						<Form.Control
+							name='kontak4'
+							ref={register()}
+							disabled={watch('checkKontak4') == 0 ? true : false}
+							placeholder={
+								watch('checkKontak4') == 1
+									? '628xxxxxxxxx'
+									: watch('checkKontak4') == 2
+									? 'Facebook username'
+									: watch('checkKontak4') == 3
+									? 'your@email.com'
+									: ''
+							}
+						/>
+						<Form.Control
+							className='mt-1'
+							name='userKontak4'
+							ref={register()}
+							placeholder='Nama tampilan'
+							disabled={watch('checkKontak4') == 0 ? true : false}
+						/>
 					</Form.Group>
 				</Form.Row>
 
