@@ -8,7 +8,7 @@ import { useQuery } from 'react-query'
 import Quill from 'react-quill'
 
 import { IApiUser } from '../../types/index.types'
-import { fetchKotaByProv } from '../../utils/fetchAPI'
+import { fetchKotaByProv, fetchAddProperty } from '../../utils/fetchAPI'
 
 type Inputs = {
 	fullName: string
@@ -19,7 +19,7 @@ type Inputs = {
 	panjang?: number
 	lebar?: number
 	harga?: number
-	mainPicture: string
+	mainPicture: FileList
 	nego: boolean
 	kontak1?: string
 	kontak2?: string
@@ -67,9 +67,44 @@ const AddPropertyForm = ({
 		fetchKotaByProv,
 	)
 
-	const onSubmit = (data: Inputs) => {
+	const onSubmit = async (data: Inputs) => {
 		setValue('title', '')
-		console.log(data)
+		if (!description) return alert('Please provide a deskripsi')
+
+		const formData = new FormData()
+		formData.append('fullName', data.fullName)
+		formData.append('title', data.title)
+		formData.append('provinsi', data.provinsi)
+		formData.append('deskripsi', description)
+		formData.append('luas', String(data.luas))
+		formData.append('panjang', String(data.panjang))
+		formData.append('lebar', String(data.lebar))
+		formData.append('harga', String(data.harga))
+		formData.append('mainPicture', data.mainPicture[0])
+		formData.append('nego', String(data.nego))
+		formData.append('kontak1', String(data.kontak1))
+		formData.append('kontak2', String(data.kontak2))
+		formData.append('kontak3', String(data.kontak3))
+		formData.append('kontak4', String(data.kontak4))
+		formData.append('checkKontak1', String(data.checkKontak1))
+		formData.append('checkKontak2', String(data.checkKontak2))
+		formData.append('checkKontak3', String(data.checkKontak3))
+		formData.append('checkKontak4', String(data.checkKontak4))
+		formData.append('userKontak1', String(data.userKontak1))
+		formData.append('userKontak2', String(data.userKontak2))
+		formData.append('userKontak3', String(data.userKontak3))
+		formData.append('userKontak4', String(data.userKontak4))
+
+		try {
+			const newProp = await fetchAddProperty(formData)
+			if (!newProp.success) {
+				alert(newProp.response.msg)
+			} else {
+				alert(newProp.response.msg)
+			}
+		} catch (err) {
+			console.error(err)
+		}
 	}
 
 	if (isError) return <span>An error has been appearred!</span>
