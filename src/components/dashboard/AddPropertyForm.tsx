@@ -95,16 +95,19 @@ const AddPropertyForm = ({
 		formData.append('userKontak3', String(data.userKontak3))
 		formData.append('userKontak4', String(data.userKontak4))
 
-		try {
-			const newProp = await fetchAddProperty(formData)
-			if (!newProp.success) {
-				alert(newProp.response.msg)
-			} else {
-				alert(newProp.response.msg)
-			}
-		} catch (err) {
-			console.error(err)
-		}
+		formData.forEach((val, key) => {
+			console.log(`${key}, ${val}`)
+		})
+		// try {
+		// 	const newProp = await fetchAddProperty(formData)
+		// 	if (!newProp.success) {
+		// 		alert(newProp.response.msg)
+		// 	} else {
+		// 		alert(newProp.response.msg)
+		// 	}
+		// } catch (err) {
+		// 	console.error(err)
+		// }
 	}
 
 	if (isError) return <span>An error has been appearred!</span>
