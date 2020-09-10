@@ -6,6 +6,7 @@ import Header from '../components/dashboard/Header'
 import Table from '../components/dashboard/Table'
 import { propertiesContext } from '../contexts/Properties'
 import { Spinner } from 'react-bootstrap'
+import { Link } from 'react-router-dom'
 
 const Dashboard = (props: any) => {
 	document.title = 'Dashboard | tuantanah'
@@ -39,6 +40,9 @@ const Dashboard = (props: any) => {
 			<Header />
 			<h2>Welcome {user.email}</h2>
 			<h3>Your role is {user.role == 1 ? 'admin' : 'user'}</h3>
+			<Link to='/dashboard/property'>
+				<button>Add property</button>
+			</Link>
 			<button onClick={onLogout}>Logout</button>
 			{isLoading && <Spinner animation='grow' />}
 			{!isLoading && <Table />}
