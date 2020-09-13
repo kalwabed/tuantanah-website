@@ -2,7 +2,7 @@
 import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { ErrorMessage } from '@hookform/error-message'
-import { Form, Col, Button, Badge, InputGroup } from 'react-bootstrap'
+import { Form, Col, Button, Badge, InputGroup, Spinner } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { useQuery } from 'react-query'
 import Quill from 'react-quill'
@@ -11,14 +11,18 @@ import { IApiUser } from '../../types/index.types'
 import { fetchKotaByProv, fetchAddProperty } from '../../utils/fetchAPI'
 
 type Inputs = {
+	// inputan dari user
 	fullName: string
 	title: string
 	provinsi: string
 	kota: string
-	luas?: number
-	panjang?: number
-	lebar?: number
-	harga?: number
+	description: string
+	isLuas: string
+	userId: string
+	luas?: string
+	panjang?: string
+	lebar?: string
+	price?: string
 	mainPicture: FileList
 	nego: boolean
 	kontak1?: string
@@ -59,8 +63,9 @@ const AddPropertyForm = ({
 }) => {
 	// BEGIN ----------------------------
 	const { setValue, watch, register, handleSubmit, errors } = useForm<Inputs>()
-	const [isPanjangLebar, setIsPanjangLebar] = useState(false)
+	const [isLuas, setIsLuas] = useState(false)
 	const [kota, setKota] = useState<number>(11)
+	const [sendingProperty, setSendingProperty] = useState(false) // loading state
 	const [description, setDescription] = useState('')
 	const { data, isFetching, isLoading, isError } = useQuery(
 		['kota', kota],
@@ -68,18 +73,21 @@ const AddPropertyForm = ({
 	)
 
 	const onSubmit = async (data: Inputs) => {
-		setValue('title', '')
+		// setValue('title', '')
 		if (!description) return alert('Please provide a deskripsi')
 
 		const formData = new FormData()
 		formData.append('fullName', data.fullName)
 		formData.append('title', data.title)
 		formData.append('provinsi', data.provinsi)
-		formData.append('deskripsi', description)
+		formData.append('kota', data.kota)
+		formData.append('description', description)
 		formData.append('luas', String(data.luas))
 		formData.append('panjang', String(data.panjang))
 		formData.append('lebar', String(data.lebar))
-		formData.append('harga', String(data.harga))
+		formData.append('price', String(data.price))
+		formData.append('userId', user._id)
+		formData.append('isLuas', String(isLuas))
 		formData.append('mainPicture', data.mainPicture[0])
 		formData.append('nego', String(data.nego))
 		formData.append('kontak1', String(data.kontak1))
@@ -95,19 +103,21 @@ const AddPropertyForm = ({
 		formData.append('userKontak3', String(data.userKontak3))
 		formData.append('userKontak4', String(data.userKontak4))
 
-		formData.forEach((val, key) => {
-			console.log(`${key}, ${val}`)
-		})
-		// try {
-		// 	const newProp = await fetchAddProperty(formData)
-		// 	if (!newProp.success) {
-		// 		alert(newProp.response.msg)
-		// 	} else {
-		// 		alert(newProp.response.msg)
-		// 	}
-		// } catch (err) {
-		// 	console.error(err)
-		// }
+		// for development purpose!
+		// formData.forEach((val, key) => {
+		// 	console.log(`${key}, ${val}`)
+		// })
+		// ----------------------
+
+		try {
+			setSendingProperty(true)
+			const newProp = await fetchAddProperty(formData)
+			setSendingProperty(false)
+			console.log(newProp)
+			alert(newProp.response.msg)
+		} catch (err) {
+			console.error(err)
+		}
 	}
 
 	if (isError) return <span>An error has been appearred!</span>
@@ -210,16 +220,74 @@ const AddPropertyForm = ({
 					</Form.Group>
 				</Form.Row>
 
+				{/* Panjang & lebar */}
+				<Form.Row>
+					<Form.Group controlId='input-panjang' as={Col}>
+						<Form.Label>Panjang</Form.Label>
+						<Form.Control
+							type='number'
+							disabled={isLuas}
+							ref={
+								!isLuas
+									? register({ required: 'Please provide a valid panjang' })
+									: register()
+							}
+							name='panjang'
+							placeholder='e.g 10'
+						/>
+						<ErrorMessage
+							name='panjang'
+							errors={errors}
+							render={({ message }) => (
+								<Badge variant='danger'>{message}</Badge>
+							)}
+						/>
+					</Form.Group>
+					<Form.Group controlId='input-lebar' as={Col}>
+						<Form.Label>Lebar</Form.Label>
+						<Form.Control
+							type='number'
+							disabled={isLuas}
+							ref={
+								!isLuas
+									? register({ required: 'Please provide a valid lebar' })
+									: register()
+							}
+							name='lebar'
+							placeholder='e.g 12'
+						/>
+						<ErrorMessage
+							name='lebar'
+							errors={errors}
+							render={({ message }) => (
+								<Badge variant='danger'>{message}</Badge>
+							)}
+						/>
+					</Form.Group>
+				</Form.Row>
+
+				{/* Ceklis panjang-lebar */}
+				<Form.Row>
+					<Form.Group as={Col}>
+						<Form.Check
+							label='Pakai ukuran luas'
+							custom
+							id='pan-luas-check'
+							onClick={() => setIsLuas(!isLuas)}
+						/>
+					</Form.Group>
+				</Form.Row>
+
 				{/* Luas */}
 				<Form.Row>
 					<Form.Group as={Col} controlId='input-luas'>
 						<Form.Label>Luas</Form.Label>
 						<InputGroup>
 							<Form.Control
-								disabled={isPanjangLebar}
+								disabled={!isLuas}
 								type='number'
 								ref={
-									!isPanjangLebar
+									isLuas
 										? register({ required: 'Please provide a valid luas' })
 										: register()
 								}
@@ -240,64 +308,6 @@ const AddPropertyForm = ({
 					</Form.Group>
 				</Form.Row>
 
-				{/* Ceklis panjang-lebar */}
-				<Form.Row>
-					<Form.Group as={Col}>
-						<Form.Check
-							label='Pakai ukuran panjang dan lebar'
-							custom
-							id='pan-luas-check'
-							onClick={() => setIsPanjangLebar(!isPanjangLebar)}
-						/>
-					</Form.Group>
-				</Form.Row>
-
-				{/* Panjang & lebar */}
-				<Form.Row>
-					<Form.Group controlId='input-panjang' as={Col}>
-						<Form.Label>Panjang</Form.Label>
-						<Form.Control
-							type='number'
-							disabled={!isPanjangLebar}
-							ref={
-								isPanjangLebar
-									? register({ required: 'Please provide a valid panjang' })
-									: register()
-							}
-							name='panjang'
-							placeholder='e.g 10'
-						/>
-						<ErrorMessage
-							name='panjang'
-							errors={errors}
-							render={({ message }) => (
-								<Badge variant='danger'>{message}</Badge>
-							)}
-						/>
-					</Form.Group>
-					<Form.Group controlId='input-lebar' as={Col}>
-						<Form.Label>Lebar</Form.Label>
-						<Form.Control
-							type='number'
-							disabled={!isPanjangLebar}
-							ref={
-								isPanjangLebar
-									? register({ required: 'Please provide a valid lebar' })
-									: register()
-							}
-							name='lebar'
-							placeholder='e.g 12'
-						/>
-						<ErrorMessage
-							name='lebar'
-							errors={errors}
-							render={({ message }) => (
-								<Badge variant='danger'>{message}</Badge>
-							)}
-						/>
-					</Form.Group>
-				</Form.Row>
-
 				{/* harga dan foto utama */}
 				<Form.Row>
 					<Form.Group controlId='input-harga' as={Col}>
@@ -306,7 +316,7 @@ const AddPropertyForm = ({
 							<Form.Control
 								type='number'
 								ref={register({ required: 'Please provide a valid harga' })}
-								name='harga'
+								name='price'
 								placeholder='e.g 79'
 							/>
 							<InputGroup.Append>
@@ -517,9 +527,15 @@ const AddPropertyForm = ({
 								Back
 							</Button>
 						</Link>
-						<Button className='' variant='success' type='submit'>
+						<Button className='mr-2' variant='success' type='submit'>
 							Submit
 						</Button>
+						{sendingProperty && (
+							<>
+								Processing your data{' '}
+								<Spinner animation='border' variant='success' />
+							</>
+						)}
 					</Form.Group>
 				</Form.Row>
 			</Form>
