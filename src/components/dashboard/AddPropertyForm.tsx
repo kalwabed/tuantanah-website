@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form'
 import { ErrorMessage } from '@hookform/error-message'
 import { Form, Col, Button, Badge, InputGroup, Spinner } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
-import { useQuery } from 'react-query'
+import { useMutation, useQuery } from 'react-query'
 import Quill from 'react-quill'
 
 import { IApiUser } from '../../types/index.types'
@@ -65,12 +65,12 @@ const AddPropertyForm = ({
 	const { setValue, watch, register, handleSubmit, errors } = useForm<Inputs>()
 	const [isLuas, setIsLuas] = useState(false)
 	const [kota, setKota] = useState<number>(11)
-	const [sendingProperty, setSendingProperty] = useState(false) // loading state
 	const [description, setDescription] = useState('')
 	const { data, isFetching, isLoading, isError } = useQuery(
 		['kota', kota],
 		fetchKotaByProv,
 	)
+	const [mutate, { status }] = useMutation(fetchAddProperty)
 
 	const onSubmit = async (data: Inputs) => {
 		// setValue('title', '')
@@ -110,16 +110,14 @@ const AddPropertyForm = ({
 		// ----------------------
 
 		try {
-			setSendingProperty(true)
-			const newProp = await fetchAddProperty(formData)
-			setSendingProperty(false)
+			const newProp = await mutate(formData)
 			console.log(newProp)
-			alert(newProp.response.msg)
 		} catch (err) {
 			console.error(err)
 		}
 	}
-
+	if (status === 'error')
+		return <span>An error has been appearred when processing your data!</span>
 	if (isError) return <span>An error has been appearred!</span>
 	return (
 		<>
@@ -530,7 +528,7 @@ const AddPropertyForm = ({
 						<Button className='mr-2' variant='success' type='submit'>
 							Submit
 						</Button>
-						{sendingProperty && (
+						{status === 'loading' && (
 							<>
 								Processing your data{' '}
 								<Spinner animation='border' variant='success' />

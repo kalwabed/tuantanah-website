@@ -140,4 +140,14 @@ export const fetchAddProperty = async (formData: FormData) => {
 	}
 }
 
+export const fetchPropertyByUserID = async (key: string, userId: string) => {
+	try {
+		return await (
+			await fetch(`${process.env.ENDPOINT}/d/property/${userId}`)
+		).json()
+	} catch (err) {
+		console.error(err)
+	}
+}
+
 //? errorCode = 400:bad req, 401:unauthorized
