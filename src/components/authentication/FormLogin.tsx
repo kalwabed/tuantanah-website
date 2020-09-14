@@ -18,9 +18,7 @@ interface SignInForm {
 	password: string
 }
 const FormLogin = () => {
-	const { register, handleSubmit, watch, errors, setValue } = useForm<
-		SignInForm
-	>()
+	const { register, handleSubmit, watch, errors } = useForm<SignInForm>()
 	const { setToken, setIsAuthenticated } = useContext(authContext)
 	const [mutate, { isLoading }] = useMutation(fetchLogin)
 
@@ -62,7 +60,7 @@ const FormLogin = () => {
 											pattern: {
 												// eslint-disable-next-line no-useless-escape
 												value: /\b[\w\.-]+@[\w\.-]+\.\w{2,4}\b/gi,
-												message: 'Please provide a valid email formats.',
+												message: 'Please provide a valid email format.',
 											},
 										})}
 										name='email'
