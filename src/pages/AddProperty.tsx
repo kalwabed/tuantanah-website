@@ -11,7 +11,9 @@ import { fetchProvinsi } from '../utils/fetchAPI'
 
 const AddProperty = () => {
 	const { user } = useContext(authContext)
-	const { data, isLoading } = useQuery('provinsi', fetchProvinsi)
+	const { data, isLoading } = useQuery('provinsi', fetchProvinsi, {
+		refetchOnMount: false,
+	})
 
 	return (
 		<>

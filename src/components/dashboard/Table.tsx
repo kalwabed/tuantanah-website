@@ -1,13 +1,12 @@
-import React, { useContext } from 'react'
+import React from 'react'
 import { Grid, _ } from 'gridjs-react'
-import { Container, Button, Badge } from 'react-bootstrap'
-import { propertiesContext } from '../../contexts/Properties'
+import { Container, Button } from 'react-bootstrap'
 import { html } from 'gridjs'
 import { IoMdTrash, IoMdSearch, IoMdCreate } from 'react-icons/io'
+import { Property } from '../../types/index.types'
 
-const Table = () => {
-	const { propertyById } = useContext(propertiesContext)
-
+const Table = ({ property }: { property: Property[] }) => {
+	if (!property) return null
 	const onDelete = (id: string) => {
 		alert(`deleting id ${id}`)
 	}
@@ -20,31 +19,15 @@ const Table = () => {
 		alert(`update id ${id}`)
 	}
 
-	if (propertyById.length < 1) return null
 	return (
 		<Container>
 			<Grid
-				data={propertyById.map((prop, i) => [
+				data={property.map((prop, i) => [
 					i + 1,
 					prop.mainPicture,
 					prop.title,
 					prop.size,
 					prop.location,
-					_(
-						<>
-							<Badge
-								variant={prop.status.negotiation ? 'success' : 'secondary'}
-							>
-								nego
-							</Badge>
-							<Badge
-								variant={prop.status.shm ? 'success' : 'secondary'}
-								className='ml-1'
-							>
-								shm
-							</Badge>
-						</>,
-					),
 					_(
 						<>
 							<Button
@@ -84,7 +67,6 @@ const Table = () => {
 					'Title',
 					{ name: 'Size', width: '3%' },
 					'Location',
-					{ name: 'Status', width: '7%' },
 					'Actions',
 				]}
 				search={true}

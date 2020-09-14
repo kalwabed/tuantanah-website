@@ -1,38 +1,33 @@
-import React, { useContext, useEffect } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 
 import { authContext } from '../contexts/Auth'
 import verify from '../utils/Verify'
 import Header from '../components/dashboard/Header'
 import Table from '../components/dashboard/Table'
-import { propertiesContext } from '../contexts/Properties'
-import { Spinner } from 'react-bootstrap'
+import { Badge, Spinner } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
+import { useQuery } from 'react-query'
+import { fetchPropertyByUserID } from '../utils/fetchAPI'
 
 const Dashboard = (props: any) => {
 	document.title = 'Dashboard | tuantanah'
 	window.scrollTo(0, 0)
 	const { setToken, setIsAuthenticated, user } = useContext(authContext)
-	const {
-		propertyById,
-		getPropertyById,
-		isLoading,
-		setPropertyById,
-	} = useContext(propertiesContext)
+	const { data, isLoading, updatedAt } = useQuery(
+		['userProperty', user._id],
+		fetchPropertyByUserID,
+		{ enabled: user },
+	)
+	const [updated, setUpdated] = useState(new Date(updatedAt))
 
 	useEffect(() => {
 		verify.User()
-		getPropertyById(user._id)
 	}, [])
 
 	const onLogout = () => {
 		setToken(null, false)
 		setIsAuthenticated(false)
-		setPropertyById([])
 		props.history.push('/')
-	}
-
-	if (propertyById.length === 0) {
-		getPropertyById(user._id)
 	}
 
 	return (
@@ -44,8 +39,13 @@ const Dashboard = (props: any) => {
 				<button>Add property</button>
 			</Link>
 			<button onClick={onLogout}>Logout</button>
-			{isLoading && <Spinner animation='grow' />}
-			{!isLoading && <Table />}
+			<br />
+			<Badge variant='secondary' as='span'>
+				last update:{' '}
+				{`${updated.getHours()}:${updated.getMinutes()}:${updated.getSeconds()}`}
+			</Badge>
+			{isLoading && <Spinner animation='border' />}
+			{!isLoading && <Table property={data.property} />}
 		</>
 	)
 }
