@@ -6,6 +6,7 @@ import { Form, Col, Button, Badge, InputGroup, Spinner } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { useMutation, useQuery } from 'react-query'
 import Quill from 'react-quill'
+import { toast } from 'react-toastify'
 
 import { IApiUser } from '../../types/index.types'
 import { fetchKotaByProv, fetchAddProperty } from '../../utils/fetchAPI'
@@ -62,8 +63,9 @@ const AddPropertyForm = ({
 	dataProvinsi: dataProvinsi
 }) => {
 	// BEGIN ----------------------------
-	const { watch, register, handleSubmit, errors } = useForm<Inputs>()
+	const { watch, register, handleSubmit, errors, setValue } = useForm<Inputs>()
 	const [isLuas, setIsLuas] = useState(false)
+	const [label, setLabel] = useState('Unggah foto')
 	const [kota, setKota] = useState<number>(11)
 	const [description, setDescription] = useState('')
 	const { data, isFetching, isLoading, isError } = useQuery(
@@ -111,7 +113,20 @@ const AddPropertyForm = ({
 
 		try {
 			const newProp = await mutate(formData)
-			console.log(newProp)
+			if (newProp?.success) {
+				toast.info(newProp.msg)
+				setValue('title', '')
+				setValue('title', '')
+				setDescription('')
+				setValue('luas', '')
+				setIsLuas(false)
+				setValue('panjang', '')
+				setValue('lebar', '')
+				setValue('price', '')
+				setLabel('Unggah foto')
+			} else {
+				toast.warn(newProp?.msg)
+			}
 		} catch (err) {
 			console.error(err)
 		}
@@ -148,7 +163,7 @@ const AddPropertyForm = ({
 							name='title'
 							errors={errors}
 							render={({ message }) => (
-								<Badge variant='danger'>{message}</Badge>
+								<Badge variant='warning'>{message}</Badge>
 							)}
 						/>
 					</Form.Group>
@@ -181,7 +196,7 @@ const AddPropertyForm = ({
 								name='provinsi'
 								errors={errors}
 								render={({ message }) => (
-									<Badge variant='danger'>{message}</Badge>
+									<Badge variant='warning'>{message}</Badge>
 								)}
 							/>
 						</Form.Control>
@@ -212,7 +227,7 @@ const AddPropertyForm = ({
 							name='kota'
 							errors={errors}
 							render={({ message }) => (
-								<Badge variant='danger'>{message}</Badge>
+								<Badge variant='warning'>{message}</Badge>
 							)}
 						/>
 					</Form.Group>
@@ -223,11 +238,18 @@ const AddPropertyForm = ({
 					<Form.Group controlId='input-panjang' as={Col}>
 						<Form.Label>Panjang</Form.Label>
 						<Form.Control
-							type='number'
 							disabled={isLuas}
 							ref={
 								!isLuas
-									? register({ required: 'Please provide a valid panjang' })
+									? register({
+											required: 'Please provide a valid panjang',
+											pattern: {
+												// eslint-disable-next-line no-useless-escape
+												value: /^([1-9]\d*(\.|\,)\d*|0?(\.|\,)\d*[1-9]\d*|[1-9]\d*)$/gm,
+												message: 'Only accept a number, comma, and dot',
+											},
+											// eslint-disable-next-line no-mixed-spaces-and-tabs
+									  })
 									: register()
 							}
 							name='panjang'
@@ -237,18 +259,25 @@ const AddPropertyForm = ({
 							name='panjang'
 							errors={errors}
 							render={({ message }) => (
-								<Badge variant='danger'>{message}</Badge>
+								<Badge variant='warning'>{message}</Badge>
 							)}
 						/>
 					</Form.Group>
 					<Form.Group controlId='input-lebar' as={Col}>
 						<Form.Label>Lebar</Form.Label>
 						<Form.Control
-							type='number'
 							disabled={isLuas}
 							ref={
 								!isLuas
-									? register({ required: 'Please provide a valid lebar' })
+									? register({
+											required: 'Please provide a valid lebar',
+											pattern: {
+												// eslint-disable-next-line no-useless-escape
+												value: /^([1-9]\d*(\.|\,)\d*|0?(\.|\,)\d*[1-9]\d*|[1-9]\d*)$/gm,
+												message: 'Only accept a number, comma, and dot',
+											},
+											// eslint-disable-next-line no-mixed-spaces-and-tabs
+									  })
 									: register()
 							}
 							name='lebar'
@@ -258,7 +287,7 @@ const AddPropertyForm = ({
 							name='lebar'
 							errors={errors}
 							render={({ message }) => (
-								<Badge variant='danger'>{message}</Badge>
+								<Badge variant='warning'>{message}</Badge>
 							)}
 						/>
 					</Form.Group>
@@ -270,6 +299,7 @@ const AddPropertyForm = ({
 						<Form.Check
 							label='Pakai ukuran luas'
 							custom
+							checked={isLuas}
 							id='pan-luas-check'
 							onClick={() => setIsLuas(!isLuas)}
 						/>
@@ -283,10 +313,17 @@ const AddPropertyForm = ({
 						<InputGroup>
 							<Form.Control
 								disabled={!isLuas}
-								type='number'
 								ref={
 									isLuas
-										? register({ required: 'Please provide a valid luas' })
+										? register({
+												required: 'Please provide a valid luas',
+												pattern: {
+													// eslint-disable-next-line no-useless-escape
+													value: /^([1-9]\d*(\.|\,)\d*|0?(\.|\,)\d*[1-9]\d*|[1-9]\d*)$/gm,
+													message: 'Only accept a number, comma, and dot',
+												},
+												// eslint-disable-next-line no-mixed-spaces-and-tabs
+										  })
 										: register()
 								}
 								name='luas'
@@ -300,7 +337,7 @@ const AddPropertyForm = ({
 							name='luas'
 							errors={errors}
 							render={({ message }) => (
-								<Badge variant='danger'>{message}</Badge>
+								<Badge variant='warning'>{message}</Badge>
 							)}
 						/>
 					</Form.Group>
@@ -312,8 +349,14 @@ const AddPropertyForm = ({
 						<Form.Label>Harga</Form.Label>
 						<InputGroup>
 							<Form.Control
-								type='number'
-								ref={register({ required: 'Please provide a valid harga' })}
+								ref={register({
+									required: 'Please provide a valid harga',
+									pattern: {
+										// eslint-disable-next-line no-useless-escape
+										value: /^([1-9]\d*(\.|\,)\d*|0?(\.|\,)\d*[1-9]\d*|[1-9]\d*)$/gm,
+										message: 'Only accept a number, comma, and dot',
+									},
+								})}
 								name='price'
 								placeholder='e.g 79'
 							/>
@@ -322,29 +365,32 @@ const AddPropertyForm = ({
 							</InputGroup.Append>
 						</InputGroup>
 						<ErrorMessage
-							name='harga'
+							name='price'
 							errors={errors}
 							render={({ message }) => (
-								<Badge variant='danger'>{message}</Badge>
+								<Badge variant='warning'>{message}</Badge>
 							)}
 						/>
 					</Form.Group>
 					<Form.Group controlId='input-foto' as={Col}>
 						<Form.Label>Foto utama</Form.Label>
 						<Form.File
-							id='mainpic-file'
-							name='mainPicture'
-							label='Unggah foto'
 							ref={register({
 								required: 'Please provide a valid main picture',
 							})}
+							onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+								setLabel(e.target.files![0].name)
+							}
+							id='mainpic-file'
+							name='mainPicture'
+							label={label}
 							custom
 						/>
 						<ErrorMessage
 							name='mainPicture'
 							errors={errors}
 							render={({ message }) => (
-								<Badge variant='danger'>{message}</Badge>
+								<Badge variant='warning'>{message}</Badge>
 							)}
 						/>
 					</Form.Group>
@@ -521,11 +567,20 @@ const AddPropertyForm = ({
 				<Form.Row className='mt-2'>
 					<Form.Group as={Col}>
 						<Link to='/dashboard'>
-							<Button className='mr-2' variant='secondary'>
+							<Button
+								className='mr-2'
+								variant='secondary'
+								disabled={status === 'loading'}
+							>
 								Back
 							</Button>
 						</Link>
-						<Button className='mr-2' variant='success' type='submit'>
+						<Button
+							className='mr-2'
+							variant='success'
+							type='submit'
+							disabled={status === 'loading'}
+						>
 							Submit
 						</Button>
 						{status === 'loading' && (

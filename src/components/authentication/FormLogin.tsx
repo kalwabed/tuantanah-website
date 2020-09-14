@@ -60,7 +60,7 @@ const FormLogin = () => {
 											pattern: {
 												// eslint-disable-next-line no-useless-escape
 												value: /\b[\w\.-]+@[\w\.-]+\.\w{2,4}\b/gi,
-												message: 'Please provide a valid email format.',
+												message: 'Please provide a valid email format',
 											},
 										})}
 										name='email'
@@ -82,7 +82,7 @@ const FormLogin = () => {
 									<Form.Control
 										name='password'
 										type='password'
-										ref={register({ required: 'Please provide an password.' })}
+										ref={register({ required: 'Please provide an password' })}
 										disabled={isLoading}
 									/>
 									<ErrorMessage

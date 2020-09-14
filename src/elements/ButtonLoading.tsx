@@ -8,8 +8,8 @@ const ButtonLoading: React.FC<IBtnLoadingProps> = (props: any) => {
 		<Button
 			block={block}
 			type={type}
-			variant={password.length < 8 || loading ? 'secondary' : 'success'}
-			disabled={password.length < 8 || loading}
+			variant={password.length < 5 || loading ? 'secondary' : 'success'}
+			disabled={password.length < 5 || loading}
 		>
 			{loading && 'Processing  '}
 			{loading && <Spinner as='span' animation='border' size='sm' />}

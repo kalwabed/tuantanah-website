@@ -8,6 +8,8 @@ export interface IServerResponse {
 		errorCode: number
 	}
 	token: string
+	msg: string
+	error: string
 	success: boolean
 }
 

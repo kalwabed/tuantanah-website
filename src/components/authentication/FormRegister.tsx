@@ -37,6 +37,10 @@ const FormRegister = () => {
 		if (res!.success === true) {
 			// SUKSES
 			toast.success(res!.msg)
+			setValue('email', '')
+			setValue('fullName', '')
+			setValue('password', '')
+			setValue('repeatPassword', '')
 			setCheck(false)
 		} else {
 			setValue('repeatPassword', '')
