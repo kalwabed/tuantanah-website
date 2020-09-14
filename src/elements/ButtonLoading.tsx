@@ -3,7 +3,7 @@ import { Button, Spinner } from 'react-bootstrap'
 import type { IBtnLoadingProps } from '../types/index.types'
 
 const ButtonLoading: React.FC<IBtnLoadingProps> = (props: any) => {
-	const { loading, fill, password, type, block }: IBtnLoadingProps = props
+	const { loading, fill, password = '', type, block }: IBtnLoadingProps = props
 	return (
 		<Button
 			block={block}

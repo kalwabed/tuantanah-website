@@ -39,7 +39,7 @@ export interface CProperties {
 export type TLoginProps = {
 	loading: boolean
 	validated: boolean
-	handleSubmit: (event: React.FormEvent<HTMLInputElement>) => void
+	onSubmit: (event: React.FormEvent<HTMLInputElement>) => void
 	email: string
 	setEmail: (email: string) => void
 	password: string

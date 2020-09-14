@@ -62,7 +62,7 @@ const AddPropertyForm = ({
 	dataProvinsi: dataProvinsi
 }) => {
 	// BEGIN ----------------------------
-	const { setValue, watch, register, handleSubmit, errors } = useForm<Inputs>()
+	const { watch, register, handleSubmit, errors } = useForm<Inputs>()
 	const [isLuas, setIsLuas] = useState(false)
 	const [kota, setKota] = useState<number>(11)
 	const [description, setDescription] = useState('')
