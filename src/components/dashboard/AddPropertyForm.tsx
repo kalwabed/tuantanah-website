@@ -465,7 +465,7 @@ const AddPropertyForm = ({
 				</Form.Row>
 
 				{/* Kontak */}
-				<Form.Label>Kontak</Form.Label>
+				<Form.Label className='mt-3'>Kontak</Form.Label>
 				<Form.Row>
 					{/* Kontak 1 */}
 					<Form.Group as={Col} controlId='check-kontak1'>

@@ -43,12 +43,12 @@ const SectionAbout: React.FC<Property> = ({
 									<p>{location}</p>
 								</div>
 								<h2>
-									{size} <span className='font-weight-light'>hektare</span>
+									<span className='font-weight-light'>{size}</span>
 								</h2>
 								{/* <Badge>CICILAN</Badge> */}
 								{/*jika pakai konsep cicilan maka akifkan badge diatas  */}
 								<h2>
-									<span className='font-weight-light'>Rp.</span>
+									<span className='font-weight-light'>Rp. </span>
 									{price} Juta
 								</h2>
 								<p>
