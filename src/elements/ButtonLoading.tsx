@@ -11,7 +11,7 @@ const ButtonLoading: React.FC<IBtnLoadingProps> = (props: any) => {
 			variant={password.length < 5 || loading ? 'secondary' : 'success'}
 			disabled={password.length < 5 || loading}
 		>
-			{loading && 'Processing  '}
+			{loading && 'Memproses  '}
 			{loading && <Spinner as='span' animation='border' size='sm' />}
 			{!loading && fill}
 		</Button>

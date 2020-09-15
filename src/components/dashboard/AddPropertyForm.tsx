@@ -140,25 +140,36 @@ const AddPropertyForm = ({
 				{/* fullname dan title */}
 				<Form.Row>
 					<Form.Group as={Col}>
-						<Form.Label>Fullname / Company name</Form.Label>
+						<Form.Label>Nama Lengkap / Nama Perusahaan</Form.Label>
 						<Form.Control
 							ref={register()}
 							name='fullName'
-							placeholder='e.g Kaliwa Coorporation'
+							placeholder='contoh: Kaliwa Coorporation'
 							defaultValue={user.fullName}
 							readOnly
+							aria-describedby='fullNameHelp'
 						/>
+						<Form.Text id='fullNameHelp' muted>
+							Masukan diatas otomatis merujuk pada Nama pengguna
+						</Form.Text>
 					</Form.Group>
 					<Form.Group controlId='input-title' as={Col}>
-						<Form.Label>Title</Form.Label>
+						<Form.Label>Judul</Form.Label>
 						<Form.Control
 							ref={register({
-								required: 'Please provide a valid title',
-								minLength: { value: 5, message: 'Min length is 5' },
+								required: 'Mohon sertakan judul yang valid',
+								minLength: {
+									value: 5,
+									message: 'Panjang minimal adalah 5 karakter',
+								},
 							})}
 							name='title'
-							placeholder='e.g Kaliwa Residence'
+							placeholder='contoh: Kaliwa Residence'
+							aria-describedby='titleHelp'
 						/>
+						<Form.Text id='titleHelp' muted>
+							Judul bisa diisi dengan nama lahan, nama perumahan, dsb.
+						</Form.Text>
 						<ErrorMessage
 							name='title'
 							errors={errors}
@@ -174,7 +185,7 @@ const AddPropertyForm = ({
 					<Form.Group as={Col} controlId='select-provinsi'>
 						<Form.Label>Provinsi</Form.Label>
 						<Form.Control
-							ref={register({ required: 'Please provide a valid provinsi' })}
+							ref={register({ required: 'Mohon sertakan provinsi yang valid' })}
 							name='provinsi'
 							as='select'
 							custom
@@ -202,9 +213,11 @@ const AddPropertyForm = ({
 						</Form.Control>
 					</Form.Group>
 					<Form.Group as={Col} controlId='select-kota'>
-						<Form.Label>Kota/kabupaten</Form.Label>
+						<Form.Label>Kota / Kabupaten</Form.Label>
 						<Form.Control
-							ref={register({ required: 'Please provide a valid kota' })}
+							ref={register({
+								required: 'Mohon sertakan Kota / Kabupaten yang valid',
+							})}
 							name='kota'
 							as='select'
 							custom
@@ -220,9 +233,7 @@ const AddPropertyForm = ({
 									</option>
 								))}
 						</Form.Control>
-						{isFetching && (
-							<span className='text-secondary'>Refreshing...</span>
-						)}
+						{isFetching && <span className='text-secondary'>Updating...</span>}
 						<ErrorMessage
 							name='kota'
 							errors={errors}
@@ -242,19 +253,24 @@ const AddPropertyForm = ({
 							ref={
 								!isLuas
 									? register({
-											required: 'Please provide a valid panjang',
+											required: 'Mohon sertakan panjang yang valid',
 											pattern: {
 												// eslint-disable-next-line no-useless-escape
 												value: /^([1-9]\d*(\.|\,)\d*|0?(\.|\,)\d*[1-9]\d*|[1-9]\d*)$/gm,
-												message: 'Only accept a number, comma, and dot',
+												message:
+													'Hanya menerima masukan angka, koma, dan titik',
 											},
 											// eslint-disable-next-line no-mixed-spaces-and-tabs
 									  })
 									: register()
 							}
 							name='panjang'
-							placeholder='e.g 10'
+							placeholder='contoh: 10'
+							aria-describedby='panjangHelp'
 						/>
+						<Form.Text id='panjangHelp' muted>
+							Panjang properti berdasarkan ukuran meter (m)
+						</Form.Text>
 						<ErrorMessage
 							name='panjang'
 							errors={errors}
@@ -270,19 +286,24 @@ const AddPropertyForm = ({
 							ref={
 								!isLuas
 									? register({
-											required: 'Please provide a valid lebar',
+											required: 'Mohon sertakan lebar yang valid',
 											pattern: {
 												// eslint-disable-next-line no-useless-escape
 												value: /^([1-9]\d*(\.|\,)\d*|0?(\.|\,)\d*[1-9]\d*|[1-9]\d*)$/gm,
-												message: 'Only accept a number, comma, and dot',
+												message:
+													'Hanya menerima masukan angka, koma, dan titik',
 											},
 											// eslint-disable-next-line no-mixed-spaces-and-tabs
 									  })
 									: register()
 							}
 							name='lebar'
-							placeholder='e.g 12'
+							placeholder='contoh: 12,7'
+							aria-describedby='lebarHelp'
 						/>
+						<Form.Text id='lebarHelp' muted>
+							Lebar properti berdasarkan ukuran meter (m)
+						</Form.Text>
 						<ErrorMessage
 							name='lebar'
 							errors={errors}
@@ -293,7 +314,7 @@ const AddPropertyForm = ({
 					</Form.Group>
 				</Form.Row>
 
-				{/* Ceklis panjang-lebar */}
+				{/* Ceklis pakai luas */}
 				<Form.Row>
 					<Form.Group as={Col}>
 						<Form.Check
@@ -303,6 +324,10 @@ const AddPropertyForm = ({
 							id='pan-luas-check'
 							onClick={() => setIsLuas(!isLuas)}
 						/>
+						<Form.Text muted>
+							Pakai luas jika properti Anda bukan berupa rumah (contoh: kebun,
+							lahan, dsb)
+						</Form.Text>
 					</Form.Group>
 				</Form.Row>
 
@@ -316,23 +341,28 @@ const AddPropertyForm = ({
 								ref={
 									isLuas
 										? register({
-												required: 'Please provide a valid luas',
+												required: 'Mohon sertakan luas yang valid',
 												pattern: {
 													// eslint-disable-next-line no-useless-escape
 													value: /^([1-9]\d*(\.|\,)\d*|0?(\.|\,)\d*[1-9]\d*|[1-9]\d*)$/gm,
-													message: 'Only accept a number, comma, and dot',
+													message:
+														'Hanya menerima masukan angka, koma, dan titik',
 												},
 												// eslint-disable-next-line no-mixed-spaces-and-tabs
 										  })
 										: register()
 								}
 								name='luas'
-								placeholder='e.g 15'
+								placeholder='contoh: 3'
+								aria-describedby='luasHelp'
 							/>
 							<InputGroup.Append>
 								<InputGroup.Text>Hektar</InputGroup.Text>
 							</InputGroup.Append>
 						</InputGroup>
+						<Form.Text id='luasHelp' muted>
+							Luas properti berdasarkan ukuran hektar (ha)
+						</Form.Text>
 						<ErrorMessage
 							name='luas'
 							errors={errors}
@@ -350,20 +380,25 @@ const AddPropertyForm = ({
 						<InputGroup>
 							<Form.Control
 								ref={register({
-									required: 'Please provide a valid harga',
+									required: 'Mohon sertakan harga yang valid',
 									pattern: {
 										// eslint-disable-next-line no-useless-escape
 										value: /^([1-9]\d*(\.|\,)\d*|0?(\.|\,)\d*[1-9]\d*|[1-9]\d*)$/gm,
-										message: 'Only accept a number, comma, and dot',
+										message: 'Hanya menerima masukan angka, koma, dan titik',
 									},
 								})}
 								name='price'
-								placeholder='e.g 79'
+								placeholder='contoh: 190'
+								aria-describedby='priceHelp'
 							/>
 							<InputGroup.Append>
 								<InputGroup.Text>Juta</InputGroup.Text>
 							</InputGroup.Append>
 						</InputGroup>
+						<Form.Text id='priceHelp' muted>
+							Harga properti dalam format angka, satuan juta (contoh: 90,3
+							[berarti 90,3 juta])
+						</Form.Text>
 						<ErrorMessage
 							name='price'
 							errors={errors}
@@ -385,7 +420,11 @@ const AddPropertyForm = ({
 							name='mainPicture'
 							label={label}
 							custom
+							aria-describedby='mainPicHelp'
 						/>
+						<Form.Text id='mainPicHelp' muted>
+							Sertakan gambar/foto untuk dipasang sebagai gambar utama
+						</Form.Text>
 						<ErrorMessage
 							name='mainPicture'
 							errors={errors}
@@ -404,9 +443,13 @@ const AddPropertyForm = ({
 							name='nego'
 							ref={register()}
 							id='check-nego'
-							label='Negosiasi?'
+							label='Negosiasi ?'
 							type='checkbox'
+							aria-describedby='negoHelp'
 						/>
+						<Form.Text muted>
+							Apakah harga properti bisa dinegosiasi? Centang jika iya
+						</Form.Text>
 					</Form.Group>
 				</Form.Row>
 
@@ -415,6 +458,9 @@ const AddPropertyForm = ({
 					<Form.Group as={Col} className='h-100'>
 						<Form.Label>Deskripsi</Form.Label>
 						<Quill theme='snow' value={description} onChange={setDescription} />
+						<Form.Text muted>
+							Sertakan deskripsi tentang properti secara detail
+						</Form.Text>
 					</Form.Group>
 				</Form.Row>
 
@@ -562,6 +608,11 @@ const AddPropertyForm = ({
 						/>
 					</Form.Group>
 				</Form.Row>
+				<Form.Text muted>
+					Periksa kembali format isian kontak dengan teliti. Pastikan kontak
+					dapat dihubungi. Jika sudah selesai silahkan tekan tombol submit untuk
+					memproses data
+				</Form.Text>
 
 				{/* Tombol submit & cancel */}
 				<Form.Row className='mt-2'>
