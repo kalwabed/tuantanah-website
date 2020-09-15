@@ -98,6 +98,19 @@ export interface Property {
 			imageUrl: string
 		},
 	]
+	contact: [
+		{
+			name: string
+			type: sosmedType
+			url: string
+		},
+	]
 	createdAt: string
 	updatedAt: string
+}
+
+enum sosmedType {
+	'whatsapp' = 1,
+	'facebook' = 2,
+	'email' = 3,
 }

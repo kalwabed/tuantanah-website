@@ -1,5 +1,6 @@
 import React from 'react'
 import { Container, Card, Row, Col } from 'react-bootstrap'
+import ReactMarkdown from 'react-markdown/with-html'
 
 import { Property } from '../../../types/index.types'
 import LazyLoad from 'react-lazyload'
@@ -11,12 +12,14 @@ const SectionDescription: React.FC<Property> = ({ description }) => {
 			<Container>
 				<Row>
 					<Col as='h2'>
-						Description <span className='divider'></span>
+						Deskripsi <span className='divider'></span>
 					</Col>
 				</Row>
 				<Card className='h-100 w-100'>
 					<LazyLoad once height={100} offset={50}>
-						<Card.Body className='text-justify'>{description}</Card.Body>
+						<Card.Body className='text-justify'>
+							<ReactMarkdown source={description} escapeHtml={false} />
+						</Card.Body>
 					</LazyLoad>
 				</Card>
 			</Container>

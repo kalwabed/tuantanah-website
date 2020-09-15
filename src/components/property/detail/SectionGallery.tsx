@@ -13,16 +13,17 @@ const SectionGalery: React.FC<Property> = ({ gallery }) => {
 			<Container>
 				<Row>
 					<Col as='h2'>
-						Gallery <span className='divider'></span>
+						Galeri <span className='divider'></span>
 					</Col>
 				</Row>
-
 				{gallery.length < 1 && (
-					<Col className='my-1' xs={12} md={3}>
-						<Card>
-							<h4 className='text-center'>Image is unavailable</h4>
-						</Card>
-					</Col>
+					<Row>
+						<Col xs={12} md={3}>
+							<Card>
+								<Card.Body className='text-center'>Tidak ada gambar</Card.Body>
+							</Card>
+						</Col>
+					</Row>
 				)}
 
 				<Row>
