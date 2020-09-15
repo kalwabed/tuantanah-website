@@ -6,6 +6,7 @@ import { Form, Col, Button, Badge, InputGroup, Spinner } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { useMutation, useQuery } from 'react-query'
 import Quill from 'react-quill'
+import { toast } from 'react-toastify'
 
 import { IApiUser } from '../../types/index.types'
 import { fetchKotaByProv, fetchAddProperty } from '../../utils/fetchAPI'
@@ -62,8 +63,9 @@ const AddPropertyForm = ({
 	dataProvinsi: dataProvinsi
 }) => {
 	// BEGIN ----------------------------
-	const { watch, register, handleSubmit, errors } = useForm<Inputs>()
+	const { watch, register, handleSubmit, errors, setValue } = useForm<Inputs>()
 	const [isLuas, setIsLuas] = useState(false)
+	const [label, setLabel] = useState('Unggah foto')
 	const [kota, setKota] = useState<number>(11)
 	const [description, setDescription] = useState('')
 	const { data, isFetching, isLoading, isError } = useQuery(
@@ -111,7 +113,20 @@ const AddPropertyForm = ({
 
 		try {
 			const newProp = await mutate(formData)
-			console.log(newProp)
+			if (newProp?.success) {
+				toast.info(newProp.msg)
+				setValue('title', '')
+				setValue('title', '')
+				setDescription('')
+				setValue('luas', '')
+				setIsLuas(false)
+				setValue('panjang', '')
+				setValue('lebar', '')
+				setValue('price', '')
+				setLabel('Unggah foto')
+			} else {
+				toast.warn(newProp?.msg)
+			}
 		} catch (err) {
 			console.error(err)
 		}
@@ -125,30 +140,41 @@ const AddPropertyForm = ({
 				{/* fullname dan title */}
 				<Form.Row>
 					<Form.Group as={Col}>
-						<Form.Label>Fullname / Company name</Form.Label>
+						<Form.Label>Nama Lengkap / Nama Perusahaan</Form.Label>
 						<Form.Control
 							ref={register()}
 							name='fullName'
-							placeholder='e.g Kaliwa Coorporation'
+							placeholder='contoh: Kaliwa Coorporation'
 							defaultValue={user.fullName}
 							readOnly
+							aria-describedby='fullNameHelp'
 						/>
+						<Form.Text id='fullNameHelp' muted>
+							Masukan diatas otomatis merujuk pada Nama pengguna
+						</Form.Text>
 					</Form.Group>
 					<Form.Group controlId='input-title' as={Col}>
-						<Form.Label>Title</Form.Label>
+						<Form.Label>Judul</Form.Label>
 						<Form.Control
 							ref={register({
-								required: 'Please provide a valid title',
-								minLength: { value: 5, message: 'Min length is 5' },
+								required: 'Mohon sertakan judul yang valid',
+								minLength: {
+									value: 5,
+									message: 'Panjang minimal adalah 5 karakter',
+								},
 							})}
 							name='title'
-							placeholder='e.g Kaliwa Residence'
+							placeholder='contoh: Kaliwa Residence'
+							aria-describedby='titleHelp'
 						/>
+						<Form.Text id='titleHelp' muted>
+							Judul bisa diisi dengan nama lahan, nama perumahan, dsb.
+						</Form.Text>
 						<ErrorMessage
 							name='title'
 							errors={errors}
 							render={({ message }) => (
-								<Badge variant='danger'>{message}</Badge>
+								<Badge variant='warning'>{message}</Badge>
 							)}
 						/>
 					</Form.Group>
@@ -159,7 +185,7 @@ const AddPropertyForm = ({
 					<Form.Group as={Col} controlId='select-provinsi'>
 						<Form.Label>Provinsi</Form.Label>
 						<Form.Control
-							ref={register({ required: 'Please provide a valid provinsi' })}
+							ref={register({ required: 'Mohon sertakan provinsi yang valid' })}
 							name='provinsi'
 							as='select'
 							custom
@@ -181,15 +207,17 @@ const AddPropertyForm = ({
 								name='provinsi'
 								errors={errors}
 								render={({ message }) => (
-									<Badge variant='danger'>{message}</Badge>
+									<Badge variant='warning'>{message}</Badge>
 								)}
 							/>
 						</Form.Control>
 					</Form.Group>
 					<Form.Group as={Col} controlId='select-kota'>
-						<Form.Label>Kota/kabupaten</Form.Label>
+						<Form.Label>Kota / Kabupaten</Form.Label>
 						<Form.Control
-							ref={register({ required: 'Please provide a valid kota' })}
+							ref={register({
+								required: 'Mohon sertakan Kota / Kabupaten yang valid',
+							})}
 							name='kota'
 							as='select'
 							custom
@@ -205,14 +233,12 @@ const AddPropertyForm = ({
 									</option>
 								))}
 						</Form.Control>
-						{isFetching && (
-							<span className='text-secondary'>Refreshing...</span>
-						)}
+						{isFetching && <span className='text-secondary'>Updating...</span>}
 						<ErrorMessage
 							name='kota'
 							errors={errors}
 							render={({ message }) => (
-								<Badge variant='danger'>{message}</Badge>
+								<Badge variant='warning'>{message}</Badge>
 							)}
 						/>
 					</Form.Group>
@@ -223,56 +249,85 @@ const AddPropertyForm = ({
 					<Form.Group controlId='input-panjang' as={Col}>
 						<Form.Label>Panjang</Form.Label>
 						<Form.Control
-							type='number'
 							disabled={isLuas}
 							ref={
 								!isLuas
-									? register({ required: 'Please provide a valid panjang' })
+									? register({
+											required: 'Mohon sertakan panjang yang valid',
+											pattern: {
+												// eslint-disable-next-line no-useless-escape
+												value: /^([1-9]\d*(\.|\,)\d*|0?(\.|\,)\d*[1-9]\d*|[1-9]\d*)$/gm,
+												message:
+													'Hanya menerima masukan angka, koma, dan titik',
+											},
+											// eslint-disable-next-line no-mixed-spaces-and-tabs
+									  })
 									: register()
 							}
 							name='panjang'
-							placeholder='e.g 10'
+							placeholder='contoh: 10'
+							aria-describedby='panjangHelp'
 						/>
+						<Form.Text id='panjangHelp' muted>
+							Panjang properti berdasarkan ukuran meter (m)
+						</Form.Text>
 						<ErrorMessage
 							name='panjang'
 							errors={errors}
 							render={({ message }) => (
-								<Badge variant='danger'>{message}</Badge>
+								<Badge variant='warning'>{message}</Badge>
 							)}
 						/>
 					</Form.Group>
 					<Form.Group controlId='input-lebar' as={Col}>
 						<Form.Label>Lebar</Form.Label>
 						<Form.Control
-							type='number'
 							disabled={isLuas}
 							ref={
 								!isLuas
-									? register({ required: 'Please provide a valid lebar' })
+									? register({
+											required: 'Mohon sertakan lebar yang valid',
+											pattern: {
+												// eslint-disable-next-line no-useless-escape
+												value: /^([1-9]\d*(\.|\,)\d*|0?(\.|\,)\d*[1-9]\d*|[1-9]\d*)$/gm,
+												message:
+													'Hanya menerima masukan angka, koma, dan titik',
+											},
+											// eslint-disable-next-line no-mixed-spaces-and-tabs
+									  })
 									: register()
 							}
 							name='lebar'
-							placeholder='e.g 12'
+							placeholder='contoh: 12,7'
+							aria-describedby='lebarHelp'
 						/>
+						<Form.Text id='lebarHelp' muted>
+							Lebar properti berdasarkan ukuran meter (m)
+						</Form.Text>
 						<ErrorMessage
 							name='lebar'
 							errors={errors}
 							render={({ message }) => (
-								<Badge variant='danger'>{message}</Badge>
+								<Badge variant='warning'>{message}</Badge>
 							)}
 						/>
 					</Form.Group>
 				</Form.Row>
 
-				{/* Ceklis panjang-lebar */}
+				{/* Ceklis pakai luas */}
 				<Form.Row>
 					<Form.Group as={Col}>
 						<Form.Check
 							label='Pakai ukuran luas'
 							custom
+							checked={isLuas}
 							id='pan-luas-check'
 							onClick={() => setIsLuas(!isLuas)}
 						/>
+						<Form.Text muted>
+							Pakai luas jika properti Anda bukan berupa rumah (contoh: kebun,
+							lahan, dsb)
+						</Form.Text>
 					</Form.Group>
 				</Form.Row>
 
@@ -283,24 +338,36 @@ const AddPropertyForm = ({
 						<InputGroup>
 							<Form.Control
 								disabled={!isLuas}
-								type='number'
 								ref={
 									isLuas
-										? register({ required: 'Please provide a valid luas' })
+										? register({
+												required: 'Mohon sertakan luas yang valid',
+												pattern: {
+													// eslint-disable-next-line no-useless-escape
+													value: /^([1-9]\d*(\.|\,)\d*|0?(\.|\,)\d*[1-9]\d*|[1-9]\d*)$/gm,
+													message:
+														'Hanya menerima masukan angka, koma, dan titik',
+												},
+												// eslint-disable-next-line no-mixed-spaces-and-tabs
+										  })
 										: register()
 								}
 								name='luas'
-								placeholder='e.g 15'
+								placeholder='contoh: 3'
+								aria-describedby='luasHelp'
 							/>
 							<InputGroup.Append>
 								<InputGroup.Text>Hektar</InputGroup.Text>
 							</InputGroup.Append>
 						</InputGroup>
+						<Form.Text id='luasHelp' muted>
+							Luas properti berdasarkan ukuran hektar (ha)
+						</Form.Text>
 						<ErrorMessage
 							name='luas'
 							errors={errors}
 							render={({ message }) => (
-								<Badge variant='danger'>{message}</Badge>
+								<Badge variant='warning'>{message}</Badge>
 							)}
 						/>
 					</Form.Group>
@@ -312,39 +379,57 @@ const AddPropertyForm = ({
 						<Form.Label>Harga</Form.Label>
 						<InputGroup>
 							<Form.Control
-								type='number'
-								ref={register({ required: 'Please provide a valid harga' })}
+								ref={register({
+									required: 'Mohon sertakan harga yang valid',
+									pattern: {
+										// eslint-disable-next-line no-useless-escape
+										value: /^([1-9]\d*(\.|\,)\d*|0?(\.|\,)\d*[1-9]\d*|[1-9]\d*)$/gm,
+										message: 'Hanya menerima masukan angka, koma, dan titik',
+									},
+								})}
 								name='price'
-								placeholder='e.g 79'
+								placeholder='contoh: 190'
+								aria-describedby='priceHelp'
 							/>
 							<InputGroup.Append>
 								<InputGroup.Text>Juta</InputGroup.Text>
 							</InputGroup.Append>
 						</InputGroup>
+						<Form.Text id='priceHelp' muted>
+							Harga properti dalam format angka, satuan juta (contoh: 90,3
+							[berarti 90,3 juta])
+						</Form.Text>
 						<ErrorMessage
-							name='harga'
+							name='price'
 							errors={errors}
 							render={({ message }) => (
-								<Badge variant='danger'>{message}</Badge>
+								<Badge variant='warning'>{message}</Badge>
 							)}
 						/>
 					</Form.Group>
 					<Form.Group controlId='input-foto' as={Col}>
 						<Form.Label>Foto utama</Form.Label>
 						<Form.File
-							id='mainpic-file'
-							name='mainPicture'
-							label='Unggah foto'
 							ref={register({
 								required: 'Please provide a valid main picture',
 							})}
+							onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+								setLabel(e.target.files![0].name)
+							}
+							id='mainpic-file'
+							name='mainPicture'
+							label={label}
 							custom
+							aria-describedby='mainPicHelp'
 						/>
+						<Form.Text id='mainPicHelp' muted>
+							Sertakan gambar/foto untuk dipasang sebagai gambar utama
+						</Form.Text>
 						<ErrorMessage
 							name='mainPicture'
 							errors={errors}
 							render={({ message }) => (
-								<Badge variant='danger'>{message}</Badge>
+								<Badge variant='warning'>{message}</Badge>
 							)}
 						/>
 					</Form.Group>
@@ -358,9 +443,13 @@ const AddPropertyForm = ({
 							name='nego'
 							ref={register()}
 							id='check-nego'
-							label='Negosiasi?'
+							label='Negosiasi ?'
 							type='checkbox'
+							aria-describedby='negoHelp'
 						/>
+						<Form.Text muted>
+							Apakah harga properti bisa dinegosiasi? Centang jika iya
+						</Form.Text>
 					</Form.Group>
 				</Form.Row>
 
@@ -369,11 +458,14 @@ const AddPropertyForm = ({
 					<Form.Group as={Col} className='h-100'>
 						<Form.Label>Deskripsi</Form.Label>
 						<Quill theme='snow' value={description} onChange={setDescription} />
+						<Form.Text muted>
+							Sertakan deskripsi tentang properti secara detail
+						</Form.Text>
 					</Form.Group>
 				</Form.Row>
 
 				{/* Kontak */}
-				<Form.Label>Kontak</Form.Label>
+				<Form.Label className='mt-3'>Kontak</Form.Label>
 				<Form.Row>
 					{/* Kontak 1 */}
 					<Form.Group as={Col} controlId='check-kontak1'>
@@ -516,16 +608,30 @@ const AddPropertyForm = ({
 						/>
 					</Form.Group>
 				</Form.Row>
+				<Form.Text muted>
+					Periksa kembali format isian kontak dengan teliti. Pastikan kontak
+					dapat dihubungi. Jika sudah selesai silahkan tekan tombol submit untuk
+					memproses data
+				</Form.Text>
 
 				{/* Tombol submit & cancel */}
 				<Form.Row className='mt-2'>
 					<Form.Group as={Col}>
 						<Link to='/dashboard'>
-							<Button className='mr-2' variant='secondary'>
+							<Button
+								className='mr-2'
+								variant='secondary'
+								disabled={status === 'loading'}
+							>
 								Back
 							</Button>
 						</Link>
-						<Button className='mr-2' variant='success' type='submit'>
+						<Button
+							className='mr-2'
+							variant='success'
+							type='submit'
+							disabled={status === 'loading'}
+						>
 							Submit
 						</Button>
 						{status === 'loading' && (

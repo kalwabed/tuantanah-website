@@ -50,17 +50,18 @@ const FormLogin = () => {
 					</div>
 					<div className='card-fat'>
 						<Card.Body>
-							<Card.Title as='h4'>Sign in</Card.Title>
+							<Card.Title as='h4'>Masuk</Card.Title>
 							<Form onSubmit={handleSubmit(onSubmit)}>
 								<Form.Group>
-									<Form.Label>Email Address</Form.Label>
+									<Form.Label>Alamat Email</Form.Label>
 									<Form.Control
 										ref={register({
-											required: 'Please provide an email.',
+											required: 'Mohon sertakan Alamat Email yang valid',
 											pattern: {
 												// eslint-disable-next-line no-useless-escape
 												value: /\b[\w\.-]+@[\w\.-]+\.\w{2,4}\b/gi,
-												message: 'Please provide a valid email format.',
+												message:
+													'Mohon sertakan format Alamat Email yang valid',
 											},
 										})}
 										name='email'
@@ -78,11 +79,13 @@ const FormLogin = () => {
 								</Form.Group>
 
 								<Form.Group>
-									<Form.Label>Password</Form.Label>
+									<Form.Label>Kata Sandi</Form.Label>
 									<Form.Control
 										name='password'
 										type='password'
-										ref={register({ required: 'Please provide an password.' })}
+										ref={register({
+											required: 'Mohon sertakan Kata Sandi yang valid',
+										})}
 										disabled={isLoading}
 									/>
 									<ErrorMessage
@@ -95,7 +98,7 @@ const FormLogin = () => {
 								</Form.Group>
 								<Form.Group className='m-0'>
 									<ButtonLoading
-										fill='Sign In'
+										fill='Masuk'
 										block
 										password={watch('password')}
 										loading={isLoading}
@@ -103,10 +106,10 @@ const FormLogin = () => {
 									/>
 								</Form.Group>
 								<div className='mt-4 text-center'>
-									don&apos;t have an account? <Link to='/signup'>sign up</Link>
+									belum punya akun? <Link to='/signup'>daftar</Link>
 								</div>
 								<p className='text-center'>
-									go back to <Link to='/'>home</Link>
+									kembali ke <Link to='/'>home</Link>
 								</p>
 							</Form>
 						</Card.Body>

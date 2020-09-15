@@ -10,6 +10,8 @@ import { authContext } from '../contexts/Auth'
 import { fetchProvinsi } from '../utils/fetchAPI'
 
 const AddProperty = () => {
+	document.title = 'Add Property | tuantanah'
+	window.scrollTo(0, 0)
 	const { user } = useContext(authContext)
 	const { data, isLoading } = useQuery('provinsi', fetchProvinsi, {
 		refetchOnMount: false,

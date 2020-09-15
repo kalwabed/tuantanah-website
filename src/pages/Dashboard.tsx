@@ -4,10 +4,15 @@ import { authContext } from '../contexts/Auth'
 import verify from '../utils/Verify'
 import Header from '../components/dashboard/Header'
 import Table from '../components/dashboard/Table'
-import { Badge, Spinner } from 'react-bootstrap'
+import { Badge, Button, Col, Container, Row, Spinner } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { useQuery } from 'react-query'
 import { fetchPropertyByUserID } from '../utils/fetchAPI'
+import {
+	IoIosAddCircle,
+	IoIosCheckmarkCircle,
+	IoIosLogOut,
+} from 'react-icons/io'
 
 const Dashboard = (props: any) => {
 	document.title = 'Dashboard | tuantanah'
@@ -33,18 +38,40 @@ const Dashboard = (props: any) => {
 	return (
 		<>
 			<Header />
-			<h2>Welcome {user.email}</h2>
-			<h3>Your role is {user.role == 1 ? 'admin' : 'user'}</h3>
-			<Link to='/dashboard/property'>
-				<button>Add property</button>
-			</Link>
-			<button onClick={onLogout}>Logout</button>
-			<br />
-			<Badge variant='secondary' as='span'>
-				last update:{' '}
-				{`${updated.getHours()}:${updated.getMinutes()}:${updated.getSeconds()}`}
-			</Badge>
-			{isLoading && <Spinner animation='border' />}
+			<Container>
+				<Row className='mt-3'>
+					<Col xs={8} md={8}>
+						<Link to='/dashboard/property'>
+							<Button className='mr-2' variant='success' size='lg'>
+								Tambah <IoIosAddCircle />
+							</Button>
+						</Link>
+						<Button className='mr-2' variant='primary' size='lg'>
+							Verifikasi <IoIosCheckmarkCircle />
+						</Button>
+					</Col>
+					<Col
+						xs={4}
+						md={4}
+						className='d-sm-flex d-md-block justify-content-end'
+					>
+						<span>Masuk sebagai </span>
+						<span className='font-weight-bold mr-1'>{user.fullName}</span>
+						<Button variant='outline-secondary' size='sm' onClick={onLogout}>
+							Keluar <IoIosLogOut />
+						</Button>
+						<Badge variant='secondary' as='span'>
+							terakhir update:{' '}
+							{`${updated.getHours()} : ${updated.getMinutes()} : ${updated.getSeconds()}`}
+						</Badge>
+					</Col>
+				</Row>
+				{isLoading && (
+					<>
+						Memuat <Spinner variant='success' animation='grow' />
+					</>
+				)}
+			</Container>
 			{!isLoading && <Table property={data.property} />}
 		</>
 	)

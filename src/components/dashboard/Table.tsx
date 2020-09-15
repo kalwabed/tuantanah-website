@@ -60,14 +60,14 @@ const Table = ({ property }: { property: Property[] }) => {
 				columns={[
 					{ name: '#', width: '1%' },
 					{
-						name: 'Img',
+						name: 'Gambar',
 						formatter: cell => html(`<img src='${cell}' width='100%'/>`),
 						width: '7%',
 					},
-					'Title',
-					{ name: 'Size', width: '3%' },
-					'Location',
-					'Actions',
+					'Judul',
+					{ name: 'Ukuran', width: '5%' },
+					'Lokasi',
+					'Aksi',
 				]}
 				search={true}
 				pagination={{ enabled: true, limit: 10 }}

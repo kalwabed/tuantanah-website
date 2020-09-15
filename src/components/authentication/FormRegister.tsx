@@ -37,6 +37,10 @@ const FormRegister = () => {
 		if (res!.success === true) {
 			// SUKSES
 			toast.success(res!.msg)
+			setValue('email', '')
+			setValue('fullName', '')
+			setValue('password', '')
+			setValue('repeatPassword', '')
 			setCheck(false)
 		} else {
 			setValue('repeatPassword', '')
@@ -58,28 +62,29 @@ const FormRegister = () => {
 						</div>
 						<div className='card-fat'>
 							<Card.Body>
-								<Card.Title as='h4'>Create an tuantanah account</Card.Title>
+								<Card.Title as='h4'>
+									Buat akun baru <span className='logo-font'>tuantanah</span>
+								</Card.Title>
 								<Form onSubmit={handleSubmit(onSubmit)}>
 									<Form.Group>
-										<Form.Label>Fullname</Form.Label>
+										<Form.Label>Nama Lengkap / Nama Perusahaan</Form.Label>
 										<Form.Control
 											ref={register({
-												required: 'Please provide a Full Name',
+												required: 'Mohon sertakan Nama yang valid',
 												maxLength: {
 													value: 50,
-													message:
-														'Full Name is reached the maximum length! (50)',
+													message: 'Panjang maksimal adalah 50 karakter',
 												},
 												minLength: {
 													value: 3,
-													message: 'Full Name min length is 3 chars',
+													message: 'Panjang minimal adalah 3 karakter',
 												},
 											})}
 											onChange={() => trigger('fullName')}
 											disabled={isLoading}
 											name='fullName'
 											type='text'
-											placeholder='i.e John Bejo'
+											placeholder='contoh: John Bejo'
 										/>
 										<ErrorMessage
 											name='fullName'
@@ -91,25 +96,26 @@ const FormRegister = () => {
 									</Form.Group>
 
 									<Form.Group>
-										<Form.Label>Email address</Form.Label>
+										<Form.Label>Alamat Email</Form.Label>
 										<Form.Control
 											ref={register({
-												required: 'Please provide an email',
+												required: 'Mohon sertakan Alamat Email yang valid',
 												maxLength: {
 													value: 30,
-													message: 'Email is reached the maximum length! (30)',
+													message: 'Panjang maksimal adalah 30 karakter',
 												},
 												pattern: {
 													// eslint-disable-next-line no-useless-escape
 													value: /\b[\w\.-]+@[\w\.-]+\.\w{2,4}\b/gi,
-													message: 'Please provide a valid email format',
+													message:
+														'Mohon sertakan format Alamat Email yang valid',
 												},
 											})}
 											onChange={() => trigger('email')}
 											disabled={isLoading}
 											name='email'
 											type='email'
-											placeholder='i.e example@do.it'
+											placeholder='contoh: example@do.it'
 										/>
 										<ErrorMessage
 											name='email'
@@ -121,25 +127,24 @@ const FormRegister = () => {
 									</Form.Group>
 
 									<Form.Group>
-										<Form.Label>Password</Form.Label>
+										<Form.Label>Kata Sandi</Form.Label>
 										<Form.Control
 											ref={register({
-												required: 'Please provide an password',
+												required: 'Mohon sertakan Kata Sandi yang valid',
 												maxLength: {
 													value: 120,
-													message:
-														'Password is reached the maximum length! (120)',
+													message: 'Panjang maksimal adalah 120 karakter',
 												},
 												minLength: {
 													value: 8,
-													message: 'Password is must at least 8 chars',
+													message: 'Panjang minimal adalah 8 karakter',
 												},
 											})}
 											onChange={() => trigger('password')}
 											disabled={isLoading}
 											name='password'
 											type='password'
-											placeholder='min. 8 chars'
+											placeholder='minimal 8 karakter'
 										/>
 										<ErrorMessage
 											name='password'
@@ -151,18 +156,18 @@ const FormRegister = () => {
 									</Form.Group>
 
 									<Form.Group>
-										<Form.Label>Confirm password</Form.Label>
+										<Form.Label>Konfirmasi Kata Sandi</Form.Label>
 										<Form.Control
 											ref={register({
 												validate: value =>
 													value == watch('password') ||
-													'Confirm Password must same as password',
+													'Konfirmasi Kata Sandi harus sama dengan Kata Sandi',
 											})}
 											onChange={() => trigger('repeatPassword')}
 											disabled={isLoading}
 											name='repeatPassword'
 											type='password'
-											placeholder='repeat your password'
+											placeholder='ulangi kata sandi anda'
 										/>
 										<ErrorMessage
 											name='repeatPassword'
@@ -181,7 +186,7 @@ const FormRegister = () => {
 											checked={check}
 											id='checkbox'
 											type='checkbox'
-											label='Agree with our terms and conditions'
+											label='Setuju dengan syarat dan ketentuan kami'
 										/>
 									</Form.Group>
 
@@ -189,17 +194,17 @@ const FormRegister = () => {
 										<ButtonLoading
 											loading={isLoading}
 											block
-											fill='Sign Up'
+											fill='Daftar'
 											password={watch('repeatPassword')}
 											type='submit'
 										/>
 									</Form.Group>
 
 									<div className='mt-4 text-center'>
-										already have an account? <Link to='/signin'>sign in</Link>
+										sudah punya akun? <Link to='/signin'>masuk</Link>
 									</div>
 									<p className='text-center'>
-										go back to <Link to='/'>home</Link>
+										kembali ke <Link to='/'>home</Link>
 									</p>
 								</Form>
 							</Card.Body>
