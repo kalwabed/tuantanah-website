@@ -31,7 +31,7 @@ const Property = () => {
 					<SearchBarProperty />
 					{isLoading && (
 						<div className='text-center my-4 h5'>
-							Please wait <Spinner animation='grow' variant='success' />
+							Tunggu sebentar <Spinner animation='grow' variant='success' />
 						</div>
 					)}
 					{!isLoading && <ListProperty />}

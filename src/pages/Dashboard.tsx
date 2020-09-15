@@ -21,7 +21,7 @@ const Dashboard = (props: any) => {
 	const { data, isLoading, updatedAt } = useQuery(
 		['userProperty', user._id],
 		fetchPropertyByUserID,
-		{ enabled: user },
+		{ enabled: user, onSettled: (): void => setUpdated(new Date()) },
 	)
 	const [updated, setUpdated] = useState(new Date(updatedAt))
 
@@ -56,12 +56,14 @@ const Dashboard = (props: any) => {
 						className='d-sm-flex d-md-block justify-content-end'
 					>
 						<span>Masuk sebagai </span>
-						<span className='font-weight-bold mr-1'>{user.fullName}</span>
+						<span className='font-weight-bold mr-1'>
+							{user.fullName}
+						</span> |{' '}
 						<Button variant='outline-secondary' size='sm' onClick={onLogout}>
 							Keluar <IoIosLogOut />
 						</Button>
-						<Badge variant='secondary' as='span'>
-							terakhir update:{' '}
+						<Badge variant='light' as='span'>
+							update terakhir:{' '}
 							{`${updated.getHours()} : ${updated.getMinutes()} : ${updated.getSeconds()}`}
 						</Badge>
 					</Col>

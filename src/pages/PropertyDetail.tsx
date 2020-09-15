@@ -21,10 +21,12 @@ const PropertyDetail = () => {
 					<SectionAbout {...showProperties} />
 					<SectionGalery {...showProperties} />
 					<SectionDescription {...showProperties} />
-					<SectionContact />
+					<SectionContact {...showProperties} />
 				</>
 			)}
-			<Footer />
+			<div className='mt-4'>
+				<Footer />
+			</div>
 		</>
 	)
 }

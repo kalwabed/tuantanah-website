@@ -454,7 +454,7 @@ const AddPropertyForm = ({
 				</Form.Row>
 
 				{/* Deskripsi */}
-				<Form.Row>
+				<Form.Row className='mb-2'>
 					<Form.Group as={Col} className='h-100'>
 						<Form.Label>Deskripsi</Form.Label>
 						<Quill theme='snow' value={description} onChange={setDescription} />
