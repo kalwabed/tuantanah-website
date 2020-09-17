@@ -15,7 +15,7 @@ const Table = ({ property }: { property: Property[] }) => {
 	}
 
 	const onDetail = (id: string) => {
-		history.push(`/dashboard/property/detail/${id}`)
+		history.push(`/dashboard/property/${id}`)
 	}
 
 	const onUpdate = (id: string) => {

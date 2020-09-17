@@ -17,11 +17,7 @@ const PrivateRoutes = () => {
 					<>
 						<Route path={`${path}/`} component={Dashboard} exact />
 						<Route path={`${path}/property`} component={AddProperty} exact />
-						<Route
-							path={`${path}/property/detail/:id`}
-							component={Detail}
-							exact
-						/>
+						<Route path={`${path}/property/:id`} component={Detail} exact />
 					</>
 				) : (
 					<Redirect
