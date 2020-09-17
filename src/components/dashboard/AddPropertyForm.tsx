@@ -320,7 +320,7 @@ const AddPropertyForm = ({
 						<Form.Check
 							label='Pakai ukuran luas'
 							custom
-							checked={isLuas}
+							defaultChecked={isLuas}
 							id='pan-luas-check'
 							onClick={() => setIsLuas(!isLuas)}
 						/>

@@ -143,7 +143,17 @@ export const fetchAddProperty = async (formData: FormData) => {
 export const fetchPropertyByUserID = async (key: string, userId: string) => {
 	try {
 		return await (
-			await fetch(`${process.env.ENDPOINT}/d/property/${userId}`)
+			await fetch(`${process.env.ENDPOINT}/d/property/u/${userId}`)
+		).json()
+	} catch (err) {
+		console.error(err)
+	}
+}
+
+export const fetchPropertyById = async (key: string, propertyId: string) => {
+	try {
+		return await (
+			await fetch(`${process.env.ENDPOINT}/d/property/${propertyId}`)
 		).json()
 	} catch (err) {
 		console.error(err)

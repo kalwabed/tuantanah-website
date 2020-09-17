@@ -4,10 +4,10 @@ import { Container, Card } from 'react-bootstrap'
 import { useQuery } from 'react-query'
 import 'react-quill/dist/quill.snow.css'
 
-import AddPropertyForm from '../components/dashboard/AddPropertyForm'
-import Header from '../components/dashboard/Header'
-import { authContext } from '../contexts/Auth'
-import { fetchProvinsi } from '../utils/fetchAPI'
+import AddPropertyForm from '../../components/dashboard/AddPropertyForm'
+import Header from '../../components/dashboard/Header'
+import { authContext } from '../../contexts/Auth'
+import { fetchProvinsi } from '../../utils/fetchAPI'
 
 const AddProperty = () => {
 	document.title = 'Add Property | tuantanah'

@@ -1,13 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react'
-
-import { authContext } from '../contexts/Auth'
-import verify from '../utils/Verify'
-import Header from '../components/dashboard/Header'
-import Table from '../components/dashboard/Table'
 import { Badge, Button, Col, Container, Row, Spinner } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { useQuery } from 'react-query'
-import { fetchPropertyByUserID } from '../utils/fetchAPI'
+
+import { authContext } from '../../contexts/Auth'
+import verify from '../../utils/Verify'
+import Header from '../../components/dashboard/Header'
+import Table from '../../components/dashboard/Table'
+import { fetchPropertyByUserID } from '../../utils/fetchAPI'
 import {
 	IoIosAddCircle,
 	IoIosCheckmarkCircle,
@@ -21,7 +21,10 @@ const Dashboard = (props: any) => {
 	const { data, isLoading, updatedAt } = useQuery(
 		['userProperty', user._id],
 		fetchPropertyByUserID,
-		{ enabled: user, onSettled: (): void => setUpdated(new Date()) },
+		{
+			enabled: user,
+			onSettled: (): void => setUpdated(new Date()),
+		},
 	)
 	const [updated, setUpdated] = useState(new Date(updatedAt))
 
