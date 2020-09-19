@@ -105,11 +105,11 @@ const AddPropertyForm = ({
 		formData.append('userKontak3', String(data.userKontak3))
 		formData.append('userKontak4', String(data.userKontak4))
 
-		// for development purpose!
+		//? for development purpose!
 		// formData.forEach((val, key) => {
 		// 	console.log(`${key}, ${val}`)
 		// })
-		// ----------------------
+		//? ----------------------
 
 		try {
 			const newProp = await mutate(formData)
@@ -250,20 +250,18 @@ const AddPropertyForm = ({
 						<Form.Label>Panjang</Form.Label>
 						<Form.Control
 							disabled={isLuas}
-							ref={
-								!isLuas
-									? register({
-											required: 'Mohon sertakan panjang yang valid',
-											pattern: {
-												// eslint-disable-next-line no-useless-escape
-												value: /^([1-9]\d*(\.|\,)\d*|0?(\.|\,)\d*[1-9]\d*|[1-9]\d*)$/gm,
-												message:
-													'Hanya menerima masukan angka, koma, dan titik',
-											},
-											// eslint-disable-next-line no-mixed-spaces-and-tabs
-									  })
-									: register()
-							}
+							ref={register({
+								required: {
+									message: 'Mohon sertakan panjang yang valid',
+									value: !isLuas,
+								},
+								pattern: {
+									// eslint-disable-next-line no-useless-escape
+									value: /^([1-9]\d*(\.|\,)\d*|0?(\.|\,)\d*[1-9]\d*|[1-9]\d*)$/gm,
+									message: 'Hanya menerima masukan angka, koma, dan titik',
+								},
+								// eslint-disable-next-line no-mixed-spaces-and-tabs
+							})}
 							name='panjang'
 							placeholder='contoh: 10'
 							aria-describedby='panjangHelp'
@@ -283,20 +281,18 @@ const AddPropertyForm = ({
 						<Form.Label>Lebar</Form.Label>
 						<Form.Control
 							disabled={isLuas}
-							ref={
-								!isLuas
-									? register({
-											required: 'Mohon sertakan lebar yang valid',
-											pattern: {
-												// eslint-disable-next-line no-useless-escape
-												value: /^([1-9]\d*(\.|\,)\d*|0?(\.|\,)\d*[1-9]\d*|[1-9]\d*)$/gm,
-												message:
-													'Hanya menerima masukan angka, koma, dan titik',
-											},
-											// eslint-disable-next-line no-mixed-spaces-and-tabs
-									  })
-									: register()
-							}
+							ref={register({
+								required: {
+									message: 'Mohon sertakan lebar yang valid',
+									value: !isLuas,
+								},
+								pattern: {
+									// eslint-disable-next-line no-useless-escape
+									value: /^([1-9]\d*(\.|\,)\d*|0?(\.|\,)\d*[1-9]\d*|[1-9]\d*)$/gm,
+									message: 'Hanya menerima masukan angka, koma, dan titik',
+								},
+								// eslint-disable-next-line no-mixed-spaces-and-tabs
+							})}
 							name='lebar'
 							placeholder='contoh: 12,7'
 							aria-describedby='lebarHelp'
@@ -338,20 +334,18 @@ const AddPropertyForm = ({
 						<InputGroup>
 							<Form.Control
 								disabled={!isLuas}
-								ref={
-									isLuas
-										? register({
-												required: 'Mohon sertakan luas yang valid',
-												pattern: {
-													// eslint-disable-next-line no-useless-escape
-													value: /^([1-9]\d*(\.|\,)\d*|0?(\.|\,)\d*[1-9]\d*|[1-9]\d*)$/gm,
-													message:
-														'Hanya menerima masukan angka, koma, dan titik',
-												},
-												// eslint-disable-next-line no-mixed-spaces-and-tabs
-										  })
-										: register()
-								}
+								ref={register({
+									required: {
+										message: 'Mohon sertakan luas yang valid',
+										value: isLuas,
+									},
+									pattern: {
+										// eslint-disable-next-line no-useless-escape
+										value: /^([1-9]\d*(\.|\,)\d*|0?(\.|\,)\d*[1-9]\d*|[1-9]\d*)$/gm,
+										message: 'Hanya menerima masukan angka, koma, dan titik',
+									},
+									// eslint-disable-next-line no-mixed-spaces-and-tabs
+								})}
 								name='luas'
 								placeholder='contoh: 3'
 								aria-describedby='luasHelp'
@@ -411,7 +405,7 @@ const AddPropertyForm = ({
 						<Form.Label>Foto utama</Form.Label>
 						<Form.File
 							ref={register({
-								required: 'Please provide a valid main picture',
+								required: 'Mohon sertakan gambar yang valid.',
 							})}
 							onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
 								setLabel(e.target.files![0].name)
