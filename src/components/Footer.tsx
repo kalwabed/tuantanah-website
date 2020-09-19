@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React from 'react'
 import { Container, Row, Col } from 'react-bootstrap'
 
@@ -5,7 +6,11 @@ import gambar from '../img/logo.png'
 import { Link } from 'react-router-dom'
 import { IoLogoGithub, IoLogoInstagram, IoIosHeart } from 'react-icons/io'
 
-const Footer = () => {
+type Props = {
+	readonly isDashboard?: boolean
+}
+
+const Footer: React.FC<Props> = ({ isDashboard = false }) => {
 	return (
 		<footer className='footer position-relative bg-dark text-light'>
 			<Container>
@@ -42,24 +47,42 @@ const Footer = () => {
 					</Col>
 					<Col></Col>
 					<Col md={4} sm={4} className='d-none d-md-block'>
-						<p className='font-weight-bold '>Pages</p>
-						<ul className='link-footer p-0 mb-0'>
-							<li>
-								<Link to='/' className='text-decoration-none text-light'>
-									About us
-								</Link>
-							</li>
-							<li>
-								<Link to='/' className='text-decoration-none text-light'>
-									Contact us
-								</Link>
-							</li>
-							<li>
-								<Link to='/' className='text-decoration-none text-light'>
-									Faq
-								</Link>
-							</li>
-						</ul>
+						{!isDashboard ? (
+							<>
+								<p className='font-weight-bold '>Pages</p>
+								<ul className='link-footer p-0 mb-0'>
+									<li>
+										<Link to='/' className='text-decoration-none text-light'>
+											About us
+										</Link>
+									</li>
+									<li>
+										<Link to='/' className='text-decoration-none text-light'>
+											Contact us
+										</Link>
+									</li>
+									<li>
+										<Link to='/' className='text-decoration-none text-light'>
+											Faq
+										</Link>
+									</li>
+								</ul>
+							</>
+						) : (
+							<>
+								<p className='font-weight-bold '>Pages</p>
+								<ul className='link-footer p-0 mb-0'>
+									<li>
+										<Link
+											to='/dashboard'
+											className='text-decoration-none text-light'
+										>
+											Dashboard
+										</Link>
+									</li>
+								</ul>
+							</>
+						)}
 					</Col>
 				</Row>
 				<hr className='my-5' />

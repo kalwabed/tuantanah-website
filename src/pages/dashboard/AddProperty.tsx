@@ -4,10 +4,11 @@ import { Container, Card } from 'react-bootstrap'
 import { useQuery } from 'react-query'
 import 'react-quill/dist/quill.snow.css'
 
-import AddPropertyForm from '../components/dashboard/AddPropertyForm'
-import Header from '../components/dashboard/Header'
-import { authContext } from '../contexts/Auth'
-import { fetchProvinsi } from '../utils/fetchAPI'
+import AddPropertyForm from '../../components/dashboard/AddPropertyForm'
+import Header from '../../components/dashboard/Header'
+import { authContext } from '../../contexts/Auth'
+import { fetchProvinsi } from '../../utils/fetchAPI'
+import Footer from '../../components/Footer'
 
 const AddProperty = () => {
 	document.title = 'Add Property | tuantanah'
@@ -20,7 +21,7 @@ const AddProperty = () => {
 	return (
 		<>
 			<Header />
-			<Container>
+			<Container className='my-3'>
 				<Card>
 					<Card.Header>Add property</Card.Header>
 					<Card.Body>
@@ -32,6 +33,7 @@ const AddProperty = () => {
 					</Card.Footer>
 				</Card>
 			</Container>
+			{!isLoading && <Footer isDashboard={true} />}
 		</>
 	)
 }

@@ -4,15 +4,18 @@ import { Container, Button } from 'react-bootstrap'
 import { html } from 'gridjs'
 import { IoMdTrash, IoMdSearch, IoMdCreate } from 'react-icons/io'
 import { Property } from '../../types/index.types'
+import { useHistory } from 'react-router-dom'
 
 const Table = ({ property }: { property: Property[] }) => {
 	if (!property) return null
+	const history = useHistory()
+
 	const onDelete = (id: string) => {
 		alert(`deleting id ${id}`)
 	}
 
 	const onDetail = (id: string) => {
-		alert(`detail id ${id}`)
+		history.push(`/dashboard/property/${id}`)
 	}
 
 	const onUpdate = (id: string) => {
@@ -20,7 +23,7 @@ const Table = ({ property }: { property: Property[] }) => {
 	}
 
 	return (
-		<Container>
+		<Container className='mb-3'>
 			<Grid
 				data={property.map((prop, i) => [
 					i + 1,

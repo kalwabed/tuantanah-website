@@ -1,13 +1,13 @@
 import React, { useContext, useEffect, useState } from 'react'
-
-import { authContext } from '../contexts/Auth'
-import verify from '../utils/Verify'
-import Header from '../components/dashboard/Header'
-import Table from '../components/dashboard/Table'
 import { Badge, Button, Col, Container, Row, Spinner } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { useQuery } from 'react-query'
-import { fetchPropertyByUserID } from '../utils/fetchAPI'
+
+import { authContext } from '../../contexts/Auth'
+import verify from '../../utils/Verify'
+import Header from '../../components/dashboard/Header'
+import Table from '../../components/dashboard/Table'
+import { fetchPropertyByUserID } from '../../utils/fetchAPI'
 import {
 	IoIosAddCircle,
 	IoIosCheckmarkCircle,
@@ -21,7 +21,9 @@ const Dashboard = (props: any) => {
 	const { data, isLoading, updatedAt } = useQuery(
 		['userProperty', user._id],
 		fetchPropertyByUserID,
-		{ enabled: user, onSettled: (): void => setUpdated(new Date()) },
+		{
+			onSettled: (): void => setUpdated(new Date()),
+		},
 	)
 	const [updated, setUpdated] = useState(new Date(updatedAt))
 
@@ -38,8 +40,8 @@ const Dashboard = (props: any) => {
 	return (
 		<>
 			<Header />
-			<Container>
-				<Row className='mt-3'>
+			<Container className='my-3'>
+				<Row>
 					<Col xs={8} md={8}>
 						<Link to='/dashboard/property'>
 							<Button className='mr-2' variant='success' size='lg'>
