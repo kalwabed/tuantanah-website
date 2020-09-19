@@ -1,9 +1,8 @@
-import React, { useState, useContext, useEffect } from 'react'
+import React, { useContext, useEffect } from 'react'
 import { Redirect } from 'react-router-dom'
 import { toast } from 'react-toastify'
 import cookies from 'js-cookie'
 
-import { fetchLogin } from '../utils/fetchAPI'
 import { authContext } from '../contexts/Auth'
 import FormLogin from '../components/authentication/FormLogin'
 import BannerDevelopment from '../elements/BannerDevelopment'

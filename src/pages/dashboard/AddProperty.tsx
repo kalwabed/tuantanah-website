@@ -8,6 +8,7 @@ import AddPropertyForm from '../../components/dashboard/AddPropertyForm'
 import Header from '../../components/dashboard/Header'
 import { authContext } from '../../contexts/Auth'
 import { fetchProvinsi } from '../../utils/fetchAPI'
+import Footer from '../../components/Footer'
 
 const AddProperty = () => {
 	document.title = 'Add Property | tuantanah'
@@ -32,6 +33,7 @@ const AddProperty = () => {
 					</Card.Footer>
 				</Card>
 			</Container>
+			{!isLoading && <Footer isDashboard={true} />}
 		</>
 	)
 }

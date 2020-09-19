@@ -1,36 +1,43 @@
+/* eslint-disable react/prop-types */
 import React from 'react'
 import { Card, Col, Row } from 'react-bootstrap'
+import {
+	AiOutlineFacebook,
+	AiOutlineMail,
+	AiOutlineWhatsApp,
+} from 'react-icons/ai'
 import StatusPropertyCheck from '../../../elements/StatusPropertyCheck'
+import { Property } from '../../../types/index.types'
 
-const Identity = () => {
+const Identity: React.FC<Property> = ({
+	title,
+	location,
+	size,
+	price,
+	status,
+	contact,
+}) => {
+	if (!status) return null
 	return (
-		<section>
+		<section className='mt-3'>
 			<Row>
 				<Col>
-					<Card>
+					<Card className='shadow-sm'>
 						<Card.Body>
 							<Row>
 								<Col>
 									<Card>
 										<Card.Body>
-											<div>
-												<h5>Judul : Kaliwa Residence</h5>
-											</div>
-
-											<div>
-												<h5>Lokasi : Genteng</h5>
-											</div>
-
-											<div>
-												<h5>Ukuran : 10x7 m</h5>
-											</div>
-
-											<div>
-												<h5>Harga : 170 Juta</h5>
-											</div>
+											<h5>Judul : {title}</h5>
+											<h5>Lokasi : {location}</h5>
+											<h5>Ukuran : {size}</h5>
+											<h5>Harga : {price} Juta</h5>
 
 											<div className='h5'>
-												<StatusPropertyCheck negotiation={true} shm={false} />
+												<StatusPropertyCheck
+													negotiation={status.negotiation}
+													shm={status.shm}
+												/>
 											</div>
 											<span className='text-muted'>
 												Lorem ipsum dolor sit amet, consectetur adipisicing
@@ -45,12 +52,60 @@ const Identity = () => {
 								<Col>
 									<Card>
 										<Card.Body>
-											<p>
-												Lorem ipsum dolor sit amet consectetur adipisicing elit.
-												Quidem harum illo, perspiciatis, quisquam veniam nemo
-												qui fugit et atque earum animi quos distinctio quasi rem
-												error. Omnis delectus voluptas animi.
-											</p>
+											{contact.length < 1 && <h5>Kontak belum ditambahkan</h5>}
+											{contact.length >= 1 && <h5>Kontak :</h5>}
+											<ul className='link-footer'>
+												{contact.map((c, i) => (
+													<li key={i} className='mb-1'>
+														{c.type === 1 ? (
+															<>
+																<AiOutlineWhatsApp size='1.4em' />{' '}
+																<h6 className='h5 d-inline-block'>{c.name}</h6>
+																<ul>
+																	<li>
+																		<a
+																			className='text-reset'
+																			href={`https://wa.me/${c.url}`}
+																		>
+																			{c.url}
+																		</a>
+																	</li>
+																</ul>
+															</>
+														) : c.type === 2 ? (
+															<>
+																<AiOutlineFacebook size='1.4em' />{' '}
+																<h6 className='h5 d-inline-block'>{c.name}</h6>
+																<ul>
+																	<li>
+																		<a
+																			className='text-reset'
+																			href={`https://facebook.com/search/top?q=${c.url}`}
+																		>
+																			{c.url}
+																		</a>
+																	</li>
+																</ul>
+															</>
+														) : c.type === 3 ? (
+															<>
+																<AiOutlineMail size='1.4em' />{' '}
+																<h6 className='h5 d-inline-block'>{c.name}</h6>
+																<ul>
+																	<li>
+																		<a
+																			className='text-reset'
+																			href={`mailto:${c.url}`}
+																		>
+																			{c.url}
+																		</a>
+																	</li>
+																</ul>
+															</>
+														) : null}
+													</li>
+												))}
+											</ul>
 										</Card.Body>
 									</Card>
 								</Col>

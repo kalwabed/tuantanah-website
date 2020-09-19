@@ -13,6 +13,7 @@ import {
 	IoIosCheckmarkCircle,
 	IoIosLogOut,
 } from 'react-icons/io'
+import Footer from '../../components/Footer'
 
 const Dashboard = (props: any) => {
 	document.title = 'Dashboard | tuantanah'
@@ -22,7 +23,6 @@ const Dashboard = (props: any) => {
 		['userProperty', user._id],
 		fetchPropertyByUserID,
 		{
-			enabled: user,
 			onSettled: (): void => setUpdated(new Date()),
 		},
 	)
@@ -78,6 +78,7 @@ const Dashboard = (props: any) => {
 				)}
 			</Container>
 			{!isLoading && <Table property={data.property} />}
+			{!isLoading && <Footer isDashboard={true} />}
 		</>
 	)
 }
