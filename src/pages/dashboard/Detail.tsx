@@ -8,6 +8,7 @@ import Description from '../../components/dashboard/Detail/Description'
 import Footer from '../../components/Footer'
 import { useQuery } from 'react-query'
 import { fetchPropertyById } from '../../utils/fetchAPI'
+import LazyLoad from 'react-lazyload'
 
 const Detail = () => {
 	const id = document.location.pathname.split('/')[3]
@@ -18,17 +19,24 @@ const Detail = () => {
 			<Header />
 			<Container className='my-3'>
 				{isLoading && <h5 className='text-center'>Loading...</h5>}
-				{!isLoading && (
+				{!isLoading && !data.success && (
+					<h5 className='text-center'>
+						Data tidak ditemukan. Silahkan kembali ke menu
+					</h5>
+				)}
+				{!isLoading && data.success && (
 					<>
 						<Row>
 							<Col>
 								<Card>
-									<Card.Img
-										className='img-gallery'
-										src={data.property.mainPicture}
-										height={400}
-										width='100%'
-									/>
+									<LazyLoad height={100} once>
+										<Card.Img
+											className='img-gallery'
+											src={data.property.mainPicture}
+											height={400}
+											width='100%'
+										/>
+									</LazyLoad>
 								</Card>
 							</Col>
 						</Row>

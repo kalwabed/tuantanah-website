@@ -21,7 +21,7 @@ const AddProperty = () => {
 	return (
 		<>
 			<Header />
-			<Container>
+			<Container className='my-3'>
 				<Card>
 					<Card.Header>Add property</Card.Header>
 					<Card.Body>

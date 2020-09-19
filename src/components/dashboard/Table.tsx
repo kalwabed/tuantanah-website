@@ -23,7 +23,7 @@ const Table = ({ property }: { property: Property[] }) => {
 	}
 
 	return (
-		<Container>
+		<Container className='mb-3'>
 			<Grid
 				data={property.map((prop, i) => [
 					i + 1,

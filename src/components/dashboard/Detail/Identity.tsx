@@ -52,7 +52,11 @@ const Identity: React.FC<Property> = ({
 								<Col>
 									<Card>
 										<Card.Body>
-											{contact.length < 1 && <h5>Kontak belum ditambahkan</h5>}
+											{contact.length < 1 && (
+												<h5 className='text-muted text-center'>
+													Kontak belum ditambahkan
+												</h5>
+											)}
 											{contact.length >= 1 && <h5>Kontak :</h5>}
 											<ul className='link-footer'>
 												{contact.map((c, i) => (

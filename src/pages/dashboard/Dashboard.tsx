@@ -13,7 +13,6 @@ import {
 	IoIosCheckmarkCircle,
 	IoIosLogOut,
 } from 'react-icons/io'
-import Footer from '../../components/Footer'
 
 const Dashboard = (props: any) => {
 	document.title = 'Dashboard | tuantanah'
@@ -41,8 +40,8 @@ const Dashboard = (props: any) => {
 	return (
 		<>
 			<Header />
-			<Container>
-				<Row className='mt-3'>
+			<Container className='my-3'>
+				<Row>
 					<Col xs={8} md={8}>
 						<Link to='/dashboard/property'>
 							<Button className='mr-2' variant='success' size='lg'>
@@ -78,7 +77,6 @@ const Dashboard = (props: any) => {
 				)}
 			</Container>
 			{!isLoading && <Table property={data.property} />}
-			{!isLoading && <Footer isDashboard={true} />}
 		</>
 	)
 }
