@@ -2,6 +2,20 @@ export type refVisLer = {
 	refVisitorDealer: any | null
 }
 
+export type apiProvinsi = {
+	provinsi: [
+		{
+			id: number
+			nama: string
+		},
+	]
+}
+
+export type apiKotaKab = {
+	id: number
+	id_provinsi: string
+	nama: string
+}
 export interface IServerResponse {
 	response: {
 		msg: string

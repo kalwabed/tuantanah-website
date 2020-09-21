@@ -8,31 +8,20 @@ import { useMutation, useQuery } from 'react-query'
 import Quill from 'react-quill'
 import { toast } from 'react-toastify'
 
-import { IApiUser, Inputs } from '../../types/index.types'
+import {
+	IApiUser,
+	Inputs,
+	apiProvinsi,
+	apiKotaKab,
+} from '../../types/index.types'
 import { fetchKotaByProv, fetchAddProperty } from '../../utils/fetchAPI'
 
-type dataProvinsi = {
-	provinsi: [
-		{
-			id: number
-			nama: string
-		},
-	]
-}
-
-type kotaKab = {
-	id: number
-	id_provinsi: string
-	nama: string
-}
-
-const AddPropertyForm = ({
-	user,
-	dataProvinsi,
-}: {
+type Props = {
 	user: IApiUser
-	dataProvinsi: dataProvinsi
-}) => {
+	dataProvinsi: apiProvinsi
+}
+
+const AddPropertyForm: React.FC<Props> = ({ user, dataProvinsi }) => {
 	// BEGIN ----------------------------
 	const { watch, register, handleSubmit, errors, setValue } = useForm<Inputs>()
 	const [isLuas, setIsLuas] = useState(false)
@@ -198,7 +187,7 @@ const AddPropertyForm = ({
 								-- Kota --
 							</option>
 							{data &&
-								data.kota_kabupaten.map((kota: kotaKab) => (
+								data.kota_kabupaten.map((kota: apiKotaKab) => (
 									<option key={kota.id} value={kota.id}>
 										{kota.nama}
 									</option>
