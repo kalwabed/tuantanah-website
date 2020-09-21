@@ -26,42 +26,40 @@ const SectionContact: React.FC<Property> = ({ contact }) => {
 								{contact.length < 1 && (
 									<Col>Tidak ada kontak yang bisa dihubungi</Col>
 								)}
-								{contact.map(contact => (
-									<>
-										<Col as='h5' xs={12} md={3}>
-											{contact.type === 1 ? (
-												<>
-													<AiOutlineWhatsApp size='1.2em' />
-													<a
-														href={`https://wa.me/${contact.url}`}
-														className='newlink ml-1'
-													>
-														{contact.name}
-													</a>
-												</>
-											) : contact.type === 2 ? (
-												<>
-													<AiOutlineFacebook size='1.2em' />
-													<a
-														href={`https://facebook.com/search/top?q=${contact.url}`}
-														className='newlink ml-1'
-													>
-														{contact.name}
-													</a>
-												</>
-											) : contact.type === 3 ? (
-												<>
-													<AiOutlineMail size='1.2em' />
-													<a
-														href={`mailto:${contact.url}`}
-														className='newlink ml-1'
-													>
-														{contact.name}
-													</a>
-												</>
-											) : null}
-										</Col>
-									</>
+								{contact.map((contact, i) => (
+									<Col as='h5' xs={12} md={3} key={i}>
+										{contact.type === 1 ? (
+											<>
+												<AiOutlineWhatsApp size='1.2em' />
+												<a
+													href={`https://wa.me/${contact.url}`}
+													className='newlink ml-1'
+												>
+													{contact.name}
+												</a>
+											</>
+										) : contact.type === 2 ? (
+											<>
+												<AiOutlineFacebook size='1.2em' />
+												<a
+													href={`https://facebook.com/search/top?q=${contact.url}`}
+													className='newlink ml-1'
+												>
+													{contact.name}
+												</a>
+											</>
+										) : contact.type === 3 ? (
+											<>
+												<AiOutlineMail size='1.2em' />
+												<a
+													href={`mailto:${contact.url}`}
+													className='newlink ml-1'
+												>
+													{contact.name}
+												</a>
+											</>
+										) : null}
+									</Col>
 								))}
 							</Row>
 						</Card.Body>

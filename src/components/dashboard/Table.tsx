@@ -29,7 +29,7 @@ const Table = ({ property }: { property: Property[] }) => {
 	}
 
 	const onUpdate = (id: string) => {
-		alert(`update id ${id}`)
+		history.push(`/dashboard/property/up/${id}`)
 	}
 
 	return (
@@ -40,7 +40,7 @@ const Table = ({ property }: { property: Property[] }) => {
 					prop.mainPicture,
 					prop.title,
 					prop.size,
-					prop.location,
+					prop.location.name,
 					_(
 						<>
 							<Button
