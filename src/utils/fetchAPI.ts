@@ -160,4 +160,16 @@ export const fetchPropertyById = async (key: string, propertyId: string) => {
 	}
 }
 
+export const fetchDeleteProperty = async (id: string) => {
+	try {
+		return await (
+			await fetch(`${process.env.ENDPOINT}/d/property/${id}`, {
+				method: 'delete',
+			})
+		).json()
+	} catch (err) {
+		console.error(err)
+	}
+}
+
 //? errorCode = 400:bad req, 401:unauthorized

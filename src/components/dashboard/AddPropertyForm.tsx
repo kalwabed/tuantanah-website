@@ -8,37 +8,8 @@ import { useMutation, useQuery } from 'react-query'
 import Quill from 'react-quill'
 import { toast } from 'react-toastify'
 
-import { IApiUser } from '../../types/index.types'
+import { IApiUser, Inputs } from '../../types/index.types'
 import { fetchKotaByProv, fetchAddProperty } from '../../utils/fetchAPI'
-
-type Inputs = {
-	// inputan dari user
-	fullName: string
-	title: string
-	provinsi: string
-	kota: string
-	description: string
-	isLuas: string
-	userId: string
-	luas?: string
-	panjang?: string
-	lebar?: string
-	price?: string
-	mainPicture: FileList
-	nego: boolean
-	kontak1?: string
-	kontak2?: string
-	kontak3?: string
-	kontak4?: string
-	checkKontak1?: number | string
-	checkKontak2?: number | string
-	checkKontak3?: number | string
-	checkKontak4?: number | string
-	userKontak1?: string
-	userKontak2?: string
-	userKontak3?: string
-	userKontak4?: string
-}
 
 type dataProvinsi = {
 	provinsi: [
@@ -105,11 +76,11 @@ const AddPropertyForm = ({
 		formData.append('userKontak3', String(data.userKontak3))
 		formData.append('userKontak4', String(data.userKontak4))
 
-		// for development purpose!
+		//? for development purpose!
 		// formData.forEach((val, key) => {
 		// 	console.log(`${key}, ${val}`)
 		// })
-		// ----------------------
+		//? ----------------------
 
 		try {
 			const newProp = await mutate(formData)
@@ -250,20 +221,18 @@ const AddPropertyForm = ({
 						<Form.Label>Panjang</Form.Label>
 						<Form.Control
 							disabled={isLuas}
-							ref={
-								!isLuas
-									? register({
-											required: 'Mohon sertakan panjang yang valid',
-											pattern: {
-												// eslint-disable-next-line no-useless-escape
-												value: /^([1-9]\d*(\.|\,)\d*|0?(\.|\,)\d*[1-9]\d*|[1-9]\d*)$/gm,
-												message:
-													'Hanya menerima masukan angka, koma, dan titik',
-											},
-											// eslint-disable-next-line no-mixed-spaces-and-tabs
-									  })
-									: register()
-							}
+							ref={register({
+								required: {
+									message: 'Mohon sertakan panjang yang valid',
+									value: !isLuas,
+								},
+								pattern: {
+									// eslint-disable-next-line no-useless-escape
+									value: /^([1-9]\d*(\.|\,)\d*|0?(\.|\,)\d*[1-9]\d*|[1-9]\d*)$/gm,
+									message: 'Hanya menerima masukan angka, koma, dan titik',
+								},
+								// eslint-disable-next-line no-mixed-spaces-and-tabs
+							})}
 							name='panjang'
 							placeholder='contoh: 10'
 							aria-describedby='panjangHelp'
@@ -283,20 +252,18 @@ const AddPropertyForm = ({
 						<Form.Label>Lebar</Form.Label>
 						<Form.Control
 							disabled={isLuas}
-							ref={
-								!isLuas
-									? register({
-											required: 'Mohon sertakan lebar yang valid',
-											pattern: {
-												// eslint-disable-next-line no-useless-escape
-												value: /^([1-9]\d*(\.|\,)\d*|0?(\.|\,)\d*[1-9]\d*|[1-9]\d*)$/gm,
-												message:
-													'Hanya menerima masukan angka, koma, dan titik',
-											},
-											// eslint-disable-next-line no-mixed-spaces-and-tabs
-									  })
-									: register()
-							}
+							ref={register({
+								required: {
+									message: 'Mohon sertakan lebar yang valid',
+									value: !isLuas,
+								},
+								pattern: {
+									// eslint-disable-next-line no-useless-escape
+									value: /^([1-9]\d*(\.|\,)\d*|0?(\.|\,)\d*[1-9]\d*|[1-9]\d*)$/gm,
+									message: 'Hanya menerima masukan angka, koma, dan titik',
+								},
+								// eslint-disable-next-line no-mixed-spaces-and-tabs
+							})}
 							name='lebar'
 							placeholder='contoh: 12,7'
 							aria-describedby='lebarHelp'
@@ -338,20 +305,18 @@ const AddPropertyForm = ({
 						<InputGroup>
 							<Form.Control
 								disabled={!isLuas}
-								ref={
-									isLuas
-										? register({
-												required: 'Mohon sertakan luas yang valid',
-												pattern: {
-													// eslint-disable-next-line no-useless-escape
-													value: /^([1-9]\d*(\.|\,)\d*|0?(\.|\,)\d*[1-9]\d*|[1-9]\d*)$/gm,
-													message:
-														'Hanya menerima masukan angka, koma, dan titik',
-												},
-												// eslint-disable-next-line no-mixed-spaces-and-tabs
-										  })
-										: register()
-								}
+								ref={register({
+									required: {
+										message: 'Mohon sertakan luas yang valid',
+										value: isLuas,
+									},
+									pattern: {
+										// eslint-disable-next-line no-useless-escape
+										value: /^([1-9]\d*(\.|\,)\d*|0?(\.|\,)\d*[1-9]\d*|[1-9]\d*)$/gm,
+										message: 'Hanya menerima masukan angka, koma, dan titik',
+									},
+									// eslint-disable-next-line no-mixed-spaces-and-tabs
+								})}
 								name='luas'
 								placeholder='contoh: 3'
 								aria-describedby='luasHelp'
@@ -411,7 +376,7 @@ const AddPropertyForm = ({
 						<Form.Label>Foto utama</Form.Label>
 						<Form.File
 							ref={register({
-								required: 'Please provide a valid main picture',
+								required: 'Mohon sertakan gambar yang valid.',
 							})}
 							onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
 								setLabel(e.target.files![0].name)

@@ -5,13 +5,23 @@ import { html } from 'gridjs'
 import { IoMdTrash, IoMdSearch, IoMdCreate } from 'react-icons/io'
 import { Property } from '../../types/index.types'
 import { useHistory } from 'react-router-dom'
+import { fetchDeleteProperty } from '../../utils/fetchAPI'
+import { toast } from 'react-toastify'
+import { useQueryCache } from 'react-query'
 
 const Table = ({ property }: { property: Property[] }) => {
 	if (!property) return null
+	const queryCache = useQueryCache()
 	const history = useHistory()
 
-	const onDelete = (id: string) => {
-		alert(`deleting id ${id}`)
+	const onDelete = async (id: string) => {
+		const result = await fetchDeleteProperty(id)
+		if (!result.success) {
+			toast.warning(result.msg)
+		} else {
+			toast.success('Properti berhasil dihapus')
+			queryCache.invalidateQueries('userProperty')
+		}
 	}
 
 	const onDetail = (id: string) => {
@@ -19,7 +29,7 @@ const Table = ({ property }: { property: Property[] }) => {
 	}
 
 	const onUpdate = (id: string) => {
-		alert(`update id ${id}`)
+		history.push(`/dashboard/property/up/${id}`)
 	}
 
 	return (
@@ -30,7 +40,7 @@ const Table = ({ property }: { property: Property[] }) => {
 					prop.mainPicture,
 					prop.title,
 					prop.size,
-					prop.location,
+					prop.location.name,
 					_(
 						<>
 							<Button
