@@ -5,12 +5,14 @@ import { useQuery } from 'react-query'
 import EditForm from '../../components/dashboard/EditPropertyForm'
 import Header from '../../components/dashboard/Header'
 import Footer from '../../components/Footer'
+import { authContext } from '../../contexts/Auth'
 import { fetchPropertyById, fetchProvinsi } from '../../utils/fetchAPI'
 
 const EditProperty = () => {
 	const id = document.location.pathname.split('/')[4]
 	const { data, isLoading } = useQuery(['propById', id], fetchPropertyById)
 	const dataProvinsi = useQuery('provinsi', fetchProvinsi, { enabled: data })
+	const { user } = React.useContext(authContext)
 
 	return (
 		<>
@@ -31,7 +33,11 @@ const EditProperty = () => {
 			)}
 
 			{!isLoading && !dataProvinsi.isLoading && (
-				<EditForm prop={...data.property} dataProvinsi={dataProvinsi.data} />
+				<EditForm
+					prop={...data.property}
+					dataProvinsi={dataProvinsi.data}
+					user={user}
+				/>
 			)}
 			{!isLoading && !dataProvinsi.isLoading && <Footer isDashboard={true} />}
 		</>

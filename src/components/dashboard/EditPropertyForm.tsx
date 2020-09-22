@@ -16,24 +16,24 @@ import { Link } from 'react-router-dom'
 import {
 	apiKotaKab,
 	apiProvinsi,
+	IApiUser,
 	Inputs,
 	Property,
 } from '../../types/index.types'
 import { fetchKotaByProv } from '../../utils/fetchAPI'
 
 interface newInputs extends Inputs {
-	galleryImg1: string
-	galleryImg2: string
-	galleryImg3: string
-	galleryImg4: string
+	gallery: FileList
 }
 
 const EditPropertyForm = ({
 	prop,
 	dataProvinsi,
+	user,
 }: {
 	prop: Property
 	dataProvinsi: apiProvinsi
+	user: IApiUser
 }) => {
 	const {
 		isLarge,
@@ -46,15 +46,54 @@ const EditPropertyForm = ({
 		mainPicture,
 		gallery,
 	} = prop
-	const { register, watch } = useForm<newInputs>()
+	const { register, watch, handleSubmit } = useForm<newInputs>()
 	const [kota, setKota] = useState(11)
 	const [deskripsi, setDeskripsi] = useState(description)
+	const [labelUtama, setLabelUtama] = useState('Unggah foto')
+	const [labelGaleri, setLabelGaleri] = useState('Unggah maks. 4 foto')
 	const [isLuas, setIsLuas] = useState(isLarge)
 	const { data, isLoading } = useQuery(['kota', kota], fetchKotaByProv)
 
+	const onSubmit = async (data: newInputs) => {
+		const formData = new FormData()
+		formData.append('fullName', data.fullName)
+		formData.append('title', data.title)
+		formData.append('provinsi', data.provinsi)
+		formData.append('kota', data.kota)
+		formData.append('description', description)
+		formData.append('luas', String(data.luas))
+		formData.append('panjang', String(data.panjang))
+		formData.append('lebar', String(data.lebar))
+		formData.append('price', String(data.price))
+		formData.append('userId', user._id)
+		formData.append('isLuas', String(isLuas))
+		formData.append('mainPicture', data.mainPicture[0])
+		formData.append('nego', String(data.nego))
+		formData.append('kontak1', String(data.kontak1))
+		formData.append('kontak2', String(data.kontak2))
+		formData.append('kontak3', String(data.kontak3))
+		formData.append('kontak4', String(data.kontak4))
+		formData.append('checkKontak1', String(data.checkKontak1))
+		formData.append('checkKontak2', String(data.checkKontak2))
+		formData.append('checkKontak3', String(data.checkKontak3))
+		formData.append('checkKontak4', String(data.checkKontak4))
+		formData.append('userKontak1', String(data.userKontak1))
+		formData.append('userKontak2', String(data.userKontak2))
+		formData.append('userKontak3', String(data.userKontak3))
+		formData.append('userKontak4', String(data.userKontak4))
+		for (let i = 0; i < data.gallery.length; i++) {
+			formData.append('gallery', data.gallery[i])
+		}
+		//? for development purpose!
+		formData.forEach((val, key) => {
+			console.log(`${key}, ${val}`)
+		})
+		//? ----------------------
+	}
+
 	return (
 		<Container fluid>
-			<Form>
+			<Form onSubmit={handleSubmit(onSubmit)}>
 				<Row>
 					{/* gambar utama dan galeri  */}
 					<Card as={Col} className='mr-2'>
@@ -76,7 +115,10 @@ const EditPropertyForm = ({
 										custom
 										id='mainPicture'
 										name='mainPicture'
-										label='Unggah foto'
+										label={labelUtama}
+										onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+											setLabelUtama(e.target.files![0].name)
+										}
 									/>
 								</Form.Group>
 							</Row>
@@ -96,6 +138,26 @@ const EditPropertyForm = ({
 										</Col>
 									))}
 							</Row>
+
+							<Form.Row className='my-2'>
+								<Form.Group as={Col}>
+									<Form.Label htmlFor='gallery'>Unggah Galeri</Form.Label>
+									<Form.File
+										multiple
+										custom
+										id='gallery'
+										name='gallery'
+										ref={register}
+										accept='image/*'
+										label={labelGaleri}
+										onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
+											setLabelGaleri(
+												`${e.target.files?.length} gambar terpilih`,
+											)
+										}
+									/>
+								</Form.Group>
+							</Form.Row>
 						</Card.Body>
 					</Card>
 
@@ -245,13 +307,13 @@ const EditPropertyForm = ({
 							{/* harga dan ceklis negosiasi */}
 							<Form.Row>
 								<Form.Group as={Col}>
-									<Form.Label htmlFor='harga'>Harga</Form.Label>
+									<Form.Label htmlFor='price'>Harga</Form.Label>
 									<InputGroup>
 										<Form.Control
 											ref={register}
 											defaultValue={price}
-											id='harga'
-											name='harga'
+											id='price'
+											name='price'
 											placeholder='contoh: 10'
 										/>
 										<InputGroup.Append>
@@ -544,12 +606,12 @@ const EditPropertyForm = ({
 				</Row>
 				<Row className='my-4 text-center'>
 					<Col>
-						<Button variant='success' type='submit' className='mr-2'>
-							Submit
-						</Button>
 						<Link to='/dashboard'>
 							<Button variant='secondary'>Back</Button>
 						</Link>
+						<Button variant='success' type='submit' className='ml-2'>
+							Submit
+						</Button>
 					</Col>
 				</Row>
 			</Form>

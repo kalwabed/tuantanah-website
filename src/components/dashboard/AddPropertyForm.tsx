@@ -373,6 +373,7 @@ const AddPropertyForm: React.FC<Props> = ({ user, dataProvinsi }) => {
 							id='mainpic-file'
 							name='mainPicture'
 							label={label}
+							accept='image/*'
 							custom
 							aria-describedby='mainPicHelp'
 						/>
