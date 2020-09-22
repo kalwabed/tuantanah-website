@@ -12,6 +12,7 @@ import {
 import { useForm } from 'react-hook-form'
 import { useQuery } from 'react-query'
 import Quill from 'react-quill'
+import { Link } from 'react-router-dom'
 import {
 	apiKotaKab,
 	apiProvinsi,
@@ -34,7 +35,7 @@ const EditPropertyForm = ({
 	prop: Property
 	dataProvinsi: apiProvinsi
 }) => {
-	const { isLarge, title, size, price, status, description } = prop
+	const { isLarge, title, size, price, status, description, contact } = prop
 	const { register, watch } = useForm<newInputs>()
 	const [kota, setKota] = useState(11)
 	const [deskripsi, setDeskripsi] = useState(description)
@@ -245,15 +246,42 @@ const EditPropertyForm = ({
 										ref={register()}
 										custom
 									>
-										<option value='0'>Kosong</option>
-										<option value='1'>Whatsapp</option>
-										<option value='2'>Facebook</option>
-										<option value='3'>Email</option>
+										{contact[0] ? (
+											<>
+												<option value={contact[0].type}>
+													{contact[0].type == 1
+														? 'Whatsapp'
+														: contact[0].type == 2
+														? 'Facebook'
+														: contact[0].type == 3
+														? 'Email'
+														: ''}
+												</option>
+												{contact[0].type !== 1 && (
+													<option value='1'>Whatsapp</option>
+												)}
+												{contact[0].type !== 2 && (
+													<option value='2'>Facebook</option>
+												)}
+												{contact[0].type !== 3 && (
+													<option value='3'>Email</option>
+												)}
+												<option value='0'>Kosong</option>
+											</>
+										) : (
+											<>
+												<option value='0'>Kosong</option>
+												<option value='1'>Whatsapp</option>
+												<option value='2'>Facebook</option>
+												<option value='3'>Email</option>
+											</>
+										)}
 									</Form.Control>
 									<Form.Control
 										name='kontak1'
 										ref={register()}
 										disabled={watch('checkKontak1') == 0 ? true : false}
+										defaultValue={contact[0].url ? contact[0].url : ''}
 										placeholder={
 											watch('checkKontak1') == 1
 												? '628xxxxxxxxx'
@@ -268,6 +296,7 @@ const EditPropertyForm = ({
 										className='mt-1'
 										name='userKontak1'
 										ref={register()}
+										defaultValue={contact[0].name ? contact[0].name : ''}
 										placeholder='Nama tampilan'
 										disabled={watch('checkKontak1') == 0 ? true : false}
 									/>
@@ -280,15 +309,42 @@ const EditPropertyForm = ({
 										ref={register()}
 										custom
 									>
-										<option value='0'>Kosong</option>
-										<option value='1'>Whatsapp</option>
-										<option value='2'>Facebook</option>
-										<option value='3'>Email</option>
+										{contact[1] ? (
+											<>
+												<option value={contact[1].type}>
+													{contact[1].type == 1
+														? 'Whatsapp'
+														: contact[1].type == 2
+														? 'Facebook'
+														: contact[1].type == 3
+														? 'Email'
+														: ''}
+												</option>
+												{contact[1].type !== 1 && (
+													<option value='1'>Whatsapp</option>
+												)}
+												{contact[1].type !== 2 && (
+													<option value='2'>Facebook</option>
+												)}
+												{contact[1].type !== 3 && (
+													<option value='3'>Email</option>
+												)}
+												<option value='0'>Kosong</option>
+											</>
+										) : (
+											<>
+												<option value='0'>Kosong</option>
+												<option value='1'>Whatsapp</option>
+												<option value='2'>Facebook</option>
+												<option value='3'>Email</option>
+											</>
+										)}
 									</Form.Control>
 									<Form.Control
 										name='kontak2'
 										ref={register()}
 										disabled={watch('checkKontak2') == 0 ? true : false}
+										defaultValue={contact[1].url ? contact[1].url : ''}
 										placeholder={
 											watch('checkKontak2') == 1
 												? '628xxxxxxxxx'
@@ -303,6 +359,7 @@ const EditPropertyForm = ({
 										className='mt-1'
 										name='userKontak2'
 										ref={register()}
+										defaultValue={contact[1].name ? contact[1].name : ''}
 										placeholder='Nama tampilan'
 										disabled={watch('checkKontak2') == 0 ? true : false}
 									/>
@@ -315,13 +372,40 @@ const EditPropertyForm = ({
 										ref={register()}
 										custom
 									>
-										<option value='0'>Kosong</option>
-										<option value='1'>Whatsapp</option>
-										<option value='2'>Facebook</option>
-										<option value='3'>Email</option>
+										{contact[2] ? (
+											<>
+												<option value={contact[2].type}>
+													{contact[2].type == 1
+														? 'Whatsapp'
+														: contact[2].type == 2
+														? 'Facebook'
+														: contact[2].type == 3
+														? 'Email'
+														: ''}
+												</option>
+												{contact[2].type !== 1 && (
+													<option value='1'>Whatsapp</option>
+												)}
+												{contact[2].type !== 2 && (
+													<option value='2'>Facebook</option>
+												)}
+												{contact[2].type !== 3 && (
+													<option value='3'>Email</option>
+												)}
+												<option value='0'>Kosong</option>
+											</>
+										) : (
+											<>
+												<option value='0'>Kosong</option>
+												<option value='1'>Whatsapp</option>
+												<option value='2'>Facebook</option>
+												<option value='3'>Email</option>
+											</>
+										)}
 									</Form.Control>
 									<Form.Control
 										name='kontak3'
+										defaultValue={contact[2].url ? contact[2].url : ''}
 										ref={register()}
 										disabled={watch('checkKontak3') == 0 ? true : false}
 										placeholder={
@@ -337,6 +421,7 @@ const EditPropertyForm = ({
 									<Form.Control
 										className='mt-1'
 										name='userKontak3'
+										defaultValue={contact[2].name ? contact[2].name : ''}
 										ref={register()}
 										placeholder='Nama tampilan'
 										disabled={watch('checkKontak3') == 0 ? true : false}
@@ -350,14 +435,41 @@ const EditPropertyForm = ({
 										ref={register()}
 										custom
 									>
-										<option value='0'>Kosong</option>
-										<option value='1'>Whatsapp</option>
-										<option value='2'>Facebook</option>
-										<option value='3'>Email</option>
+										{contact[3] ? (
+											<>
+												<option value={contact[3].type}>
+													{contact[3].type == 1
+														? 'Whatsapp'
+														: contact[3].type == 2
+														? 'Facebook'
+														: contact[3].type == 3
+														? 'Email'
+														: ''}
+												</option>
+												{contact[3].type !== 1 && (
+													<option value='1'>Whatsapp</option>
+												)}
+												{contact[3].type !== 2 && (
+													<option value='2'>Facebook</option>
+												)}
+												{contact[3].type !== 3 && (
+													<option value='3'>Email</option>
+												)}
+												<option value='0'>Kosong</option>
+											</>
+										) : (
+											<>
+												<option value='0'>Kosong</option>
+												<option value='1'>Whatsapp</option>
+												<option value='2'>Facebook</option>
+												<option value='3'>Email</option>
+											</>
+										)}
 									</Form.Control>
 									<Form.Control
 										name='kontak4'
 										ref={register()}
+										defaultValue={contact[3].url ? contact[3].url : ''}
 										disabled={watch('checkKontak4') == 0 ? true : false}
 										placeholder={
 											watch('checkKontak4') == 1
@@ -372,6 +484,7 @@ const EditPropertyForm = ({
 									<Form.Control
 										className='mt-1'
 										name='userKontak4'
+										defaultValue={contact[3].name ? contact[3].name : ''}
 										ref={register()}
 										placeholder='Nama tampilan'
 										disabled={watch('checkKontak4') == 0 ? true : false}
@@ -386,7 +499,9 @@ const EditPropertyForm = ({
 						<Button variant='success' type='submit' className='mr-2'>
 							Submit
 						</Button>
-						<Button variant='secondary'>Cancel</Button>
+						<Link to='/dashboard'>
+							<Button variant='secondary'>Back</Button>
+						</Link>
 					</Col>
 				</Row>
 			</Form>

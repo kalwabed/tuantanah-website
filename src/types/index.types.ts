@@ -122,7 +122,23 @@ export interface Property {
 			imageUrl: string
 		},
 	]
+
 	contact: [
+		{
+			name: string
+			type: sosmedType
+			url: string
+		},
+		{
+			name: string
+			type: sosmedType
+			url: string
+		},
+		{
+			name: string
+			type: sosmedType
+			url: string
+		},
 		{
 			name: string
 			type: sosmedType
