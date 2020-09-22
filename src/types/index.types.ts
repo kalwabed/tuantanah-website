@@ -102,7 +102,12 @@ export interface Property {
 	}
 	mainPicture: string
 	price: number
-	size: string
+	size: {
+		display: string
+		wide: string
+		long: string
+		large: string
+	}
 	isLarge: boolean
 	status: {
 		shm: boolean

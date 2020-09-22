@@ -39,7 +39,7 @@ const Table = ({ property }: { property: Property[] }) => {
 					i + 1,
 					prop.mainPicture,
 					prop.title,
-					prop.size,
+					prop.size.display,
 					prop.location.name,
 					_(
 						<>

@@ -22,6 +22,7 @@ const EditProperty = () => {
 					<Spinner variant='success' animation='grow' />
 				</div>
 			)}
+			{/* 'memuat' yang atas dan bawah untuk menciptakan efek dinamis */}
 			{dataProvinsi.isLoading && (
 				<div className='text-center p-5'>
 					Memuat data provinsi...
@@ -32,7 +33,7 @@ const EditProperty = () => {
 			{!isLoading && !dataProvinsi.isLoading && (
 				<EditForm prop={...data.property} dataProvinsi={dataProvinsi.data} />
 			)}
-			<Footer isDashboard={true} />
+			{!isLoading && !dataProvinsi.isLoading && <Footer isDashboard={true} />}
 		</>
 	)
 }

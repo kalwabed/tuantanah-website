@@ -30,7 +30,7 @@ const Identity: React.FC<Property> = ({
 										<Card.Body>
 											<h5>Judul : {title}</h5>
 											<h5>Lokasi : {location.name}</h5>
-											<h5>Ukuran : {size}</h5>
+											<h5>Ukuran : {size.display}</h5>
 											<h5>Harga : {price} Juta</h5>
 
 											<div className='h5'>

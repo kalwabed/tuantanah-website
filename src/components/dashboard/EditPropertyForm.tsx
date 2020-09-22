@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import React from 'react'
+import React, { useState } from 'react'
 import {
 	Button,
 	Card,
@@ -10,8 +10,15 @@ import {
 	Row,
 } from 'react-bootstrap'
 import { useForm } from 'react-hook-form'
+import { useQuery } from 'react-query'
 import Quill from 'react-quill'
-import { apiProvinsi, Inputs, Property } from '../../types/index.types'
+import {
+	apiKotaKab,
+	apiProvinsi,
+	Inputs,
+	Property,
+} from '../../types/index.types'
+import { fetchKotaByProv } from '../../utils/fetchAPI'
 
 interface newInputs extends Inputs {
 	galleryImg1: string
@@ -27,8 +34,13 @@ const EditPropertyForm = ({
 	prop: Property
 	dataProvinsi: apiProvinsi
 }) => {
+	const { isLarge, title, size, price, status, description } = prop
 	const { register, watch } = useForm<newInputs>()
-	console.log(dataProvinsi)
+	const [kota, setKota] = useState(11)
+	const [deskripsi, setDeskripsi] = useState(description)
+	const [isLuas, setIsLuas] = useState(isLarge)
+	const { data, isLoading } = useQuery(['kota', kota], fetchKotaByProv)
+
 	return (
 		<Container fluid>
 			<Form>
@@ -60,7 +72,7 @@ const EditPropertyForm = ({
 								<Form.Group as={Col}>
 									<Form.Label htmlFor='title'>Judul</Form.Label>
 									<Form.Control
-										defaultValue={prop.title}
+										defaultValue={title}
 										id='title'
 										name='title'
 										ref={register}
@@ -83,23 +95,37 @@ const EditPropertyForm = ({
 										<option value='' disabled>
 											-- Provinsi --
 										</option>
-										<option value='Jawa barat'>Jawa barat</option>
+										{dataProvinsi.provinsi.map(prov => (
+											<option
+												onClick={() => setKota(prov.id)}
+												key={prov.id}
+												value={prov.id}
+											>
+												{prov.nama}
+											</option>
+										))}
 									</Form.Control>
 								</Form.Group>
 								{/* kota */}
 								<Form.Group as={Col}>
 									<Form.Label htmlFor='kota'>Kota/Kabupaten</Form.Label>
 									<Form.Control
+										ref={register}
+										disabled={isLoading}
 										id='kota'
 										name='kota'
-										ref={register}
 										custom
 										as='select'
 									>
 										<option value='' disabled>
 											-- Kota/Kabupaten --
 										</option>
-										<option value='Bandung'>Bandung</option>
+										{data &&
+											data.kota_kabupaten.map((kota: apiKotaKab) => (
+												<option key={kota.id} value={kota.id}>
+													{kota.nama}
+												</option>
+											))}
 									</Form.Control>
 								</Form.Group>
 							</Form.Row>
@@ -110,9 +136,11 @@ const EditPropertyForm = ({
 								<Form.Group as={Col}>
 									<Form.Label htmlFor='panjang'>Panjang</Form.Label>
 									<Form.Control
+										ref={register}
+										disabled={isLuas}
+										defaultValue={!isLuas ? size.long : ''}
 										id='panjang'
 										name='panjang'
-										ref={register}
 										placeholder='contoh: 10'
 									/>
 								</Form.Group>
@@ -120,9 +148,11 @@ const EditPropertyForm = ({
 								<Form.Group as={Col}>
 									<Form.Label htmlFor='lebar'>Lebar</Form.Label>
 									<Form.Control
+										ref={register}
+										disabled={isLuas}
+										defaultValue={!isLuas ? size.wide : ''}
 										id='lebar'
 										name='lebar'
-										ref={register}
 										placeholder='contoh: 1,5'
 									/>
 								</Form.Group>
@@ -132,10 +162,11 @@ const EditPropertyForm = ({
 							<Form.Row>
 								<Form.Group as={Col}>
 									<Form.Check
+										ref={register}
+										onClick={() => setIsLuas(!isLuas)}
 										id='isLuas'
 										name='isLuas'
-										defaultChecked={false}
-										ref={register}
+										defaultChecked={isLuas}
 										custom
 										label='Pakai ukuran luas'
 									/>
@@ -148,9 +179,11 @@ const EditPropertyForm = ({
 									<Form.Label htmlFor='luas'>Luas</Form.Label>
 									<InputGroup>
 										<Form.Control
+											ref={register}
+											disabled={!isLuas}
+											defaultValue={isLuas ? size.large : ''}
 											id='luas'
 											name='luas'
-											ref={register}
 											placeholder='contoh: 4'
 										/>
 										<InputGroup.Append>
@@ -166,20 +199,22 @@ const EditPropertyForm = ({
 									<Form.Label htmlFor='harga'>Harga</Form.Label>
 									<InputGroup>
 										<Form.Control
+											ref={register}
+											defaultValue={price}
 											id='harga'
 											name='harga'
-											ref={register}
 											placeholder='contoh: 10'
 										/>
 										<InputGroup.Append>
 											<InputGroup.Text>
 												<Form.Check
-													custom
+													ref={register}
+													defaultChecked={status.negotiation}
 													name='nego'
 													id='nego'
 													label='Negosiasi ?'
 													type='checkbox'
-													ref={register}
+													custom
 												/>
 											</InputGroup.Text>
 										</InputGroup.Append>
@@ -191,7 +226,11 @@ const EditPropertyForm = ({
 							<Form.Row className='my-2'>
 								<Form.Group as={Col}>
 									<Form.Label htmlFor='deskripsi'>Deskripsi</Form.Label>
-									<Quill theme='snow' />
+									<Quill
+										theme='snow'
+										value={deskripsi}
+										onChange={setDeskripsi}
+									/>
 								</Form.Group>
 							</Form.Row>
 

@@ -43,7 +43,7 @@ const SectionAbout: React.FC<Property> = ({
 									<p>{location.name}</p>
 								</div>
 								<h2>
-									<span className='font-weight-light'>{size}</span>
+									<span className='font-weight-light'>{size.display}</span>
 								</h2>
 								{/* <Badge>CICILAN</Badge> */}
 								{/*jika pakai konsep cicilan maka akifkan badge diatas  */}

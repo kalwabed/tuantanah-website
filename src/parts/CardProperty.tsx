@@ -23,7 +23,7 @@ const CardProperty: React.FC<Property> = ({
 			<Card.Img variant='top' src={mainPicture} width='10%' />
 			<Card.Body className='pt-2 font-card'>
 				<div className='d-md-flex justify-content-between'>
-					<Card.Title>{size}</Card.Title>
+					<Card.Title>{size.display}</Card.Title>
 					<div>
 						<StatusPropertyCheck {...status} />
 					</div>
