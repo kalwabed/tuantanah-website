@@ -35,7 +35,17 @@ const EditPropertyForm = ({
 	prop: Property
 	dataProvinsi: apiProvinsi
 }) => {
-	const { isLarge, title, size, price, status, description, contact } = prop
+	const {
+		isLarge,
+		title,
+		size,
+		price,
+		status,
+		description,
+		contact,
+		mainPicture,
+		gallery,
+	} = prop
 	const { register, watch } = useForm<newInputs>()
 	const [kota, setKota] = useState(11)
 	const [deskripsi, setDeskripsi] = useState(description)
@@ -46,12 +56,50 @@ const EditPropertyForm = ({
 		<Container fluid>
 			<Form>
 				<Row>
+					{/* gambar utama dan galeri  */}
 					<Card as={Col} className='mr-2'>
 						<Card.Body>
-							<h1>gambar</h1>
+							<Row>
+								<Card.Img
+									src={mainPicture}
+									alt={title}
+									className='img-gallery'
+								/>
+							</Row>
+
+							<Row className='my-2'>
+								<Form.Group as={Col}>
+									<Form.Label htmlFor='mainPicture'>Foto Utama</Form.Label>
+									<Form.File
+										ref={register}
+										accept='image/*'
+										custom
+										id='mainPicture'
+										name='mainPicture'
+										label='Unggah foto'
+									/>
+								</Form.Group>
+							</Row>
+
+							<Row>
+								{gallery.length < 1 && (
+									<Col>
+										<Card className='text-center text-muted'>
+											<Card.Body>Galeri belum ditambahkan</Card.Body>
+										</Card>
+									</Col>
+								)}
+								{gallery.length >= 1 &&
+									gallery.map(gall => (
+										<Col key={gall.imageUrl}>
+											<Card.Img src={gall.imageUrl} alt='Gallery' />
+										</Col>
+									))}
+							</Row>
 						</Card.Body>
 					</Card>
 
+					{/* identitas */}
 					<Card as={Col}>
 						<Card.Body>
 							{/* nama & judul */}
@@ -344,7 +392,7 @@ const EditPropertyForm = ({
 										name='kontak2'
 										ref={register()}
 										disabled={watch('checkKontak2') == 0 ? true : false}
-										defaultValue={contact[1].url ? contact[1].url : ''}
+										defaultValue={contact[1] ? contact[1].url : ''}
 										placeholder={
 											watch('checkKontak2') == 1
 												? '628xxxxxxxxx'
@@ -359,7 +407,7 @@ const EditPropertyForm = ({
 										className='mt-1'
 										name='userKontak2'
 										ref={register()}
-										defaultValue={contact[1].name ? contact[1].name : ''}
+										defaultValue={contact[1] ? contact[1].name : ''}
 										placeholder='Nama tampilan'
 										disabled={watch('checkKontak2') == 0 ? true : false}
 									/>
@@ -405,7 +453,7 @@ const EditPropertyForm = ({
 									</Form.Control>
 									<Form.Control
 										name='kontak3'
-										defaultValue={contact[2].url ? contact[2].url : ''}
+										defaultValue={contact[2] ? contact[2].url : ''}
 										ref={register()}
 										disabled={watch('checkKontak3') == 0 ? true : false}
 										placeholder={
@@ -421,7 +469,7 @@ const EditPropertyForm = ({
 									<Form.Control
 										className='mt-1'
 										name='userKontak3'
-										defaultValue={contact[2].name ? contact[2].name : ''}
+										defaultValue={contact[2] ? contact[2].name : ''}
 										ref={register()}
 										placeholder='Nama tampilan'
 										disabled={watch('checkKontak3') == 0 ? true : false}
@@ -469,7 +517,7 @@ const EditPropertyForm = ({
 									<Form.Control
 										name='kontak4'
 										ref={register()}
-										defaultValue={contact[3].url ? contact[3].url : ''}
+										defaultValue={contact[3] ? contact[3].url : ''}
 										disabled={watch('checkKontak4') == 0 ? true : false}
 										placeholder={
 											watch('checkKontak4') == 1
@@ -484,7 +532,7 @@ const EditPropertyForm = ({
 									<Form.Control
 										className='mt-1'
 										name='userKontak4'
-										defaultValue={contact[3].name ? contact[3].name : ''}
+										defaultValue={contact[3] ? contact[3].name : ''}
 										ref={register()}
 										placeholder='Nama tampilan'
 										disabled={watch('checkKontak4') == 0 ? true : false}
