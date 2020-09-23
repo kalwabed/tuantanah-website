@@ -8,9 +8,10 @@ import {
 	Form,
 	InputGroup,
 	Row,
+	Spinner,
 } from 'react-bootstrap'
 import { useForm } from 'react-hook-form'
-import { useQuery } from 'react-query'
+import { useMutation, useQuery } from 'react-query'
 import Quill from 'react-quill'
 import { Link } from 'react-router-dom'
 import {
@@ -20,7 +21,7 @@ import {
 	Inputs,
 	Property,
 } from '../../types/index.types'
-import { fetchKotaByProv } from '../../utils/fetchAPI'
+import { fetchKotaByProv, fetchUpdateProperty } from '../../utils/fetchAPI'
 
 interface newInputs extends Inputs {
 	gallery: FileList
@@ -52,10 +53,12 @@ const EditPropertyForm = ({
 	const [labelUtama, setLabelUtama] = useState('Unggah foto')
 	const [labelGaleri, setLabelGaleri] = useState('Unggah maks. 4 foto')
 	const [isLuas, setIsLuas] = useState(isLarge)
-	const { data, isLoading } = useQuery(['kota', kota], fetchKotaByProv)
+	const dataKota = useQuery(['kota', kota], fetchKotaByProv)
+	const [mutate, { isLoading }] = useMutation(fetchUpdateProperty)
 
 	const onSubmit = async (data: newInputs) => {
 		const formData = new FormData()
+		formData.append('_id', prop._id)
 		formData.append('fullName', data.fullName)
 		formData.append('title', data.title)
 		formData.append('provinsi', data.provinsi)
@@ -81,14 +84,24 @@ const EditPropertyForm = ({
 		formData.append('userKontak2', String(data.userKontak2))
 		formData.append('userKontak3', String(data.userKontak3))
 		formData.append('userKontak4', String(data.userKontak4))
-		for (let i = 0; i < data.gallery.length; i++) {
-			formData.append('gallery', data.gallery[i])
-		}
+		if (data.gallery.length !== 0) {
+			for (let i = 0; i < data.gallery.length; i++) {
+				formData.append('gallery', data.gallery[i])
+			}
+		} else formData.append('gallery', 'undefined')
+
 		//? for development purpose!
-		formData.forEach((val, key) => {
-			console.log(`${key}, ${val}`)
-		})
+		// formData.forEach((val, key) => {
+		// 	console.log(`${key}, ${val}`)
+		// })
 		//? ----------------------
+
+		try {
+			const result = await mutate(formData)
+			alert(result.msg)
+		} catch (err) {
+			console.error(err)
+		}
 	}
 
 	return (
@@ -222,7 +235,7 @@ const EditPropertyForm = ({
 									<Form.Label htmlFor='kota'>Kota/Kabupaten</Form.Label>
 									<Form.Control
 										ref={register}
-										disabled={isLoading}
+										disabled={dataKota.isLoading}
 										id='kota'
 										name='kota'
 										custom
@@ -231,8 +244,8 @@ const EditPropertyForm = ({
 										<option value='' disabled>
 											-- Kota/Kabupaten --
 										</option>
-										{data &&
-											data.kota_kabupaten.map((kota: apiKotaKab) => (
+										{dataKota.data &&
+											dataKota.data.kota_kabupaten.map((kota: apiKotaKab) => (
 												<option key={kota.id} value={kota.id}>
 													{kota.nama}
 												</option>
@@ -612,6 +625,12 @@ const EditPropertyForm = ({
 						<Button variant='success' type='submit' className='ml-2'>
 							Submit
 						</Button>
+						{isLoading && (
+							<>
+								<span className='ml-2'>Memproses data...</span>{' '}
+								<Spinner variant='success' animation='border' />
+							</>
+						)}
 					</Col>
 				</Row>
 			</Form>

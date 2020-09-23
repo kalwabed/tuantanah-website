@@ -96,7 +96,7 @@ export interface Property {
 	title: string
 	description: string
 	location: {
-		name: string
+		display: string
 		provinceId: number
 		cityId: number
 	}

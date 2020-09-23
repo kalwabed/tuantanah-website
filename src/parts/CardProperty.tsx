@@ -29,7 +29,7 @@ const CardProperty: React.FC<Property> = ({
 					</div>
 				</div>
 				<Card.Text className='font-weight-bold'>{title}</Card.Text>
-				<Card.Text className='mt-2 font-small'>{location.name}</Card.Text>
+				<Card.Text className='mt-2 font-small'>{location.display}</Card.Text>
 				<div className='justify-content-between d-flex'>
 					<Link to={`/property/${_id}`} onClick={() => getOneProperty(_id)}>
 						<Button size='sm' variant='success'>

@@ -35,7 +35,6 @@ const AddPropertyForm: React.FC<Props> = ({ user, dataProvinsi }) => {
 	const [mutate, { status }] = useMutation(fetchAddProperty)
 
 	const onSubmit = async (data: Inputs) => {
-		// setValue('title', '')
 		if (!description) return alert('Please provide a deskripsi')
 
 		const formData = new FormData()

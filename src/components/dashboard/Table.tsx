@@ -40,7 +40,7 @@ const Table = ({ property }: { property: Property[] }) => {
 					prop.mainPicture,
 					prop.title,
 					prop.size.display,
-					prop.location.name,
+					prop.location.display,
 					_(
 						<>
 							<Button

@@ -172,4 +172,17 @@ export const fetchDeleteProperty = async (id: string) => {
 	}
 }
 
+export const fetchUpdateProperty = async (formData: FormData) => {
+	try {
+		return await (
+			await fetch(`${process.env.ENDPOINT}/d/property`, {
+				method: 'put',
+				body: formData,
+			})
+		).json()
+	} catch (err) {
+		throw new Error(err)
+	}
+}
+
 //? errorCode = 400:bad req, 401:unauthorized
