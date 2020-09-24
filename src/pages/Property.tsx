@@ -26,11 +26,11 @@ const Property = () => {
 	return (
 		<>
 			<Header navlink='property' />
-			<main>
+			<main className='mb-3'>
 				<Container>
 					<SearchBarProperty />
 					{isLoading && (
-						<div className='text-center my-4 h5'>
+						<div className='text-center p-4 h5'>
 							Tunggu sebentar <Spinner animation='grow' variant='success' />
 						</div>
 					)}

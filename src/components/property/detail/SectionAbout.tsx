@@ -1,10 +1,11 @@
 /* eslint-disable react/prop-types */
 import React from 'react'
-import { Row, Col, Container, Card } from 'react-bootstrap'
+import { Row, Col, Container, Card, Breadcrumb } from 'react-bootstrap'
 
 import StatusPropertyCheck from '../../../elements/StatusPropertyCheck'
 import { Property } from '../../../types/index.types'
 import LazyLoad from 'react-lazyload'
+import { Link } from 'react-router-dom'
 
 const SectionAbout: React.FC<Property> = ({
 	title,
@@ -15,11 +16,23 @@ const SectionAbout: React.FC<Property> = ({
 	location,
 	userId,
 }) => {
-	// fix bux yang gak load saat user return
 	if (!userId) return null
 	return (
 		<section className='section'>
 			<Container>
+				<Row className='mt-3'>
+					<Col>
+						<Breadcrumb>
+							<Breadcrumb.Item>
+								<Link to='/'>Home</Link>
+							</Breadcrumb.Item>
+							<Breadcrumb.Item>
+								<Link to='/property'>Property</Link>
+							</Breadcrumb.Item>
+							<Breadcrumb.Item active>{title}</Breadcrumb.Item>
+						</Breadcrumb>
+					</Col>
+				</Row>
 				<Row>
 					<Col xs={12} md={7} className='mt-4'>
 						<Card>
