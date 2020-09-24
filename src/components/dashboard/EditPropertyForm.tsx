@@ -1,6 +1,9 @@
+import { ErrorMessage } from '@hookform/error-message'
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react'
+import { Fade } from 'react-awesome-reveal'
 import {
+	Badge,
 	Button,
 	Card,
 	Col,
@@ -11,9 +14,11 @@ import {
 	Spinner,
 } from 'react-bootstrap'
 import { useForm } from 'react-hook-form'
-import { useMutation, useQuery } from 'react-query'
+import LazyLoad from 'react-lazyload'
+import { useMutation, useQuery, useQueryCache } from 'react-query'
 import Quill from 'react-quill'
 import { Link } from 'react-router-dom'
+import { toast } from 'react-toastify'
 import {
 	apiKotaKab,
 	apiProvinsi,
@@ -47,14 +52,28 @@ const EditPropertyForm = ({
 		mainPicture,
 		gallery,
 	} = prop
-	const { register, watch, handleSubmit } = useForm<newInputs>()
+	document.title = `${title} | tuantanah`
+	const { register, watch, handleSubmit, errors, setValue } = useForm<
+		newInputs
+	>()
 	const [kota, setKota] = useState(11)
 	const [deskripsi, setDeskripsi] = useState(description)
 	const [labelUtama, setLabelUtama] = useState('Unggah foto')
 	const [labelGaleri, setLabelGaleri] = useState('Unggah maks. 4 foto')
 	const [isLuas, setIsLuas] = useState(isLarge)
 	const dataKota = useQuery(['kota', kota], fetchKotaByProv)
-	const [mutate, { isLoading }] = useMutation(fetchUpdateProperty)
+	const queryCache = useQueryCache()
+	const [mutate, { isLoading }] = useMutation(fetchUpdateProperty, {
+		onSuccess: () => {
+			queryCache.invalidateQueries(['propById', prop._id])
+			toast.success('Data berhasil diubah!')
+		},
+		onError: () => {
+			toast.error(
+				'Ups! ada masalah saat mengirim data. Pastikan anda sudah mengirim data dengan benar',
+			)
+		},
+	})
 
 	const onSubmit = async (data: newInputs) => {
 		const formData = new FormData()
@@ -98,7 +117,13 @@ const EditPropertyForm = ({
 
 		try {
 			const result = await mutate(formData)
-			alert(result.msg)
+			setValue('gallery', undefined)
+			setValue('mainPicture', undefined)
+			setLabelUtama('Unggah foto utama')
+			setLabelGaleri('Unggah maks. 4 foto')
+			if (!result.success) {
+				console.error(result.msg)
+			}
 		} catch (err) {
 			console.error(err)
 		}
@@ -112,11 +137,17 @@ const EditPropertyForm = ({
 					<Card as={Col} className='mr-2'>
 						<Card.Body>
 							<Row>
-								<Card.Img
-									src={mainPicture}
-									alt={title}
-									className='img-gallery'
-								/>
+								<LazyLoad
+									once
+									height={50}
+									placeholder={<Spinner animation='grow' />}
+								>
+									<Card.Img
+										src={mainPicture}
+										alt={title}
+										className='img-gallery'
+									/>
+								</LazyLoad>
 							</Row>
 
 							<Row className='my-2'>
@@ -144,12 +175,25 @@ const EditPropertyForm = ({
 										</Card>
 									</Col>
 								)}
-								{gallery.length >= 1 &&
-									gallery.map(gall => (
-										<Col key={gall.imageUrl}>
-											<Card.Img src={gall.imageUrl} alt='Gallery' />
-										</Col>
-									))}
+								{gallery.length >= 1 && (
+									<Fade
+										direction='left'
+										className='col-12 col-md-3'
+										triggerOnce
+										cascade
+									>
+										{gallery.map(gall => (
+											<LazyLoad
+												key={gall.imageUrl}
+												once
+												height={50}
+												placeholder={<Spinner animation='grow' />}
+											>
+												<Card.Img src={gall.imageUrl} alt='Gallery' />
+											</LazyLoad>
+										))}
+									</Fade>
+								)}
 							</Row>
 
 							<Form.Row className='my-2'>
@@ -185,12 +229,15 @@ const EditPropertyForm = ({
 										Nama Lengkap / Perusahaan
 									</Form.Label>
 									<Form.Control
+										readOnly
 										defaultValue='Kalwabed'
 										id='fullName'
-										readOnly
 										name='fullName'
 										ref={register}
 									/>
+									<Form.Text muted>
+										Masukan diatas otomatis merujuk pada Nama pengguna
+									</Form.Text>
 								</Form.Group>
 								{/* judul */}
 								<Form.Group as={Col}>
@@ -199,7 +246,24 @@ const EditPropertyForm = ({
 										defaultValue={title}
 										id='title'
 										name='title'
-										ref={register}
+										placeholder='contoh: Kaliwa Residence'
+										ref={register({
+											required: 'Mohon sertakan judul yang valid',
+											maxLength: {
+												value: 100,
+												message: 'Judul maksimal 100 karakter',
+											},
+										})}
+									/>
+									<Form.Text muted>
+										Judul bisa diisi dengan nama lahan, nama perumahan, dsb.
+									</Form.Text>
+									<ErrorMessage
+										name='title'
+										errors={errors}
+										render={({ message }) => (
+											<Badge variant='warning'>{message}</Badge>
+										)}
 									/>
 								</Form.Group>
 							</Form.Row>
@@ -210,11 +274,13 @@ const EditPropertyForm = ({
 								<Form.Group as={Col}>
 									<Form.Label htmlFor='provinsi'>Provinsi</Form.Label>
 									<Form.Control
+										custom
 										id='provinsi'
 										name='provinsi'
-										ref={register}
-										custom
 										as='select'
+										ref={register({
+											required: 'Mohon sertakan provinsi dengan benar',
+										})}
 									>
 										<option value='' disabled>
 											-- Provinsi --
@@ -229,17 +295,24 @@ const EditPropertyForm = ({
 											</option>
 										))}
 									</Form.Control>
+									<ErrorMessage
+										name='provinsi'
+										errors={errors}
+										render={({ message }) => (
+											<Badge variant='warning'>{message}</Badge>
+										)}
+									/>
 								</Form.Group>
 								{/* kota */}
 								<Form.Group as={Col}>
 									<Form.Label htmlFor='kota'>Kota/Kabupaten</Form.Label>
 									<Form.Control
-										ref={register}
-										disabled={dataKota.isLoading}
 										id='kota'
 										name='kota'
 										custom
 										as='select'
+										ref={register}
+										disabled={dataKota.isLoading}
 									>
 										<option value='' disabled>
 											-- Kota/Kabupaten --
@@ -251,6 +324,13 @@ const EditPropertyForm = ({
 												</option>
 											))}
 									</Form.Control>
+									<ErrorMessage
+										name='kota'
+										errors={errors}
+										render={({ message }) => (
+											<Badge variant='warning'>{message}</Badge>
+										)}
+									/>
 								</Form.Group>
 							</Form.Row>
 
@@ -260,24 +340,54 @@ const EditPropertyForm = ({
 								<Form.Group as={Col}>
 									<Form.Label htmlFor='panjang'>Panjang</Form.Label>
 									<Form.Control
-										ref={register}
-										disabled={isLuas}
-										defaultValue={!isLuas ? size.long : ''}
 										id='panjang'
 										name='panjang'
 										placeholder='contoh: 10'
+										ref={register({
+											required: {
+												message: 'Mohon sertakan panjang yang valid',
+												value: !isLuas,
+											},
+										})}
+										disabled={isLuas}
+										defaultValue={!isLuas ? size.long : ''}
+									/>
+									<Form.Text muted>
+										Panjang properti berdasarkan ukuran meter (m)
+									</Form.Text>
+									<ErrorMessage
+										name='panjang'
+										errors={errors}
+										render={({ message }) => (
+											<Badge variant='warning'>{message}</Badge>
+										)}
 									/>
 								</Form.Group>
 								{/* lebar */}
 								<Form.Group as={Col}>
 									<Form.Label htmlFor='lebar'>Lebar</Form.Label>
 									<Form.Control
-										ref={register}
-										disabled={isLuas}
-										defaultValue={!isLuas ? size.wide : ''}
 										id='lebar'
 										name='lebar'
 										placeholder='contoh: 1,5'
+										defaultValue={!isLuas ? size.wide : ''}
+										disabled={isLuas}
+										ref={register({
+											required: {
+												message: 'Mohon sertakan lebar yang valid',
+												value: !isLuas,
+											},
+										})}
+									/>
+									<Form.Text muted>
+										Lebar properti berdasarkan ukuran meter (m)
+									</Form.Text>
+									<ErrorMessage
+										name='lebar'
+										errors={errors}
+										render={({ message }) => (
+											<Badge variant='warning'>{message}</Badge>
+										)}
 									/>
 								</Form.Group>
 							</Form.Row>
@@ -294,6 +404,10 @@ const EditPropertyForm = ({
 										custom
 										label='Pakai ukuran luas'
 									/>
+									<Form.Text muted>
+										Pakai luas jika properti Anda bukan berupa rumah (contoh:
+										kebun, lahan, dsb)
+									</Form.Text>
 								</Form.Group>
 							</Form.Row>
 
@@ -303,17 +417,32 @@ const EditPropertyForm = ({
 									<Form.Label htmlFor='luas'>Luas</Form.Label>
 									<InputGroup>
 										<Form.Control
-											ref={register}
-											disabled={!isLuas}
-											defaultValue={isLuas ? size.large : ''}
 											id='luas'
 											name='luas'
 											placeholder='contoh: 4'
+											disabled={!isLuas}
+											defaultValue={isLuas ? size.large : ''}
+											ref={register({
+												required: {
+													message: 'Mohon sertakan luas yang valid',
+													value: isLuas,
+												},
+											})}
 										/>
 										<InputGroup.Append>
 											<InputGroup.Text>Hektar</InputGroup.Text>
 										</InputGroup.Append>
 									</InputGroup>
+									<Form.Text muted>
+										Luas properti berdasarkan ukuran hektar (ha)
+									</Form.Text>
+									<ErrorMessage
+										name='luas'
+										errors={errors}
+										render={({ message }) => (
+											<Badge variant='warning'>{message}</Badge>
+										)}
+									/>
 								</Form.Group>
 							</Form.Row>
 
@@ -323,26 +452,45 @@ const EditPropertyForm = ({
 									<Form.Label htmlFor='price'>Harga</Form.Label>
 									<InputGroup>
 										<Form.Control
-											ref={register}
-											defaultValue={price}
 											id='price'
 											name='price'
 											placeholder='contoh: 10'
+											defaultValue={price}
+											ref={register({
+												required: 'Mohon sertakan harga yang valid',
+												pattern: {
+													// eslint-disable-next-line no-useless-escape
+													value: /^([1-9]\d*(\.|\,)\d*|0?(\.|\,)\d*[1-9]\d*|[1-9]\d*)$/gm,
+													message:
+														'Hanya menerima masukan angka, koma, dan titik',
+												},
+											})}
 										/>
 										<InputGroup.Append>
 											<InputGroup.Text>
 												<Form.Check
-													ref={register}
-													defaultChecked={status.negotiation}
+													custom
 													name='nego'
 													id='nego'
 													label='Negosiasi ?'
 													type='checkbox'
-													custom
+													ref={register}
+													defaultChecked={status.negotiation}
 												/>
 											</InputGroup.Text>
 										</InputGroup.Append>
 									</InputGroup>
+									<Form.Text muted>
+										Harga properti dalam format angka, satuan juta (contoh: 90,3
+										[berarti 90,3 juta])
+									</Form.Text>
+									<ErrorMessage
+										name='price'
+										errors={errors}
+										render={({ message }) => (
+											<Badge variant='warning'>{message}</Badge>
+										)}
+									/>
 								</Form.Group>
 							</Form.Row>
 
@@ -355,6 +503,9 @@ const EditPropertyForm = ({
 										value={deskripsi}
 										onChange={setDeskripsi}
 									/>
+									<Form.Text muted>
+										Sertakan deskripsi tentang properti secara detail
+									</Form.Text>
 								</Form.Group>
 							</Form.Row>
 
@@ -620,9 +771,16 @@ const EditPropertyForm = ({
 				<Row className='my-4 text-center'>
 					<Col>
 						<Link to='/dashboard'>
-							<Button variant='secondary'>Back</Button>
+							<Button disabled={isLoading} variant='secondary'>
+								Back
+							</Button>
 						</Link>
-						<Button variant='success' type='submit' className='ml-2'>
+						<Button
+							disabled={isLoading}
+							variant='success'
+							type='submit'
+							className='ml-2'
+						>
 							Submit
 						</Button>
 						{isLoading && (

@@ -75,7 +75,6 @@ const AddPropertyForm: React.FC<Props> = ({ user, dataProvinsi }) => {
 			if (newProp?.success) {
 				toast.info(newProp.msg)
 				setValue('title', '')
-				setValue('title', '')
 				setDescription('')
 				setValue('luas', '')
 				setIsLuas(false)
@@ -101,7 +100,7 @@ const AddPropertyForm: React.FC<Props> = ({ user, dataProvinsi }) => {
 					<Form.Group as={Col}>
 						<Form.Label>Nama Lengkap / Nama Perusahaan</Form.Label>
 						<Form.Control
-							ref={register()}
+							ref={register}
 							name='fullName'
 							placeholder='contoh: Kaliwa Coorporation'
 							defaultValue={user.fullName}
@@ -214,12 +213,6 @@ const AddPropertyForm: React.FC<Props> = ({ user, dataProvinsi }) => {
 									message: 'Mohon sertakan panjang yang valid',
 									value: !isLuas,
 								},
-								pattern: {
-									// eslint-disable-next-line no-useless-escape
-									value: /^([1-9]\d*(\.|\,)\d*|0?(\.|\,)\d*[1-9]\d*|[1-9]\d*)$/gm,
-									message: 'Hanya menerima masukan angka, koma, dan titik',
-								},
-								// eslint-disable-next-line no-mixed-spaces-and-tabs
 							})}
 							name='panjang'
 							placeholder='contoh: 10'
@@ -245,12 +238,6 @@ const AddPropertyForm: React.FC<Props> = ({ user, dataProvinsi }) => {
 									message: 'Mohon sertakan lebar yang valid',
 									value: !isLuas,
 								},
-								pattern: {
-									// eslint-disable-next-line no-useless-escape
-									value: /^([1-9]\d*(\.|\,)\d*|0?(\.|\,)\d*[1-9]\d*|[1-9]\d*)$/gm,
-									message: 'Hanya menerima masukan angka, koma, dan titik',
-								},
-								// eslint-disable-next-line no-mixed-spaces-and-tabs
 							})}
 							name='lebar'
 							placeholder='contoh: 12,7'
@@ -298,12 +285,6 @@ const AddPropertyForm: React.FC<Props> = ({ user, dataProvinsi }) => {
 										message: 'Mohon sertakan luas yang valid',
 										value: isLuas,
 									},
-									pattern: {
-										// eslint-disable-next-line no-useless-escape
-										value: /^([1-9]\d*(\.|\,)\d*|0?(\.|\,)\d*[1-9]\d*|[1-9]\d*)$/gm,
-										message: 'Hanya menerima masukan angka, koma, dan titik',
-									},
-									// eslint-disable-next-line no-mixed-spaces-and-tabs
 								})}
 								name='luas'
 								placeholder='contoh: 3'
@@ -395,7 +376,7 @@ const AddPropertyForm: React.FC<Props> = ({ user, dataProvinsi }) => {
 						<Form.Check
 							custom
 							name='nego'
-							ref={register()}
+							ref={register}
 							id='check-nego'
 							label='Negosiasi ?'
 							type='checkbox'
