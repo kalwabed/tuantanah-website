@@ -8,31 +8,20 @@ import { useMutation, useQuery } from 'react-query'
 import Quill from 'react-quill'
 import { toast } from 'react-toastify'
 
-import { IApiUser, Inputs } from '../../types/index.types'
+import {
+	IApiUser,
+	Inputs,
+	apiProvinsi,
+	apiKotaKab,
+} from '../../types/index.types'
 import { fetchKotaByProv, fetchAddProperty } from '../../utils/fetchAPI'
 
-type dataProvinsi = {
-	provinsi: [
-		{
-			id: number
-			nama: string
-		},
-	]
-}
-
-type kotaKab = {
-	id: number
-	id_provinsi: string
-	nama: string
-}
-
-const AddPropertyForm = ({
-	user,
-	dataProvinsi,
-}: {
+type Props = {
 	user: IApiUser
-	dataProvinsi: dataProvinsi
-}) => {
+	dataProvinsi: apiProvinsi
+}
+
+const AddPropertyForm: React.FC<Props> = ({ user, dataProvinsi }) => {
 	// BEGIN ----------------------------
 	const { watch, register, handleSubmit, errors, setValue } = useForm<Inputs>()
 	const [isLuas, setIsLuas] = useState(false)
@@ -46,7 +35,6 @@ const AddPropertyForm = ({
 	const [mutate, { status }] = useMutation(fetchAddProperty)
 
 	const onSubmit = async (data: Inputs) => {
-		// setValue('title', '')
 		if (!description) return alert('Please provide a deskripsi')
 
 		const formData = new FormData()
@@ -87,7 +75,6 @@ const AddPropertyForm = ({
 			if (newProp?.success) {
 				toast.info(newProp.msg)
 				setValue('title', '')
-				setValue('title', '')
 				setDescription('')
 				setValue('luas', '')
 				setIsLuas(false)
@@ -113,7 +100,7 @@ const AddPropertyForm = ({
 					<Form.Group as={Col}>
 						<Form.Label>Nama Lengkap / Nama Perusahaan</Form.Label>
 						<Form.Control
-							ref={register()}
+							ref={register}
 							name='fullName'
 							placeholder='contoh: Kaliwa Coorporation'
 							defaultValue={user.fullName}
@@ -198,7 +185,7 @@ const AddPropertyForm = ({
 								-- Kota --
 							</option>
 							{data &&
-								data.kota_kabupaten.map((kota: kotaKab) => (
+								data.kota_kabupaten.map((kota: apiKotaKab) => (
 									<option key={kota.id} value={kota.id}>
 										{kota.nama}
 									</option>
@@ -226,12 +213,6 @@ const AddPropertyForm = ({
 									message: 'Mohon sertakan panjang yang valid',
 									value: !isLuas,
 								},
-								pattern: {
-									// eslint-disable-next-line no-useless-escape
-									value: /^([1-9]\d*(\.|\,)\d*|0?(\.|\,)\d*[1-9]\d*|[1-9]\d*)$/gm,
-									message: 'Hanya menerima masukan angka, koma, dan titik',
-								},
-								// eslint-disable-next-line no-mixed-spaces-and-tabs
 							})}
 							name='panjang'
 							placeholder='contoh: 10'
@@ -257,12 +238,6 @@ const AddPropertyForm = ({
 									message: 'Mohon sertakan lebar yang valid',
 									value: !isLuas,
 								},
-								pattern: {
-									// eslint-disable-next-line no-useless-escape
-									value: /^([1-9]\d*(\.|\,)\d*|0?(\.|\,)\d*[1-9]\d*|[1-9]\d*)$/gm,
-									message: 'Hanya menerima masukan angka, koma, dan titik',
-								},
-								// eslint-disable-next-line no-mixed-spaces-and-tabs
 							})}
 							name='lebar'
 							placeholder='contoh: 12,7'
@@ -310,12 +285,6 @@ const AddPropertyForm = ({
 										message: 'Mohon sertakan luas yang valid',
 										value: isLuas,
 									},
-									pattern: {
-										// eslint-disable-next-line no-useless-escape
-										value: /^([1-9]\d*(\.|\,)\d*|0?(\.|\,)\d*[1-9]\d*|[1-9]\d*)$/gm,
-										message: 'Hanya menerima masukan angka, koma, dan titik',
-									},
-									// eslint-disable-next-line no-mixed-spaces-and-tabs
 								})}
 								name='luas'
 								placeholder='contoh: 3'
@@ -384,6 +353,7 @@ const AddPropertyForm = ({
 							id='mainpic-file'
 							name='mainPicture'
 							label={label}
+							accept='image/*'
 							custom
 							aria-describedby='mainPicHelp'
 						/>
@@ -406,7 +376,7 @@ const AddPropertyForm = ({
 						<Form.Check
 							custom
 							name='nego'
-							ref={register()}
+							ref={register}
 							id='check-nego'
 							label='Negosiasi ?'
 							type='checkbox'

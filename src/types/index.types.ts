@@ -2,6 +2,20 @@ export type refVisLer = {
 	refVisitorDealer: any | null
 }
 
+export type apiProvinsi = {
+	provinsi: [
+		{
+			id: number
+			nama: string
+		},
+	]
+}
+
+export type apiKotaKab = {
+	id: number
+	id_provinsi: string
+	nama: string
+}
 export interface IServerResponse {
 	response: {
 		msg: string
@@ -82,13 +96,18 @@ export interface Property {
 	title: string
 	description: string
 	location: {
-		name: string
+		display: string
 		provinceId: number
 		cityId: number
 	}
 	mainPicture: string
 	price: number
-	size: string
+	size: {
+		display: string
+		wide: string
+		long: string
+		large: string
+	}
 	isLarge: boolean
 	status: {
 		shm: boolean
@@ -103,7 +122,23 @@ export interface Property {
 			imageUrl: string
 		},
 	]
+
 	contact: [
+		{
+			name: string
+			type: sosmedType
+			url: string
+		},
+		{
+			name: string
+			type: sosmedType
+			url: string
+		},
+		{
+			name: string
+			type: sosmedType
+			url: string
+		},
 		{
 			name: string
 			type: sosmedType

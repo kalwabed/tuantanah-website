@@ -40,10 +40,10 @@ const SectionAbout: React.FC<Property> = ({
 								<div className='border-bottom'>
 									<h5 className='h4'>{title}</h5>
 									<p className='h6'>{userId.fullName}</p>
-									<p>{location.name}</p>
+									<p>{location.display}</p>
 								</div>
 								<h2>
-									<span className='font-weight-light'>{size}</span>
+									<span className='font-weight-light'>{size.display}</span>
 								</h2>
 								{/* <Badge>CICILAN</Badge> */}
 								{/*jika pakai konsep cicilan maka akifkan badge diatas  */}

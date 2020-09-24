@@ -17,9 +17,9 @@ const Table = ({ property }: { property: Property[] }) => {
 	const onDelete = async (id: string) => {
 		const result = await fetchDeleteProperty(id)
 		if (!result.success) {
-			toast.warning(result.msg)
+			toast.error(result.msg)
 		} else {
-			toast.success('Properti berhasil dihapus')
+			toast.success('Properti berhasil dihapus', { autoClose: 5000 })
 			queryCache.invalidateQueries('userProperty')
 		}
 	}
@@ -39,8 +39,8 @@ const Table = ({ property }: { property: Property[] }) => {
 					i + 1,
 					prop.mainPicture,
 					prop.title,
-					prop.size,
-					prop.location.name,
+					prop.size.display,
+					prop.location.display,
 					_(
 						<>
 							<Button

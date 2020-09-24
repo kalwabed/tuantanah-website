@@ -29,8 +29,8 @@ const Identity: React.FC<Property> = ({
 									<Card>
 										<Card.Body>
 											<h5>Judul : {title}</h5>
-											<h5>Lokasi : {location}</h5>
-											<h5>Ukuran : {size}</h5>
+											<h5>Lokasi : {location.display}</h5>
+											<h5>Ukuran : {size.display}</h5>
 											<h5>Harga : {price} Juta</h5>
 
 											<div className='h5'>
