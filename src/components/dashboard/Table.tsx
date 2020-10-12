@@ -2,7 +2,7 @@ import React from 'react'
 import { Grid, _ } from 'gridjs-react'
 import { Container, Button } from 'react-bootstrap'
 import { html } from 'gridjs'
-import { IoMdTrash, IoMdSearch, IoMdCreate } from 'react-icons/io'
+import { IoMdTrash, IoMdCreate, IoMdEye } from 'react-icons/io'
 import { Property } from '../../types/index.types'
 import { useHistory } from 'react-router-dom'
 import { fetchDeleteProperty } from '../../utils/fetchAPI'
@@ -43,44 +43,29 @@ const Table = ({ property }: { property: Property[] }) => {
 					prop.location.display,
 					_(
 						<>
-							<Button
-								className='mr-1'
-								size='sm'
-								variant='info'
-								onClick={() => onDetail(prop._id)}
-							>
-								<IoMdSearch />
+							<Button className='mr-1' size='sm' variant='info' onClick={() => onDetail(prop._id)}>
+								<IoMdEye />
 							</Button>
-							<Button
-								className='mx-1'
-								size='sm'
-								variant='warning'
-								onClick={() => onUpdate(prop._id)}
-							>
+							<Button className='mx-1' size='sm' variant='warning' onClick={() => onUpdate(prop._id)}>
 								<IoMdCreate />
 							</Button>
-							<Button
-								className='ml-1'
-								size='sm'
-								variant='danger'
-								onClick={() => onDelete(prop._id)}
-							>
+							<Button className='ml-1' size='sm' variant='danger' onClick={() => onDelete(prop._id)}>
 								<IoMdTrash />
 							</Button>
-						</>,
-					),
+						</>
+					)
 				])}
 				columns={[
 					{ name: '#', width: '1%' },
 					{
 						name: 'Gambar',
 						formatter: cell => html(`<img src='${cell}' width='100%'/>`),
-						width: '7%',
+						width: '7%'
 					},
 					'Judul',
 					{ name: 'Ukuran', width: '5%' },
 					'Lokasi',
-					'Aksi',
+					'Aksi'
 				]}
 				search={true}
 				pagination={{ enabled: true, limit: 10 }}

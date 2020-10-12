@@ -1,6 +1,8 @@
 import React from 'react'
-import { Spinner } from 'react-bootstrap'
+import { Button, Spinner } from 'react-bootstrap'
+import { IoMdArrowRoundBack } from 'react-icons/io'
 import { useQuery } from 'react-query'
+import { Link } from 'react-router-dom'
 
 import EditForm from '../../components/dashboard/EditPropertyForm'
 import Header from '../../components/dashboard/Header'
@@ -18,6 +20,11 @@ const EditProperty = () => {
 		<>
 			<Header />
 			<div className='mt-3'></div>
+			<Link to='/dashboard'>
+				<Button variant='light' size='lg' className='my-2 ml-2'>
+					<IoMdArrowRoundBack /> Kembali
+				</Button>
+			</Link>
 			{isLoading && (
 				<div className='text-center p-5'>
 					Memuat data properti...
@@ -32,13 +39,7 @@ const EditProperty = () => {
 				</div>
 			)}
 
-			{!isLoading && !dataProvinsi.isLoading && (
-				<EditForm
-					prop={...data.property}
-					dataProvinsi={dataProvinsi.data}
-					user={user}
-				/>
-			)}
+			{!isLoading && !dataProvinsi.isLoading && <EditForm prop={...data.property} dataProvinsi={dataProvinsi.data} user={user} />}
 			{!isLoading && !dataProvinsi.isLoading && <Footer isDashboard={true} />}
 		</>
 	)
