@@ -2,29 +2,21 @@ import React, { useContext, useEffect, useState } from 'react'
 import { Badge, Button, Col, Container, Row, Spinner } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { useQuery } from 'react-query'
+import { IoIosAddCircle, IoIosCheckmarkCircle, IoIosLogOut } from 'react-icons/io'
 
 import { authContext } from '../../contexts/Auth'
 import verify from '../../utils/Verify'
 import Header from '../../components/dashboard/Header'
 import Table from '../../components/dashboard/Table'
 import { fetchPropertyByUserID } from '../../utils/fetchAPI'
-import {
-	IoIosAddCircle,
-	IoIosCheckmarkCircle,
-	IoIosLogOut,
-} from 'react-icons/io'
 
 const Dashboard = (props: any) => {
 	document.title = 'Dashboard | tuantanah'
 	window.scrollTo(0, 0)
 	const { setToken, setIsAuthenticated, user } = useContext(authContext)
-	const { data, isLoading, updatedAt } = useQuery(
-		['userProperty', user._id],
-		fetchPropertyByUserID,
-		{
-			onSettled: (): void => setUpdated(new Date()),
-		},
-	)
+	const { data, isLoading, updatedAt } = useQuery(['userProperty', user._id], fetchPropertyByUserID, {
+		onSettled: (): void => setUpdated(new Date())
+	})
 	const [updated, setUpdated] = useState(new Date(updatedAt))
 
 	useEffect(() => {
@@ -52,21 +44,14 @@ const Dashboard = (props: any) => {
 							Verifikasi <IoIosCheckmarkCircle />
 						</Button>
 					</Col>
-					<Col
-						xs={4}
-						md={4}
-						className='d-sm-flex d-md-block justify-content-end'
-					>
+					<Col xs={4} md={4} className='d-sm-flex d-md-block justify-content-end'>
 						<span>Masuk sebagai </span>
-						<span className='font-weight-bold mr-1'>
-							{user.fullName}
-						</span> |{' '}
+						<span className='font-weight-bold mr-1'>{user.fullName}</span> |{' '}
 						<Button variant='outline-secondary' size='sm' onClick={onLogout}>
 							Keluar <IoIosLogOut />
 						</Button>
 						<Badge variant='light' as='span'>
-							update terakhir:{' '}
-							{`${updated.getHours()} : ${updated.getMinutes()} : ${updated.getSeconds()}`}
+							update terakhir: {`${updated.getHours()} : ${updated.getMinutes()} : ${updated.getSeconds()}`}
 						</Badge>
 					</Col>
 				</Row>

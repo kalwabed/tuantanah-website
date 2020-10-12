@@ -51,7 +51,7 @@ const Header = ({ navlink = '' }) => {
 							Property
 						</Link>
 						<Link
-							to='#'
+							to='/faq'
 							className={`nav-link mr-3 ${navlink === 'faq' ? 'active' : null}`}
 						>
 							Faq
