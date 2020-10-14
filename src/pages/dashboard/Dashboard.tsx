@@ -40,9 +40,11 @@ const Dashboard = (props: any) => {
 								Tambah <IoIosAddCircle />
 							</Button>
 						</Link>
-						<Button className='mr-2' variant='primary' size='lg'>
-							Verifikasi <IoIosCheckmarkCircle />
-						</Button>
+						<Link to='/dashboard/verification'>
+							<Button className='mr-2' variant='primary' size='lg'>
+								Verifikasi <IoIosCheckmarkCircle />
+							</Button>
+						</Link>
 					</Col>
 					<Col xs={4} md={4} className='d-sm-flex d-md-block justify-content-end'>
 						<span>Masuk sebagai </span>
