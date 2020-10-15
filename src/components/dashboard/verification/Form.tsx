@@ -8,6 +8,7 @@ import { toast } from 'react-toastify'
 import type { Property } from '../../../types/index.types'
 import { fetchAddCertificate } from '../../../utils/fetchAPI'
 import { Link } from 'react-router-dom'
+import { Fade } from 'react-awesome-reveal'
 
 interface Inputs {
 	propertyId: string
@@ -22,9 +23,8 @@ const TheForm = ({ property }: Props) => {
 	if (!property) return null
 	const queryCache = useQueryCache()
 	const { register, handleSubmit, setValue } = useForm<Inputs>()
-
 	const [labelCert, setLabelCert] = useState('Sertakan foto sertifikat')
-
+	const [imgPreview, setImgPreview] = useState<string[]>([])
 	const [mutate, { isLoading }] = useMutation(fetchAddCertificate, {
 		onSuccess: () => {
 			queryCache.invalidateQueries('userProperty')
@@ -62,6 +62,19 @@ const TheForm = ({ property }: Props) => {
 		}
 	}
 
+	const handleImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setLabelCert(`${e.target.files?.length} gambar dipilih`)
+
+		//? preview multiple image
+		const imgObj = []
+		const imgArr = []
+		imgObj.push(e.target.files!)
+		for (let i = 0; i < imgObj[0].length; i++) {
+			imgArr.push(URL.createObjectURL(imgObj[0][i]))
+		}
+		setImgPreview(imgArr)
+	}
+
 	return (
 		<>
 			<Form onSubmit={handleSubmit(submit)}>
@@ -97,10 +110,25 @@ const TheForm = ({ property }: Props) => {
 									accept='image/*'
 									disabled={isLoading}
 									label={labelCert}
-									onChange={(e: React.ChangeEvent<HTMLInputElement>) => setLabelCert(`${e.target.files?.length} gambar dipilih`)}
+									onChange={handleImage}
 								/>
 							</Form.Group>
 						</Form.Row>
+					</Col>
+				</Row>
+				<Row className='mt-3 px-5'>
+					<Col>
+						<h3>Pratinjau dokumen</h3>
+						<Row>
+							{imgPreview.length !== 0 && (
+								<Fade className='col' triggerOnce cascade>
+									{imgPreview.map(source => (
+										<img src={source} key={source} alt='certificate' width='100%' />
+									))}
+								</Fade>
+							)}
+							{imgPreview.length === 0 && <Col className='text-center border mx-3'>Tidak ada</Col>}
+						</Row>
 					</Col>
 				</Row>
 				<Row className='mt-3 px-5'>
@@ -155,5 +183,4 @@ const FormButton = ({ isLoading = false }) => (
 		</Button>
 	</>
 )
-
 export default TheForm
