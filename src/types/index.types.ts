@@ -7,7 +7,7 @@ export type apiProvinsi = {
 		{
 			id: number
 			nama: string
-		},
+		}
 	]
 }
 
@@ -110,7 +110,7 @@ export interface Property {
 	}
 	isLarge: boolean
 	status: {
-		shm: boolean
+		shm: number // 0=not confirm, 1=on process, 2=success
 		negotiation: boolean
 	}
 	userId: {
@@ -120,9 +120,9 @@ export interface Property {
 	gallery: [
 		{
 			imageUrl: string
-		},
+		}
 	]
-
+	certificate: string[]
 	contact: [
 		{
 			name: string
@@ -143,7 +143,7 @@ export interface Property {
 			name: string
 			type: sosmedType
 			url: string
-		},
+		}
 	]
 	createdAt: string
 	updatedAt: string
@@ -152,7 +152,7 @@ export interface Property {
 enum sosmedType {
 	'whatsapp' = 1,
 	'facebook' = 2,
-	'email' = 3,
+	'email' = 3
 }
 
 export interface Inputs {

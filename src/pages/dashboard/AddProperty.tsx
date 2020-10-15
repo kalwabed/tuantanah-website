@@ -12,7 +12,7 @@ import Footer from '../../components/Footer'
 import { Link } from 'react-router-dom'
 
 const AddProperty = () => {
-	document.title = 'Add Property | tuantanah'
+	document.title = 'Properti'
 	window.scrollTo(0, 0)
 	const { user } = useContext(authContext)
 	const { data, isLoading } = useQuery('provinsi', fetchProvinsi, {
@@ -24,7 +24,7 @@ const AddProperty = () => {
 			<Header />
 			<Container className='my-3'>
 				<Card>
-					<Card.Header>Add property</Card.Header>
+					<Card.Header>Tambah properti</Card.Header>
 					<Link to='/dashboard'>
 						<Button variant='light' size='lg' className='my-2 ml-2'>
 							<IoMdArrowRoundBack /> Kembali

@@ -40,9 +40,7 @@ const Detail = () => {
 						</Row>
 
 						<Gallery {...data.property} />
-
 						<Identity {...data.property} />
-
 						<Description {...data.property} />
 					</>
 				)}

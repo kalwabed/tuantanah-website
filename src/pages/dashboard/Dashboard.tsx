@@ -11,7 +11,7 @@ import Table from '../../components/dashboard/Table'
 import { fetchPropertyByUserID } from '../../utils/fetchAPI'
 
 const Dashboard = (props: any) => {
-	document.title = 'Dashboard | tuantanah'
+	document.title = 'Dashboard'
 	window.scrollTo(0, 0)
 	const { setToken, setIsAuthenticated, user } = useContext(authContext)
 	const { data, isLoading, updatedAt } = useQuery(['userProperty', user._id], fetchPropertyByUserID, {
@@ -40,9 +40,11 @@ const Dashboard = (props: any) => {
 								Tambah <IoIosAddCircle />
 							</Button>
 						</Link>
-						<Button className='mr-2' variant='primary' size='lg'>
-							Verifikasi <IoIosCheckmarkCircle />
-						</Button>
+						<Link to='/dashboard/verification'>
+							<Button className='mr-2' variant='primary' size='lg'>
+								Verifikasi <IoIosCheckmarkCircle />
+							</Button>
+						</Link>
 					</Col>
 					<Col xs={4} md={4} className='d-sm-flex d-md-block justify-content-end'>
 						<span>Masuk sebagai </span>

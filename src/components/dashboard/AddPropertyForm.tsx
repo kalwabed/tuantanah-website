@@ -8,12 +8,7 @@ import { useMutation, useQuery } from 'react-query'
 import Quill from 'react-quill'
 import { toast } from 'react-toastify'
 
-import {
-	IApiUser,
-	Inputs,
-	apiProvinsi,
-	apiKotaKab,
-} from '../../types/index.types'
+import { IApiUser, Inputs, apiProvinsi, apiKotaKab } from '../../types/index.types'
 import { fetchKotaByProv, fetchAddProperty } from '../../utils/fetchAPI'
 
 type Props = {
@@ -28,10 +23,7 @@ const AddPropertyForm: React.FC<Props> = ({ user, dataProvinsi }) => {
 	const [label, setLabel] = useState('Unggah foto')
 	const [kota, setKota] = useState<number>(11)
 	const [description, setDescription] = useState('')
-	const { data, isFetching, isLoading, isError } = useQuery(
-		['kota', kota],
-		fetchKotaByProv,
-	)
+	const { data, isFetching, isLoading, isError } = useQuery(['kota', kota], fetchKotaByProv)
 	const [mutate, { status }] = useMutation(fetchAddProperty)
 
 	const onSubmit = async (data: Inputs) => {
@@ -89,8 +81,7 @@ const AddPropertyForm: React.FC<Props> = ({ user, dataProvinsi }) => {
 			console.error(err)
 		}
 	}
-	if (status === 'error')
-		return <span>An error has been appearred when processing your data!</span>
+	if (status === 'error') return <span>An error has been appearred when processing your data!</span>
 	if (isError) return <span>An error has been appearred!</span>
 	return (
 		<>
@@ -118,8 +109,8 @@ const AddPropertyForm: React.FC<Props> = ({ user, dataProvinsi }) => {
 								required: 'Mohon sertakan judul yang valid',
 								minLength: {
 									value: 5,
-									message: 'Panjang minimal adalah 5 karakter',
-								},
+									message: 'Panjang minimal adalah 5 karakter'
+								}
 							})}
 							name='title'
 							placeholder='contoh: Kaliwa Residence'
@@ -128,13 +119,7 @@ const AddPropertyForm: React.FC<Props> = ({ user, dataProvinsi }) => {
 						<Form.Text id='titleHelp' muted>
 							Judul bisa diisi dengan nama lahan, nama perumahan, dsb.
 						</Form.Text>
-						<ErrorMessage
-							name='title'
-							errors={errors}
-							render={({ message }) => (
-								<Badge variant='warning'>{message}</Badge>
-							)}
-						/>
+						<ErrorMessage name='title' errors={errors} render={({ message }) => <Badge variant='warning'>{message}</Badge>} />
 					</Form.Group>
 				</Form.Row>
 
@@ -153,28 +138,18 @@ const AddPropertyForm: React.FC<Props> = ({ user, dataProvinsi }) => {
 								-- Provinsi --
 							</option>
 							{dataProvinsi.provinsi.map(prov => (
-								<option
-									key={prov.id}
-									value={prov.id}
-									onClick={() => setKota(prov.id)}
-								>
+								<option key={prov.id} value={prov.id} onClick={() => setKota(prov.id)}>
 									{prov.nama}
 								</option>
 							))}
-							<ErrorMessage
-								name='provinsi'
-								errors={errors}
-								render={({ message }) => (
-									<Badge variant='warning'>{message}</Badge>
-								)}
-							/>
+							<ErrorMessage name='provinsi' errors={errors} render={({ message }) => <Badge variant='warning'>{message}</Badge>} />
 						</Form.Control>
 					</Form.Group>
 					<Form.Group as={Col} controlId='select-kota'>
 						<Form.Label>Kota / Kabupaten</Form.Label>
 						<Form.Control
 							ref={register({
-								required: 'Mohon sertakan Kota / Kabupaten yang valid',
+								required: 'Mohon sertakan Kota / Kabupaten yang valid'
 							})}
 							name='kota'
 							as='select'
@@ -192,13 +167,7 @@ const AddPropertyForm: React.FC<Props> = ({ user, dataProvinsi }) => {
 								))}
 						</Form.Control>
 						{isFetching && <span className='text-secondary'>Updating...</span>}
-						<ErrorMessage
-							name='kota'
-							errors={errors}
-							render={({ message }) => (
-								<Badge variant='warning'>{message}</Badge>
-							)}
-						/>
+						<ErrorMessage name='kota' errors={errors} render={({ message }) => <Badge variant='warning'>{message}</Badge>} />
 					</Form.Group>
 				</Form.Row>
 
@@ -211,8 +180,8 @@ const AddPropertyForm: React.FC<Props> = ({ user, dataProvinsi }) => {
 							ref={register({
 								required: {
 									message: 'Mohon sertakan panjang yang valid',
-									value: !isLuas,
-								},
+									value: !isLuas
+								}
 							})}
 							name='panjang'
 							placeholder='contoh: 10'
@@ -221,13 +190,7 @@ const AddPropertyForm: React.FC<Props> = ({ user, dataProvinsi }) => {
 						<Form.Text id='panjangHelp' muted>
 							Panjang properti berdasarkan ukuran meter (m)
 						</Form.Text>
-						<ErrorMessage
-							name='panjang'
-							errors={errors}
-							render={({ message }) => (
-								<Badge variant='warning'>{message}</Badge>
-							)}
-						/>
+						<ErrorMessage name='panjang' errors={errors} render={({ message }) => <Badge variant='warning'>{message}</Badge>} />
 					</Form.Group>
 					<Form.Group controlId='input-lebar' as={Col}>
 						<Form.Label>Lebar</Form.Label>
@@ -236,8 +199,8 @@ const AddPropertyForm: React.FC<Props> = ({ user, dataProvinsi }) => {
 							ref={register({
 								required: {
 									message: 'Mohon sertakan lebar yang valid',
-									value: !isLuas,
-								},
+									value: !isLuas
+								}
 							})}
 							name='lebar'
 							placeholder='contoh: 12,7'
@@ -246,30 +209,15 @@ const AddPropertyForm: React.FC<Props> = ({ user, dataProvinsi }) => {
 						<Form.Text id='lebarHelp' muted>
 							Lebar properti berdasarkan ukuran meter (m)
 						</Form.Text>
-						<ErrorMessage
-							name='lebar'
-							errors={errors}
-							render={({ message }) => (
-								<Badge variant='warning'>{message}</Badge>
-							)}
-						/>
+						<ErrorMessage name='lebar' errors={errors} render={({ message }) => <Badge variant='warning'>{message}</Badge>} />
 					</Form.Group>
 				</Form.Row>
 
 				{/* Ceklis pakai luas */}
 				<Form.Row>
 					<Form.Group as={Col}>
-						<Form.Check
-							label='Pakai ukuran luas'
-							custom
-							defaultChecked={isLuas}
-							id='pan-luas-check'
-							onClick={() => setIsLuas(!isLuas)}
-						/>
-						<Form.Text muted>
-							Pakai luas jika properti Anda bukan berupa rumah (contoh: kebun,
-							lahan, dsb)
-						</Form.Text>
+						<Form.Check label='Pakai ukuran luas' custom defaultChecked={isLuas} id='pan-luas-check' onClick={() => setIsLuas(!isLuas)} />
+						<Form.Text muted>Pakai luas jika properti Anda bukan berupa rumah (contoh: kebun, lahan, dsb)</Form.Text>
 					</Form.Group>
 				</Form.Row>
 
@@ -283,8 +231,8 @@ const AddPropertyForm: React.FC<Props> = ({ user, dataProvinsi }) => {
 								ref={register({
 									required: {
 										message: 'Mohon sertakan luas yang valid',
-										value: isLuas,
-									},
+										value: isLuas
+									}
 								})}
 								name='luas'
 								placeholder='contoh: 3'
@@ -297,13 +245,7 @@ const AddPropertyForm: React.FC<Props> = ({ user, dataProvinsi }) => {
 						<Form.Text id='luasHelp' muted>
 							Luas properti berdasarkan ukuran hektar (ha)
 						</Form.Text>
-						<ErrorMessage
-							name='luas'
-							errors={errors}
-							render={({ message }) => (
-								<Badge variant='warning'>{message}</Badge>
-							)}
-						/>
+						<ErrorMessage name='luas' errors={errors} render={({ message }) => <Badge variant='warning'>{message}</Badge>} />
 					</Form.Group>
 				</Form.Row>
 
@@ -318,8 +260,8 @@ const AddPropertyForm: React.FC<Props> = ({ user, dataProvinsi }) => {
 									pattern: {
 										// eslint-disable-next-line no-useless-escape
 										value: /^([1-9]\d*(\.|\,)\d*|0?(\.|\,)\d*[1-9]\d*|[1-9]\d*)$/gm,
-										message: 'Hanya menerima masukan angka, koma, dan titik',
-									},
+										message: 'Hanya menerima masukan angka, koma, dan titik'
+									}
 								})}
 								name='price'
 								placeholder='contoh: 190'
@@ -330,26 +272,17 @@ const AddPropertyForm: React.FC<Props> = ({ user, dataProvinsi }) => {
 							</InputGroup.Append>
 						</InputGroup>
 						<Form.Text id='priceHelp' muted>
-							Harga properti dalam format angka, satuan juta (contoh: 90,3
-							[berarti 90,3 juta])
+							Harga properti dalam format angka, satuan juta (contoh: 90,3 [berarti 90,3 juta])
 						</Form.Text>
-						<ErrorMessage
-							name='price'
-							errors={errors}
-							render={({ message }) => (
-								<Badge variant='warning'>{message}</Badge>
-							)}
-						/>
+						<ErrorMessage name='price' errors={errors} render={({ message }) => <Badge variant='warning'>{message}</Badge>} />
 					</Form.Group>
 					<Form.Group controlId='input-foto' as={Col}>
 						<Form.Label>Foto utama</Form.Label>
 						<Form.File
 							ref={register({
-								required: 'Mohon sertakan gambar yang valid.',
+								required: 'Mohon sertakan gambar yang valid.'
 							})}
-							onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-								setLabel(e.target.files![0].name)
-							}
+							onChange={(e: React.ChangeEvent<HTMLInputElement>) => setLabel(e.target.files![0].name)}
 							id='mainpic-file'
 							name='mainPicture'
 							label={label}
@@ -360,31 +293,15 @@ const AddPropertyForm: React.FC<Props> = ({ user, dataProvinsi }) => {
 						<Form.Text id='mainPicHelp' muted>
 							Sertakan gambar/foto untuk dipasang sebagai gambar utama
 						</Form.Text>
-						<ErrorMessage
-							name='mainPicture'
-							errors={errors}
-							render={({ message }) => (
-								<Badge variant='warning'>{message}</Badge>
-							)}
-						/>
+						<ErrorMessage name='mainPicture' errors={errors} render={({ message }) => <Badge variant='warning'>{message}</Badge>} />
 					</Form.Group>
 				</Form.Row>
 
 				{/* Ceklis negosiasi */}
 				<Form.Row>
 					<Form.Group as={Col}>
-						<Form.Check
-							custom
-							name='nego'
-							ref={register}
-							id='check-nego'
-							label='Negosiasi ?'
-							type='checkbox'
-							aria-describedby='negoHelp'
-						/>
-						<Form.Text muted>
-							Apakah harga properti bisa dinegosiasi? Centang jika iya
-						</Form.Text>
+						<Form.Check custom name='nego' ref={register} id='check-nego' label='Negosiasi ?' type='checkbox' aria-describedby='negoHelp' />
+						<Form.Text muted>Apakah harga properti bisa dinegosiasi? Centang jika iya</Form.Text>
 					</Form.Group>
 				</Form.Row>
 
@@ -393,9 +310,7 @@ const AddPropertyForm: React.FC<Props> = ({ user, dataProvinsi }) => {
 					<Form.Group as={Col} className='h-100'>
 						<Form.Label>Deskripsi</Form.Label>
 						<Quill theme='snow' value={description} onChange={setDescription} />
-						<Form.Text muted>
-							Sertakan deskripsi tentang properti secara detail
-						</Form.Text>
+						<Form.Text muted>Sertakan deskripsi tentang properti secara detail</Form.Text>
 					</Form.Group>
 				</Form.Row>
 
@@ -404,12 +319,7 @@ const AddPropertyForm: React.FC<Props> = ({ user, dataProvinsi }) => {
 				<Form.Row>
 					{/* Kontak 1 */}
 					<Form.Group as={Col} controlId='check-kontak1'>
-						<Form.Control
-							as='select'
-							name='checkKontak1'
-							ref={register()}
-							custom
-						>
+						<Form.Control as='select' name='checkKontak1' ref={register()} custom>
 							<option value='0'>Kosong</option>
 							<option value='1'>Whatsapp</option>
 							<option value='2'>Facebook</option>
@@ -439,12 +349,7 @@ const AddPropertyForm: React.FC<Props> = ({ user, dataProvinsi }) => {
 					</Form.Group>
 					{/* Kontak 2 */}
 					<Form.Group as={Col} controlId='check-kontak2'>
-						<Form.Control
-							as='select'
-							name='checkKontak2'
-							ref={register()}
-							custom
-						>
+						<Form.Control as='select' name='checkKontak2' ref={register()} custom>
 							<option value='0'>Kosong</option>
 							<option value='1'>Whatsapp</option>
 							<option value='2'>Facebook</option>
@@ -474,12 +379,7 @@ const AddPropertyForm: React.FC<Props> = ({ user, dataProvinsi }) => {
 					</Form.Group>
 					{/* Kontak 3 */}
 					<Form.Group as={Col} controlId='check-kontak3'>
-						<Form.Control
-							as='select'
-							name='checkKontak3'
-							ref={register()}
-							custom
-						>
+						<Form.Control as='select' name='checkKontak3' ref={register()} custom>
 							<option value='0'>Kosong</option>
 							<option value='1'>Whatsapp</option>
 							<option value='2'>Facebook</option>
@@ -509,12 +409,7 @@ const AddPropertyForm: React.FC<Props> = ({ user, dataProvinsi }) => {
 					</Form.Group>
 					{/* Kontak 4 */}
 					<Form.Group as={Col} controlId='check-kontak4'>
-						<Form.Control
-							as='select'
-							name='checkKontak4'
-							ref={register()}
-							custom
-						>
+						<Form.Control as='select' name='checkKontak4' ref={register()} custom>
 							<option value='0'>Kosong</option>
 							<option value='1'>Whatsapp</option>
 							<option value='2'>Facebook</option>
@@ -544,35 +439,24 @@ const AddPropertyForm: React.FC<Props> = ({ user, dataProvinsi }) => {
 					</Form.Group>
 				</Form.Row>
 				<Form.Text muted>
-					Periksa kembali format isian kontak dengan teliti. Pastikan kontak
-					dapat dihubungi. Jika sudah selesai silahkan tekan tombol submit untuk
-					memproses data
+					Periksa kembali format isian kontak dengan teliti. Pastikan kontak dapat dihubungi. Jika sudah selesai silahkan tekan tombol kirim
+					untuk memproses data
 				</Form.Text>
 
 				{/* Tombol submit & cancel */}
 				<Form.Row className='mt-2'>
 					<Form.Group as={Col}>
 						<Link to='/dashboard'>
-							<Button
-								className='mr-2'
-								variant='secondary'
-								disabled={status === 'loading'}
-							>
-								Back
+							<Button className='mr-2' variant='secondary' disabled={status === 'loading'}>
+								Kembali
 							</Button>
 						</Link>
-						<Button
-							className='mr-2'
-							variant='success'
-							type='submit'
-							disabled={status === 'loading'}
-						>
-							Submit
+						<Button className='mr-2' variant='success' type='submit' disabled={status === 'loading'}>
+							Kirim
 						</Button>
 						{status === 'loading' && (
 							<>
-								Processing your data{' '}
-								<Spinner animation='border' variant='success' />
+								Memproses data Anda <Spinner animation='border' variant='success' />
 							</>
 						)}
 					</Form.Group>
