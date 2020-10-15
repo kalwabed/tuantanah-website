@@ -2,60 +2,24 @@ import { ErrorMessage } from '@hookform/error-message'
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react'
 import { Fade } from 'react-awesome-reveal'
-import {
-	Badge,
-	Button,
-	Card,
-	Col,
-	Container,
-	Form,
-	InputGroup,
-	Row,
-	Spinner,
-} from 'react-bootstrap'
+import { Badge, Button, Card, Col, Container, Form, InputGroup, Row, Spinner } from 'react-bootstrap'
 import { useForm } from 'react-hook-form'
 import LazyLoad from 'react-lazyload'
 import { useMutation, useQuery, useQueryCache } from 'react-query'
 import Quill from 'react-quill'
 import { Link } from 'react-router-dom'
 import { toast } from 'react-toastify'
-import {
-	apiKotaKab,
-	apiProvinsi,
-	IApiUser,
-	Inputs,
-	Property,
-} from '../../types/index.types'
+import { apiKotaKab, apiProvinsi, IApiUser, Inputs, Property } from '../../types/index.types'
 import { fetchKotaByProv, fetchUpdateProperty } from '../../utils/fetchAPI'
 
 interface newInputs extends Inputs {
 	gallery: FileList
 }
 
-const EditPropertyForm = ({
-	prop,
-	dataProvinsi,
-	user,
-}: {
-	prop: Property
-	dataProvinsi: apiProvinsi
-	user: IApiUser
-}) => {
-	const {
-		isLarge,
-		title,
-		size,
-		price,
-		status,
-		description,
-		contact,
-		mainPicture,
-		gallery,
-	} = prop
+const EditPropertyForm = ({ prop, dataProvinsi, user }: { prop: Property; dataProvinsi: apiProvinsi; user: IApiUser }) => {
+	const { isLarge, title, size, price, status, description, contact, mainPicture, gallery } = prop
 	document.title = `${title} | tuantanah`
-	const { register, watch, handleSubmit, errors, setValue } = useForm<
-		newInputs
-	>()
+	const { register, watch, handleSubmit, errors, setValue } = useForm<newInputs>()
 	const [kota, setKota] = useState(11)
 	const [deskripsi, setDeskripsi] = useState(description)
 	const [labelUtama, setLabelUtama] = useState('Unggah foto')
@@ -69,10 +33,8 @@ const EditPropertyForm = ({
 			toast.success('Data berhasil diubah!')
 		},
 		onError: () => {
-			toast.error(
-				'Ups! ada masalah saat mengirim data. Pastikan anda sudah mengirim data dengan benar',
-			)
-		},
+			toast.error('Ups! ada masalah saat mengirim data. Pastikan anda sudah mengirim data dengan benar')
+		}
 	})
 
 	const onSubmit = async (data: newInputs) => {
@@ -137,16 +99,8 @@ const EditPropertyForm = ({
 					<Card as={Col} className='mr-2'>
 						<Card.Body>
 							<Row>
-								<LazyLoad
-									once
-									height={50}
-									placeholder={<Spinner animation='grow' />}
-								>
-									<Card.Img
-										src={mainPicture}
-										alt={title}
-										className='img-gallery'
-									/>
+								<LazyLoad once height={50} placeholder={<Spinner animation='grow' />}>
+									<Card.Img src={mainPicture} alt={title} className='img-gallery' />
 								</LazyLoad>
 							</Row>
 
@@ -160,9 +114,7 @@ const EditPropertyForm = ({
 										id='mainPicture'
 										name='mainPicture'
 										label={labelUtama}
-										onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-											setLabelUtama(e.target.files![0].name)
-										}
+										onChange={(e: React.ChangeEvent<HTMLInputElement>) => setLabelUtama(e.target.files![0].name)}
 									/>
 								</Form.Group>
 							</Row>
@@ -176,19 +128,9 @@ const EditPropertyForm = ({
 									</Col>
 								)}
 								{gallery.length >= 1 && (
-									<Fade
-										direction='left'
-										className='col-12 col-md-3'
-										triggerOnce
-										cascade
-									>
+									<Fade direction='left' className='col-12 col-md-3' triggerOnce cascade>
 										{gallery.map(gall => (
-											<LazyLoad
-												key={gall.imageUrl}
-												once
-												height={50}
-												placeholder={<Spinner animation='grow' />}
-											>
+											<LazyLoad key={gall.imageUrl} once height={50} placeholder={<Spinner animation='grow' />}>
 												<Card.Img src={gall.imageUrl} alt='Gallery' />
 											</LazyLoad>
 										))}
@@ -207,11 +149,7 @@ const EditPropertyForm = ({
 										ref={register}
 										accept='image/*'
 										label={labelGaleri}
-										onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
-											setLabelGaleri(
-												`${e.target.files?.length} gambar terpilih`,
-											)
-										}
+										onChange={(e: React.ChangeEvent<HTMLInputElement>) => setLabelGaleri(`${e.target.files?.length} gambar terpilih`)}
 									/>
 								</Form.Group>
 							</Form.Row>
@@ -225,19 +163,9 @@ const EditPropertyForm = ({
 							<Form.Row>
 								{/* nama */}
 								<Form.Group as={Col}>
-									<Form.Label htmlFor='fullName'>
-										Nama Lengkap / Perusahaan
-									</Form.Label>
-									<Form.Control
-										readOnly
-										defaultValue='Kalwabed'
-										id='fullName'
-										name='fullName'
-										ref={register}
-									/>
-									<Form.Text muted>
-										Masukan diatas otomatis merujuk pada Nama pengguna
-									</Form.Text>
+									<Form.Label htmlFor='fullName'>Nama Lengkap / Perusahaan</Form.Label>
+									<Form.Control readOnly defaultValue='Kalwabed' id='fullName' name='fullName' ref={register} />
+									<Form.Text muted>Masukan diatas otomatis merujuk pada Nama pengguna</Form.Text>
 								</Form.Group>
 								{/* judul */}
 								<Form.Group as={Col}>
@@ -251,20 +179,12 @@ const EditPropertyForm = ({
 											required: 'Mohon sertakan judul yang valid',
 											maxLength: {
 												value: 100,
-												message: 'Judul maksimal 100 karakter',
-											},
+												message: 'Judul maksimal 100 karakter'
+											}
 										})}
 									/>
-									<Form.Text muted>
-										Judul bisa diisi dengan nama lahan, nama perumahan, dsb.
-									</Form.Text>
-									<ErrorMessage
-										name='title'
-										errors={errors}
-										render={({ message }) => (
-											<Badge variant='warning'>{message}</Badge>
-										)}
-									/>
+									<Form.Text muted>Judul bisa diisi dengan nama lahan, nama perumahan, dsb.</Form.Text>
+									<ErrorMessage name='title' errors={errors} render={({ message }) => <Badge variant='warning'>{message}</Badge>} />
 								</Form.Group>
 							</Form.Row>
 
@@ -279,41 +199,24 @@ const EditPropertyForm = ({
 										name='provinsi'
 										as='select'
 										ref={register({
-											required: 'Mohon sertakan provinsi dengan benar',
+											required: 'Mohon sertakan provinsi dengan benar'
 										})}
 									>
 										<option value='' disabled>
 											-- Provinsi --
 										</option>
 										{dataProvinsi.provinsi.map(prov => (
-											<option
-												onClick={() => setKota(prov.id)}
-												key={prov.id}
-												value={prov.id}
-											>
+											<option onClick={() => setKota(prov.id)} key={prov.id} value={prov.id}>
 												{prov.nama}
 											</option>
 										))}
 									</Form.Control>
-									<ErrorMessage
-										name='provinsi'
-										errors={errors}
-										render={({ message }) => (
-											<Badge variant='warning'>{message}</Badge>
-										)}
-									/>
+									<ErrorMessage name='provinsi' errors={errors} render={({ message }) => <Badge variant='warning'>{message}</Badge>} />
 								</Form.Group>
 								{/* kota */}
 								<Form.Group as={Col}>
 									<Form.Label htmlFor='kota'>Kota/Kabupaten</Form.Label>
-									<Form.Control
-										id='kota'
-										name='kota'
-										custom
-										as='select'
-										ref={register}
-										disabled={dataKota.isLoading}
-									>
+									<Form.Control id='kota' name='kota' custom as='select' ref={register} disabled={dataKota.isLoading}>
 										<option value='' disabled>
 											-- Kota/Kabupaten --
 										</option>
@@ -324,13 +227,7 @@ const EditPropertyForm = ({
 												</option>
 											))}
 									</Form.Control>
-									<ErrorMessage
-										name='kota'
-										errors={errors}
-										render={({ message }) => (
-											<Badge variant='warning'>{message}</Badge>
-										)}
-									/>
+									<ErrorMessage name='kota' errors={errors} render={({ message }) => <Badge variant='warning'>{message}</Badge>} />
 								</Form.Group>
 							</Form.Row>
 
@@ -346,22 +243,14 @@ const EditPropertyForm = ({
 										ref={register({
 											required: {
 												message: 'Mohon sertakan panjang yang valid',
-												value: !isLuas,
-											},
+												value: !isLuas
+											}
 										})}
 										disabled={isLuas}
 										defaultValue={!isLuas ? size.long : ''}
 									/>
-									<Form.Text muted>
-										Panjang properti berdasarkan ukuran meter (m)
-									</Form.Text>
-									<ErrorMessage
-										name='panjang'
-										errors={errors}
-										render={({ message }) => (
-											<Badge variant='warning'>{message}</Badge>
-										)}
-									/>
+									<Form.Text muted>Panjang properti berdasarkan ukuran meter (m)</Form.Text>
+									<ErrorMessage name='panjang' errors={errors} render={({ message }) => <Badge variant='warning'>{message}</Badge>} />
 								</Form.Group>
 								{/* lebar */}
 								<Form.Group as={Col}>
@@ -375,20 +264,12 @@ const EditPropertyForm = ({
 										ref={register({
 											required: {
 												message: 'Mohon sertakan lebar yang valid',
-												value: !isLuas,
-											},
+												value: !isLuas
+											}
 										})}
 									/>
-									<Form.Text muted>
-										Lebar properti berdasarkan ukuran meter (m)
-									</Form.Text>
-									<ErrorMessage
-										name='lebar'
-										errors={errors}
-										render={({ message }) => (
-											<Badge variant='warning'>{message}</Badge>
-										)}
-									/>
+									<Form.Text muted>Lebar properti berdasarkan ukuran meter (m)</Form.Text>
+									<ErrorMessage name='lebar' errors={errors} render={({ message }) => <Badge variant='warning'>{message}</Badge>} />
 								</Form.Group>
 							</Form.Row>
 
@@ -404,10 +285,7 @@ const EditPropertyForm = ({
 										custom
 										label='Pakai ukuran luas'
 									/>
-									<Form.Text muted>
-										Pakai luas jika properti Anda bukan berupa rumah (contoh:
-										kebun, lahan, dsb)
-									</Form.Text>
+									<Form.Text muted>Pakai luas jika properti Anda bukan berupa rumah (contoh: kebun, lahan, dsb)</Form.Text>
 								</Form.Group>
 							</Form.Row>
 
@@ -425,24 +303,16 @@ const EditPropertyForm = ({
 											ref={register({
 												required: {
 													message: 'Mohon sertakan luas yang valid',
-													value: isLuas,
-												},
+													value: isLuas
+												}
 											})}
 										/>
 										<InputGroup.Append>
 											<InputGroup.Text>Hektar</InputGroup.Text>
 										</InputGroup.Append>
 									</InputGroup>
-									<Form.Text muted>
-										Luas properti berdasarkan ukuran hektar (ha)
-									</Form.Text>
-									<ErrorMessage
-										name='luas'
-										errors={errors}
-										render={({ message }) => (
-											<Badge variant='warning'>{message}</Badge>
-										)}
-									/>
+									<Form.Text muted>Luas properti berdasarkan ukuran hektar (ha)</Form.Text>
+									<ErrorMessage name='luas' errors={errors} render={({ message }) => <Badge variant='warning'>{message}</Badge>} />
 								</Form.Group>
 							</Form.Row>
 
@@ -461,9 +331,8 @@ const EditPropertyForm = ({
 												pattern: {
 													// eslint-disable-next-line no-useless-escape
 													value: /^([1-9]\d*(\.|\,)\d*|0?(\.|\,)\d*[1-9]\d*|[1-9]\d*)$/gm,
-													message:
-														'Hanya menerima masukan angka, koma, dan titik',
-												},
+													message: 'Hanya menerima masukan angka, koma, dan titik'
+												}
 											})}
 										/>
 										<InputGroup.Append>
@@ -480,17 +349,8 @@ const EditPropertyForm = ({
 											</InputGroup.Text>
 										</InputGroup.Append>
 									</InputGroup>
-									<Form.Text muted>
-										Harga properti dalam format angka, satuan juta (contoh: 90,3
-										[berarti 90,3 juta])
-									</Form.Text>
-									<ErrorMessage
-										name='price'
-										errors={errors}
-										render={({ message }) => (
-											<Badge variant='warning'>{message}</Badge>
-										)}
-									/>
+									<Form.Text muted>Harga properti dalam format angka, satuan juta (contoh: 90,3 [berarti 90,3 juta])</Form.Text>
+									<ErrorMessage name='price' errors={errors} render={({ message }) => <Badge variant='warning'>{message}</Badge>} />
 								</Form.Group>
 							</Form.Row>
 
@@ -498,14 +358,8 @@ const EditPropertyForm = ({
 							<Form.Row className='my-2'>
 								<Form.Group as={Col}>
 									<Form.Label htmlFor='deskripsi'>Deskripsi</Form.Label>
-									<Quill
-										theme='snow'
-										value={deskripsi}
-										onChange={setDeskripsi}
-									/>
-									<Form.Text muted>
-										Sertakan deskripsi tentang properti secara detail
-									</Form.Text>
+									<Quill theme='snow' value={deskripsi} onChange={setDeskripsi} />
+									<Form.Text muted>Sertakan deskripsi tentang properti secara detail</Form.Text>
 								</Form.Group>
 							</Form.Row>
 
@@ -514,32 +368,15 @@ const EditPropertyForm = ({
 							<Form.Row>
 								{/* Kontak 1 */}
 								<Form.Group as={Col} controlId='check-kontak1'>
-									<Form.Control
-										as='select'
-										name='checkKontak1'
-										ref={register()}
-										custom
-									>
+									<Form.Control as='select' name='checkKontak1' ref={register()} custom>
 										{contact[0] ? (
 											<>
 												<option value={contact[0].type}>
-													{contact[0].type == 1
-														? 'Whatsapp'
-														: contact[0].type == 2
-														? 'Facebook'
-														: contact[0].type == 3
-														? 'Email'
-														: ''}
+													{contact[0].type == 1 ? 'Whatsapp' : contact[0].type == 2 ? 'Facebook' : contact[0].type == 3 ? 'Email' : ''}
 												</option>
-												{contact[0].type !== 1 && (
-													<option value='1'>Whatsapp</option>
-												)}
-												{contact[0].type !== 2 && (
-													<option value='2'>Facebook</option>
-												)}
-												{contact[0].type !== 3 && (
-													<option value='3'>Email</option>
-												)}
+												{contact[0].type !== 1 && <option value='1'>Whatsapp</option>}
+												{contact[0].type !== 2 && <option value='2'>Facebook</option>}
+												{contact[0].type !== 3 && <option value='3'>Email</option>}
 												<option value='0'>Kosong</option>
 											</>
 										) : (
@@ -577,32 +414,15 @@ const EditPropertyForm = ({
 								</Form.Group>
 								{/* Kontak 2 */}
 								<Form.Group as={Col} controlId='check-kontak2'>
-									<Form.Control
-										as='select'
-										name='checkKontak2'
-										ref={register()}
-										custom
-									>
+									<Form.Control as='select' name='checkKontak2' ref={register()} custom>
 										{contact[1] ? (
 											<>
 												<option value={contact[1].type}>
-													{contact[1].type == 1
-														? 'Whatsapp'
-														: contact[1].type == 2
-														? 'Facebook'
-														: contact[1].type == 3
-														? 'Email'
-														: ''}
+													{contact[1].type == 1 ? 'Whatsapp' : contact[1].type == 2 ? 'Facebook' : contact[1].type == 3 ? 'Email' : ''}
 												</option>
-												{contact[1].type !== 1 && (
-													<option value='1'>Whatsapp</option>
-												)}
-												{contact[1].type !== 2 && (
-													<option value='2'>Facebook</option>
-												)}
-												{contact[1].type !== 3 && (
-													<option value='3'>Email</option>
-												)}
+												{contact[1].type !== 1 && <option value='1'>Whatsapp</option>}
+												{contact[1].type !== 2 && <option value='2'>Facebook</option>}
+												{contact[1].type !== 3 && <option value='3'>Email</option>}
 												<option value='0'>Kosong</option>
 											</>
 										) : (
@@ -640,32 +460,15 @@ const EditPropertyForm = ({
 								</Form.Group>
 								{/* Kontak 3 */}
 								<Form.Group as={Col} controlId='check-kontak3'>
-									<Form.Control
-										as='select'
-										name='checkKontak3'
-										ref={register()}
-										custom
-									>
+									<Form.Control as='select' name='checkKontak3' ref={register()} custom>
 										{contact[2] ? (
 											<>
 												<option value={contact[2].type}>
-													{contact[2].type == 1
-														? 'Whatsapp'
-														: contact[2].type == 2
-														? 'Facebook'
-														: contact[2].type == 3
-														? 'Email'
-														: ''}
+													{contact[2].type == 1 ? 'Whatsapp' : contact[2].type == 2 ? 'Facebook' : contact[2].type == 3 ? 'Email' : ''}
 												</option>
-												{contact[2].type !== 1 && (
-													<option value='1'>Whatsapp</option>
-												)}
-												{contact[2].type !== 2 && (
-													<option value='2'>Facebook</option>
-												)}
-												{contact[2].type !== 3 && (
-													<option value='3'>Email</option>
-												)}
+												{contact[2].type !== 1 && <option value='1'>Whatsapp</option>}
+												{contact[2].type !== 2 && <option value='2'>Facebook</option>}
+												{contact[2].type !== 3 && <option value='3'>Email</option>}
 												<option value='0'>Kosong</option>
 											</>
 										) : (
@@ -703,32 +506,15 @@ const EditPropertyForm = ({
 								</Form.Group>
 								{/* Kontak 4 */}
 								<Form.Group as={Col} controlId='check-kontak4'>
-									<Form.Control
-										as='select'
-										name='checkKontak4'
-										ref={register()}
-										custom
-									>
+									<Form.Control as='select' name='checkKontak4' ref={register()} custom>
 										{contact[3] ? (
 											<>
 												<option value={contact[3].type}>
-													{contact[3].type == 1
-														? 'Whatsapp'
-														: contact[3].type == 2
-														? 'Facebook'
-														: contact[3].type == 3
-														? 'Email'
-														: ''}
+													{contact[3].type == 1 ? 'Whatsapp' : contact[3].type == 2 ? 'Facebook' : contact[3].type == 3 ? 'Email' : ''}
 												</option>
-												{contact[3].type !== 1 && (
-													<option value='1'>Whatsapp</option>
-												)}
-												{contact[3].type !== 2 && (
-													<option value='2'>Facebook</option>
-												)}
-												{contact[3].type !== 3 && (
-													<option value='3'>Email</option>
-												)}
+												{contact[3].type !== 1 && <option value='1'>Whatsapp</option>}
+												{contact[3].type !== 2 && <option value='2'>Facebook</option>}
+												{contact[3].type !== 3 && <option value='3'>Email</option>}
 												<option value='0'>Kosong</option>
 											</>
 										) : (
@@ -772,21 +558,15 @@ const EditPropertyForm = ({
 					<Col>
 						<Link to='/dashboard'>
 							<Button disabled={isLoading} variant='secondary'>
-								Back
+								Kembali
 							</Button>
 						</Link>
-						<Button
-							disabled={isLoading}
-							variant='success'
-							type='submit'
-							className='ml-2'
-						>
-							Submit
+						<Button disabled={isLoading} variant='success' type='submit' className='ml-2'>
+							Kirim
 						</Button>
 						{isLoading && (
 							<>
-								<span className='ml-2'>Memproses data...</span>{' '}
-								<Spinner variant='success' animation='border' />
+								<span className='ml-2'>Memproses data...</span> <Spinner variant='success' animation='border' />
 							</>
 						)}
 					</Col>

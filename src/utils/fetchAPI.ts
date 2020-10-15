@@ -2,11 +2,7 @@ import cookies from 'js-cookie'
 import jwt from 'jsonwebtoken'
 import { v4 } from 'uuid'
 
-import type {
-	IUserLogin,
-	IServerResponse,
-	IUserRegister,
-} from '../types/index.types'
+import type { IUserLogin, IServerResponse, IUserRegister } from '../types/index.types'
 
 export const fetchLogin = async ({ email, password }: IUserLogin) => {
 	try {
@@ -14,9 +10,9 @@ export const fetchLogin = async ({ email, password }: IUserLogin) => {
 			await fetch(`${process.env.ENDPOINT}/d/signin`, {
 				method: 'post',
 				headers: {
-					'content-type': 'application/json',
+					'content-type': 'application/json'
 				},
-				body: JSON.stringify({ email, password }),
+				body: JSON.stringify({ email, password })
 			})
 		).json()
 
@@ -24,12 +20,12 @@ export const fetchLogin = async ({ email, password }: IUserLogin) => {
 			return {
 				success: false,
 				msg: result.response.msg,
-				errorCode: result.response.errorCode,
+				errorCode: result.response.errorCode
 			}
 		}
 		return {
 			success: true,
-			token: JSON.stringify(result.token).slice(1, -1),
+			token: JSON.stringify(result.token).slice(1, -1)
 		}
 	} catch (err) {
 		alert(err)
@@ -37,17 +33,12 @@ export const fetchLogin = async ({ email, password }: IUserLogin) => {
 	}
 }
 
-export const fetchRegister = async ({
-	email,
-	password,
-	repeatPassword,
-	fullName,
-}: IUserRegister) => {
+export const fetchRegister = async ({ email, password, repeatPassword, fullName }: IUserRegister) => {
 	if (process.env.NODE_ENV === 'production') {
 		return {
 			success: false,
 			msg: 'you cannot register now. admin page is under construction.',
-			errorCode: 401,
+			errorCode: 401
 		}
 	}
 
@@ -55,14 +46,14 @@ export const fetchRegister = async ({
 		await fetch(`${process.env.ENDPOINT}/d/signup`, {
 			method: 'post',
 			headers: {
-				'content-type': 'application/json',
+				'content-type': 'application/json'
 			},
 			body: JSON.stringify({
 				email,
 				password,
 				repeatPassword,
-				fullName,
-			}),
+				fullName
+			})
 		})
 	).json()
 
@@ -70,12 +61,12 @@ export const fetchRegister = async ({
 		return {
 			success: false,
 			msg: result.response.msg,
-			errorCode: result.response.errorCode,
+			errorCode: result.response.errorCode
 		}
 	}
 	return {
 		success: true,
-		msg: result.response.msg,
+		msg: result.response.msg
 	}
 }
 
@@ -86,7 +77,7 @@ const decode = (token: string) => {
 const setTokenIdentity = (token: string) => {
 	cookies.set('exp_props', v4(), {
 		expires: 1 / 48,
-		secure: true,
+		secure: true
 	}) // expire in 30 minutes
 	localStorage.setItem('props', token)
 }
@@ -95,9 +86,7 @@ export const fetchAllProperty = async () => {
 	let result: any = '' || null
 	try {
 		if (!cookies.get('exp_props') || !localStorage.getItem('props')) {
-			const data = await (
-				await fetch(`${process.env.ENDPOINT}/v/property`)
-			).json()
+			const data = await (await fetch(`${process.env.ENDPOINT}/v/property`)).json()
 			const token = JSON.stringify(data).slice(1, -1)
 
 			setTokenIdentity(token)
@@ -113,17 +102,11 @@ export const fetchAllProperty = async () => {
 }
 
 export const fetchProvinsi = async () => {
-	return await (
-		await fetch('https://dev.farizdotid.com/api/daerahindonesia/provinsi')
-	).json()
+	return await (await fetch('https://dev.farizdotid.com/api/daerahindonesia/provinsi')).json()
 }
 
 export const fetchKotaByProv = async (key: string, id: number) => {
-	return await (
-		await fetch(
-			`https://dev.farizdotid.com/api/daerahindonesia/kota?id_provinsi=${id}`,
-		)
-	).json()
+	return await (await fetch(`https://dev.farizdotid.com/api/daerahindonesia/kota?id_provinsi=${id}`)).json()
 }
 
 export const fetchAddProperty = async (formData: FormData) => {
@@ -131,7 +114,7 @@ export const fetchAddProperty = async (formData: FormData) => {
 		const json: IServerResponse = await (
 			await fetch(`${process.env.ENDPOINT}/d/property`, {
 				method: 'post',
-				body: formData,
+				body: formData
 			})
 		).json()
 		return json
@@ -142,9 +125,7 @@ export const fetchAddProperty = async (formData: FormData) => {
 
 export const fetchPropertyByUserID = async (key: string, userId: string) => {
 	try {
-		return await (
-			await fetch(`${process.env.ENDPOINT}/d/property/u/${userId}`)
-		).json()
+		return await (await fetch(`${process.env.ENDPOINT}/d/property/u/${userId}`)).json()
 	} catch (err) {
 		console.error(err)
 	}
@@ -152,9 +133,7 @@ export const fetchPropertyByUserID = async (key: string, userId: string) => {
 
 export const fetchPropertyById = async (key: string, propertyId: string) => {
 	try {
-		return await (
-			await fetch(`${process.env.ENDPOINT}/d/property/${propertyId}`)
-		).json()
+		return await (await fetch(`${process.env.ENDPOINT}/d/property/${propertyId}`)).json()
 	} catch (err) {
 		console.error(err)
 	}
@@ -164,7 +143,7 @@ export const fetchDeleteProperty = async (id: string) => {
 	try {
 		return await (
 			await fetch(`${process.env.ENDPOINT}/d/property/${id}`, {
-				method: 'delete',
+				method: 'delete'
 			})
 		).json()
 	} catch (err) {
@@ -177,7 +156,20 @@ export const fetchUpdateProperty = async (formData: FormData) => {
 		return await (
 			await fetch(`${process.env.ENDPOINT}/d/property`, {
 				method: 'put',
-				body: formData,
+				body: formData
+			})
+		).json()
+	} catch (err) {
+		throw new Error(err)
+	}
+}
+
+export const fetchAddCertificate = async (formData: FormData) => {
+	try {
+		return await (
+			await fetch(`${process.env.ENDPOINT}/d/certificate`, {
+				method: 'post',
+				body: formData
 			})
 		).json()
 	} catch (err) {

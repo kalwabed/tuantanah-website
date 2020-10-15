@@ -1,11 +1,17 @@
-import React from 'react'
+/* eslint-disable react/prop-types */
+import React, { useState } from 'react'
 import { useForm } from 'react-hook-form'
-import { Button, Col, Form } from 'react-bootstrap'
+import { Button, Card, Col, Form, Row, Spinner } from 'react-bootstrap'
+import { useMutation, useQueryCache } from 'react-query'
+import { toast } from 'react-toastify'
 
 import type { Property } from '../../../types/index.types'
+import { fetchAddCertificate } from '../../../utils/fetchAPI'
+import { Link } from 'react-router-dom'
 
 interface Inputs {
 	propertyId: string
+	certificate: FileList
 }
 
 interface Props {
@@ -14,48 +20,140 @@ interface Props {
 
 const TheForm = ({ property }: Props) => {
 	if (!property) return null
-	const { register, handleSubmit } = useForm<Inputs>()
-	const [labelCert, setLabelCert] = React.useState('Sertakan foto sertifikat')
+	const queryCache = useQueryCache()
+	const { register, handleSubmit, setValue } = useForm<Inputs>()
 
-	const submit = (data: Inputs) => {
-		console.log(data)
+	const [labelCert, setLabelCert] = useState('Sertakan foto sertifikat')
+
+	const [mutate, { isLoading }] = useMutation(fetchAddCertificate, {
+		onSuccess: () => {
+			queryCache.invalidateQueries('userProperty')
+		},
+		onError: () => {
+			toast.error('Ups! tampaknya ada masalah saat mengunggah sertifikat')
+		}
+	})
+
+	const submit = async (data: Inputs) => {
+		const formData = new FormData()
+		formData.append('propertyId', data.propertyId)
+
+		for (let i = 0; i < data.certificate.length; i++) {
+			formData.append('certificate', data.certificate[i])
+		}
+
+		//? for development purpose!
+		// formData.forEach((val, key) => {
+		// 	console.log(`${key}, ${val}`)
+		// })
+		//? ----------------------
+
+		try {
+			const result = await mutate(formData)
+			if (!result.success) {
+				toast.error(result.msg)
+				return
+			}
+			setLabelCert('Sertakan foto sertifikat')
+			setValue('certificate', undefined)
+			toast.success('Sertifikat berhasil di unggah')
+		} catch (err) {
+			console.error(err)
+		}
 	}
 
 	return (
-		<Form onSubmit={handleSubmit(submit)}>
-			<Form.Row>
-				<Form.Group as={Col}>
-					<Form.Label>Property</Form.Label>
-					<Form.Control ref={register()} name='propertyId' as='select' custom>
-						{property.map(({ title, _id, status: { shm } }) =>
-							!shm ? (
-								<option value={_id} key={_id}>
-									{title}
-								</option>
-							) : null
-						)}
-					</Form.Control>
-				</Form.Group>
+		<>
+			<Form onSubmit={handleSubmit(submit)}>
+				<Row className='mt-3 px-5'>
+					<Col>
+						<Form.Row>
+							<Form.Group as={Col}>
+								<Form.Label>Properti</Form.Label>
+								<Form.Control ref={register()} name='propertyId' as='select' custom disabled={isLoading}>
+									{property.map(({ title, _id, status: { shm } }) =>
+										shm === 0 ? (
+											<option value={_id} key={_id}>
+												{title}
+											</option>
+										) : (
+											<option value='' disabled>
+												{title} ({shm === 1 ? 'proses verifikasi' : 'sudah terverifikasi'})
+											</option>
+										)
+									)}
+								</Form.Control>
+								<Form.Text>Pilih properti</Form.Text>
+							</Form.Group>
 
-				<Form.Group as={Col}>
-					<Form.Label>Sertifikat</Form.Label>
-					<Form.File
-						ref={register}
-						multiple
-						custom
-						id='certificate'
-						name='certificate'
-						accept='image/*'
-						label={labelCert}
-						onChange={(e: React.ChangeEvent<HTMLInputElement>) => setLabelCert(`${e.target.files?.length} gambar dipilih`)}
-					/>
-				</Form.Group>
-			</Form.Row>
-			<Button type='submit' variant='success'>
-				Submit
-			</Button>
-		</Form>
+							<Form.Group as={Col}>
+								<Form.Label>Sertifikat</Form.Label>
+								<Form.File
+									ref={register({ required: true })}
+									multiple
+									custom
+									id='certificate'
+									name='certificate'
+									accept='image/*'
+									disabled={isLoading}
+									label={labelCert}
+									onChange={(e: React.ChangeEvent<HTMLInputElement>) => setLabelCert(`${e.target.files?.length} gambar dipilih`)}
+								/>
+							</Form.Group>
+						</Form.Row>
+					</Col>
+				</Row>
+				<Row className='mt-3 px-5'>
+					<Col>
+						<InformationCard />
+					</Col>
+				</Row>
+				<Row className='mt-3 px-5'>
+					<Col>
+						<FormButton isLoading={isLoading} />
+					</Col>
+				</Row>
+			</Form>
+		</>
 	)
 }
+
+const InformationCard = () => (
+	<Card>
+		<Card.Header>Perhatian</Card.Header>
+		<Card.Body>
+			Verifikasi <b>Sertifikat Hak Milik (SHM)</b> akan meningkatkan kepercayaan calon pelanggan kepada penyedia properti, dengan harus
+			memperhatikan ketentuan-ketentuan berikut:
+			<ul>
+				<li>Sertakan foto sertifikat yang jelas, dan sertakan semua dokumen-dokumen yang dirasa perlu sesuai kaidah yang berlaku.</li>
+				<li>Pastikan Anda menyertakan sertifikat yang legal, sah secara hukum, dan orisinil.</li>
+				<li>Kami tidak tidak akan memproses sertifikat atau dokumen yang bermasalah secara hukum ataupun secara fisik.</li>
+				<li>
+					Proses verifikasi/validasi <b>Sertifikat Hak Milik (SHM)</b> setidaknya membutuhkan waktu 3x24 jam.{' '}
+				</li>
+				<li>Kami akan segera menghubungi Anda melalui email apabila proses validasi telah selesai.</li>
+				<br />
+				Jika terjadi masalah silahkan menghubungi kami melalui alamat email:{' '}
+				<a href='mailto:admin@tuantanah.id'>
+					<b>admin@tuantanah.id</b>
+				</a>
+			</ul>
+		</Card.Body>
+	</Card>
+)
+
+const FormButton = ({ isLoading = false }) => (
+	<>
+		<Link to='/dashboard'>
+			<Button disabled={isLoading} variant='secondary' className='mr-2'>
+				Kembali
+			</Button>
+		</Link>
+		<Button type='submit' disabled={isLoading} variant={isLoading ? 'secondary' : 'success'}>
+			{!isLoading && 'Kirim'}
+			{isLoading && <Spinner as='span' animation='border' variant='light' size='sm' />}
+		</Button>
+	</>
+)
 
 export default TheForm
