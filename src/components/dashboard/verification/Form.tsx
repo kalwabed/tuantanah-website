@@ -56,7 +56,8 @@ const TheForm = ({ property }: Props) => {
 			}
 			setLabelCert('Sertakan foto sertifikat')
 			setValue('certificate', undefined)
-			toast.success('Sertifikat berhasil di unggah')
+			setImgPreview([])
+			toast.success(result.msg)
 		} catch (err) {
 			console.error(err)
 		}

@@ -11,7 +11,7 @@ import Table from '../../components/dashboard/Table'
 import { fetchPropertyByUserID } from '../../utils/fetchAPI'
 
 const Dashboard = (props: any) => {
-	document.title = 'Dashboard | tuantanah'
+	document.title = 'Dashboard'
 	window.scrollTo(0, 0)
 	const { setToken, setIsAuthenticated, user } = useContext(authContext)
 	const { data, isLoading, updatedAt } = useQuery(['userProperty', user._id], fetchPropertyByUserID, {

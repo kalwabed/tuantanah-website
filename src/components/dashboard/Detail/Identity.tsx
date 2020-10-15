@@ -1,22 +1,12 @@
 /* eslint-disable react/prop-types */
 import React from 'react'
 import { Card, Col, Row } from 'react-bootstrap'
-import {
-	AiOutlineFacebook,
-	AiOutlineMail,
-	AiOutlineWhatsApp,
-} from 'react-icons/ai'
+import { AiOutlineFacebook, AiOutlineMail, AiOutlineWhatsApp } from 'react-icons/ai'
 import StatusPropertyCheck from '../../../elements/StatusPropertyCheck'
 import { Property } from '../../../types/index.types'
 
-const Identity: React.FC<Property> = ({
-	title,
-	location,
-	size,
-	price,
-	status,
-	contact,
-}) => {
+const Identity: React.FC<Property> = ({ title, location, size, price, status, contact }) => {
+	document.title = title
 	if (!status) return null
 	return (
 		<section className='mt-3'>
@@ -34,17 +24,12 @@ const Identity: React.FC<Property> = ({
 											<h5>Harga : {price} Juta</h5>
 
 											<div className='h5'>
-												<StatusPropertyCheck
-													negotiation={status.negotiation}
-													shm={status.shm}
-												/>
+												<StatusPropertyCheck negotiation={status.negotiation} shm={status.shm} />
 											</div>
 											<span className='text-muted'>
-												Lorem ipsum dolor sit amet, consectetur adipisicing
-												elit. Quae placeat at iusto repellendus exercitationem
-												nemo perspiciatis? Illo magni voluptate deserunt
-												temporibus aperiam, cum iusto nihil fugiat pariatur,
-												explicabo veniam perferendis.
+												Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quae placeat at iusto repellendus exercitationem nemo
+												perspiciatis? Illo magni voluptate deserunt temporibus aperiam, cum iusto nihil fugiat pariatur, explicabo veniam
+												perferendis.
 											</span>
 										</Card.Body>
 									</Card>
@@ -52,25 +37,17 @@ const Identity: React.FC<Property> = ({
 								<Col>
 									<Card>
 										<Card.Body>
-											{contact.length < 1 && (
-												<h5 className='text-muted text-center'>
-													Kontak belum ditambahkan
-												</h5>
-											)}
+											{contact.length < 1 && <h5 className='text-muted text-center'>Kontak belum ditambahkan</h5>}
 											{contact.length >= 1 && <h5>Kontak :</h5>}
 											<ul className='link-footer'>
 												{contact.map((c, i) => (
 													<li key={i} className='mb-1'>
 														{c.type === 1 ? (
 															<>
-																<AiOutlineWhatsApp size='1.4em' />{' '}
-																<h6 className='h5 d-inline-block'>{c.name}</h6>
+																<AiOutlineWhatsApp size='1.4em' /> <h6 className='h5 d-inline-block'>{c.name}</h6>
 																<ul>
 																	<li>
-																		<a
-																			className='text-reset'
-																			href={`https://wa.me/${c.url}`}
-																		>
+																		<a className='text-reset' href={`https://wa.me/${c.url}`}>
 																			{c.url}
 																		</a>
 																	</li>
@@ -78,14 +55,10 @@ const Identity: React.FC<Property> = ({
 															</>
 														) : c.type === 2 ? (
 															<>
-																<AiOutlineFacebook size='1.4em' />{' '}
-																<h6 className='h5 d-inline-block'>{c.name}</h6>
+																<AiOutlineFacebook size='1.4em' /> <h6 className='h5 d-inline-block'>{c.name}</h6>
 																<ul>
 																	<li>
-																		<a
-																			className='text-reset'
-																			href={`https://facebook.com/search/top?q=${c.url}`}
-																		>
+																		<a className='text-reset' href={`https://facebook.com/search/top?q=${c.url}`}>
 																			{c.url}
 																		</a>
 																	</li>
@@ -93,14 +66,10 @@ const Identity: React.FC<Property> = ({
 															</>
 														) : c.type === 3 ? (
 															<>
-																<AiOutlineMail size='1.4em' />{' '}
-																<h6 className='h5 d-inline-block'>{c.name}</h6>
+																<AiOutlineMail size='1.4em' /> <h6 className='h5 d-inline-block'>{c.name}</h6>
 																<ul>
 																	<li>
-																		<a
-																			className='text-reset'
-																			href={`mailto:${c.url}`}
-																		>
+																		<a className='text-reset' href={`mailto:${c.url}`}>
 																			{c.url}
 																		</a>
 																	</li>

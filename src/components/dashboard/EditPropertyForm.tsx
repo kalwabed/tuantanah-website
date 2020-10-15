@@ -18,7 +18,7 @@ interface newInputs extends Inputs {
 
 const EditPropertyForm = ({ prop, dataProvinsi, user }: { prop: Property; dataProvinsi: apiProvinsi; user: IApiUser }) => {
 	const { isLarge, title, size, price, status, description, contact, mainPicture, gallery } = prop
-	document.title = `${title} | tuantanah`
+	document.title = title
 	const { register, watch, handleSubmit, errors, setValue } = useForm<newInputs>()
 	const [kota, setKota] = useState(11)
 	const [deskripsi, setDeskripsi] = useState(description)
