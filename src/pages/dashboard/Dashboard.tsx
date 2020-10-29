@@ -1,14 +1,15 @@
 import React, { useContext, useEffect, useState } from 'react'
-import { Badge, Button, Col, Container, Row, Spinner } from 'react-bootstrap'
+import { Badge, Button, Col, Container, Modal, Row, Spinner } from 'react-bootstrap'
 import { Link } from 'react-router-dom'
 import { useQuery } from 'react-query'
-import { IoIosAddCircle, IoIosCheckmarkCircle, IoIosLogOut } from 'react-icons/io'
+import { IoIosAddCircle, IoIosCheckmarkCircle, IoIosJournal, IoIosLogOut } from 'react-icons/io'
 
 import { authContext } from '../../contexts/Auth'
 import verify from '../../utils/Verify'
 import Header from '../../components/dashboard/Header'
 import Table from '../../components/dashboard/Table'
 import { fetchPropertyByUserID } from '../../utils/fetchAPI'
+import SoldOutTable from '../../components/dashboard/SoldOutTable'
 
 const Dashboard = (props: any) => {
 	document.title = 'Dashboard'
@@ -18,6 +19,7 @@ const Dashboard = (props: any) => {
 		onSettled: (): void => setUpdated(new Date())
 	})
 	const [updated, setUpdated] = useState(new Date(updatedAt))
+	const [showModal, setShowModal] = useState(false)
 
 	useEffect(() => {
 		verify.User()
@@ -33,6 +35,24 @@ const Dashboard = (props: any) => {
 		<>
 			<Header />
 			<Container className='my-3'>
+				{/* Modal */}
+				<Modal show={showModal} size='lg' scrollable backdrop='static'>
+					<Modal.Header closeButton onHide={() => setShowModal(false)}>
+						<p className='h6'>
+							Daftar properti <b>{user.fullName}</b> yang telah terjual
+						</p>
+					</Modal.Header>
+					<Modal.Body>{!isLoading && <SoldOutTable property={data.property} />}</Modal.Body>
+					<Modal.Footer>
+						<div className='d-flex justify-content'>
+							<button className='btn btn-secondary' onClick={() => setShowModal(false)}>
+								Kembali
+							</button>
+						</div>
+					</Modal.Footer>
+				</Modal>
+				{/* end modal */}
+
 				<Row>
 					<Col xs={8} md={8}>
 						<Link to='/dashboard/property'>
@@ -45,6 +65,9 @@ const Dashboard = (props: any) => {
 								Verifikasi <IoIosCheckmarkCircle />
 							</Button>
 						</Link>
+						<Button className='mr-2' variant='info' size='lg' onClick={() => setShowModal(true)}>
+							Terjual <IoIosJournal />
+						</Button>
 					</Col>
 					<Col xs={4} md={4} className='d-sm-flex d-md-block justify-content-end'>
 						<span>Masuk sebagai </span>

@@ -34,6 +34,8 @@ const TheForm = ({ property }: Props) => {
 		}
 	})
 
+	const newProperty = property.filter(prop => !prop.status.soldOut)
+
 	const submit = async (data: Inputs) => {
 		const formData = new FormData()
 		formData.append('propertyId', data.propertyId)
@@ -84,17 +86,27 @@ const TheForm = ({ property }: Props) => {
 						<Form.Row>
 							<Form.Group as={Col}>
 								<Form.Label>Properti</Form.Label>
-								<Form.Control ref={register()} name='propertyId' as='select' custom disabled={isLoading}>
-									{property.map(({ title, _id, status: { shm } }) =>
-										shm === 0 ? (
-											<option value={_id} key={_id}>
-												{title}
-											</option>
-										) : (
-											<option value='' disabled>
-												{title} ({shm === 1 ? 'proses verifikasi' : 'sudah terverifikasi'})
-											</option>
+								<Form.Control
+									ref={register()}
+									name='propertyId'
+									as='select'
+									custom
+									disabled={isLoading || newProperty.length === 0}
+								>
+									{newProperty.length !== 0 ? (
+										newProperty.map(({ title, _id, status: { shm } }) =>
+											shm === 0 ? (
+												<option value={_id} key={_id}>
+													{title}
+												</option>
+											) : (
+												<option value='' disabled>
+													{title} ({shm === 1 ? 'proses verifikasi' : 'sudah terverifikasi'})
+												</option>
+											)
 										)
+									) : (
+										<option defaultValue=''>Tidak ada properti yang harus diverifikasi</option>
 									)}
 								</Form.Control>
 								<Form.Text>Pilih properti</Form.Text>
@@ -109,7 +121,7 @@ const TheForm = ({ property }: Props) => {
 									id='certificate'
 									name='certificate'
 									accept='image/*'
-									disabled={isLoading}
+									disabled={isLoading || newProperty.length === 0}
 									label={labelCert}
 									onChange={handleImage}
 								/>
@@ -151,12 +163,17 @@ const InformationCard = () => (
 	<Card>
 		<Card.Header>Perhatian</Card.Header>
 		<Card.Body>
-			Verifikasi <b>Sertifikat Hak Milik (SHM)</b> akan meningkatkan kepercayaan calon pelanggan kepada penyedia properti, dengan harus
-			memperhatikan ketentuan-ketentuan berikut:
+			Verifikasi <b>Sertifikat Hak Milik (SHM)</b> akan meningkatkan kepercayaan calon pelanggan kepada penyedia
+			properti, dengan harus memperhatikan ketentuan-ketentuan berikut:
 			<ul>
-				<li>Sertakan foto sertifikat yang jelas, dan sertakan semua dokumen-dokumen yang dirasa perlu sesuai kaidah yang berlaku.</li>
+				<li>
+					Sertakan foto sertifikat yang jelas, dan sertakan semua dokumen-dokumen yang dirasa perlu sesuai kaidah yang
+					berlaku.
+				</li>
 				<li>Pastikan Anda menyertakan sertifikat yang legal, sah secara hukum, dan orisinil.</li>
-				<li>Kami tidak tidak akan memproses sertifikat atau dokumen yang bermasalah secara hukum ataupun secara fisik.</li>
+				<li>
+					Kami tidak tidak akan memproses sertifikat atau dokumen yang bermasalah secara hukum ataupun secara fisik.
+				</li>
 				<li>
 					Proses verifikasi/validasi <b>Sertifikat Hak Milik (SHM)</b> setidaknya membutuhkan waktu 3x24 jam.{' '}
 				</li>

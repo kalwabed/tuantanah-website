@@ -14,7 +14,7 @@ const Auth = (props: any) => {
 	const secure = process.env.NODE_ENV === 'production' ? true : false
 	const cookieConf = {
 		expires: 14, // expires 14 hari
-		secure,
+		secure
 	}
 
 	useEffect(() => {
@@ -23,18 +23,16 @@ const Auth = (props: any) => {
 			try {
 				setUser(jwt.verify(token, String(process.env.SECRET_KEY)) as string)
 			} catch (err) {
-				process.exit(1)
+				console.error(err)
 			}
 		}
 	}, [isAuthenticated])
 
 	const createCookieValue = (): string => {
 		// untuk isi value dari cookie
-		return jwt.sign(
-			{ secret: String(process.env.COOKIE_SECRET) },
-			String(process.env.CLIENT_SECRET),
-			{ expiresIn: '14d' },
-		)
+		return jwt.sign({ secret: String(process.env.COOKIE_SECRET) }, String(process.env.CLIENT_SECRET), {
+			expiresIn: '14d'
+		})
 	}
 
 	const setAuthToken = (data: string | null, setCookie: boolean) => {
@@ -61,7 +59,7 @@ const Auth = (props: any) => {
 				token,
 				setToken: setAuthToken,
 				setIsAuthenticated,
-				user,
+				user
 			}}
 		>
 			{props.children}
