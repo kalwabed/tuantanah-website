@@ -8,7 +8,7 @@ import { useQueryCache } from 'react-query'
 
 import { Property } from '../../types/index.types'
 import { useHistory } from 'react-router-dom'
-import { fetchDeleteProperty } from '../../utils/fetchAPI'
+import { fetchDeleteProperty, fetchPropertySoldOut } from '../../utils/fetchAPI'
 
 const Table = ({ property }: { property: Property[] }) => {
 	const [showModal, setShowModal] = useState(false)
@@ -30,9 +30,13 @@ const Table = ({ property }: { property: Property[] }) => {
 
 	const propertySoldOut = async (id: string) => {
 		try {
-			// TODO send id and change the status.soldOut = true
+			const result = await fetchPropertySoldOut(id)
+			if (!result.success) {
+				toast.error('Ups! tampaknya ada kesalahan. Silahkan refresh halaman ini')
+			} else {
+				toast.success('Status berhasil diubah!')
+			}
 			setShowModal(false)
-			toast.success('Status berhasil diubah!')
 		} catch (err) {
 			console.error(err)
 		}

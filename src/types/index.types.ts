@@ -112,6 +112,7 @@ export interface Property {
 	status: {
 		shm: number // 0=not confirm, 1=on process, 2=success
 		negotiation: boolean
+		soldOut: boolean
 	}
 	userId: {
 		_id: string

@@ -177,4 +177,20 @@ export const fetchAddCertificate = async (formData: FormData) => {
 	}
 }
 
+export const fetchPropertySoldOut = async (id: string) => {
+	try {
+		return await (
+			await fetch(`${process.env.ENDPOINT}/d/property/soldout`, {
+				method: 'put',
+				headers: {
+					'content-type': 'application/json'
+				},
+				body: JSON.stringify({ id })
+			})
+		).json()
+	} catch (err) {
+		console.error(err)
+	}
+}
+
 //? errorCode = 400:bad req, 401:unauthorized
