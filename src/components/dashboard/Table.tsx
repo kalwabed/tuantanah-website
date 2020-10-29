@@ -16,6 +16,7 @@ const Table = ({ property }: { property: Property[] }) => {
 	if (!property) return null
 	const queryCache = useQueryCache()
 	const history = useHistory()
+	const newProperty = property.filter(prop => !prop.status.soldOut)
 
 	const propertyRemove = async (id: string) => {
 		const result = await fetchDeleteProperty(id)
@@ -37,6 +38,7 @@ const Table = ({ property }: { property: Property[] }) => {
 				toast.success('Status berhasil diubah!')
 			}
 			setShowModal(false)
+			queryCache.invalidateQueries('userProperty')
 		} catch (err) {
 			console.error(err)
 		}
@@ -92,7 +94,7 @@ const Table = ({ property }: { property: Property[] }) => {
 				</Modal.Footer>
 			</Modal>
 			<Grid
-				data={property.map((prop, i) => [
+				data={newProperty.map((prop, i) => [
 					i + 1,
 					prop.mainPicture,
 					prop.title,
