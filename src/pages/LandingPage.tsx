@@ -12,32 +12,33 @@ import Footer from '../components/Footer'
 import BannerDevelopment from '../elements/BannerDevelopment'
 
 const Index = (props: any) => {
-	const refVisitorDealer = createRef<HTMLDivElement>()
-	document.title = 'Home | tuantanah'
-	window.scrollTo(0, 0)
-	useEffect(() => {
-		toast.dismiss()
-	}, [props.history])
-	return (
-		<>
-			<BannerDevelopment />
-			<Header navlink='/' />
-			<main>
-				<Container>
-					<Hero refVisitorDealer={refVisitorDealer} />
-					<div className='my-3' />
-				</Container>
-				<LazyLoad once height={100}>
-					<SectionAdvantages />
-				</LazyLoad>
-				<SectionVisLer refVisitorDealer={refVisitorDealer} />
-				<SectionFaq />
-			</main>
-			<LazyLoad once height={300} offset={200}>
-				<Footer />
-			</LazyLoad>
-		</>
-	)
+  const refVisitorDealer = createRef<HTMLDivElement>()
+  document.title = 'Home | tuantanah'
+  window.scrollTo(0, 0)
+  useEffect(() => {
+    toast.dismiss()
+  }, [props.history])
+
+  return (
+    <>
+      <BannerDevelopment />
+      <Header navlink="/" />
+      <main>
+        <Container>
+          <Hero refVisitorDealer={refVisitorDealer} />
+          <div className="my-3" />
+        </Container>
+        <LazyLoad once height={100}>
+          <SectionAdvantages />
+        </LazyLoad>
+        <SectionVisLer refVisitorDealer={refVisitorDealer} />
+        <SectionFaq />
+      </main>
+      <LazyLoad once height={300} offset={200}>
+        <Footer />
+      </LazyLoad>
+    </>
+  )
 }
 
 export default Index

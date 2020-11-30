@@ -1,7 +1,6 @@
 /* eslint-disable react/prop-types */
 import React from 'react'
 import { Card, Button } from 'react-bootstrap'
-import { IoIosHeartEmpty } from 'react-icons/io'
 
 import { Property } from '../types/index.types'
 import StatusPropertyCheck from '../elements/StatusPropertyCheck'

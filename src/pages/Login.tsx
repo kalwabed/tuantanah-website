@@ -8,24 +8,24 @@ import FormLogin from '../components/authentication/FormLogin'
 import BannerDevelopment from '../elements/BannerDevelopment'
 
 const Login = (props: any) => {
-	document.title = 'Signin | tuantanah'
-	window.scrollTo(0, 0)
-	useEffect(() => {
-		toast.dismiss()
-	}, [props.history])
+  document.title = 'Signin | tuantanah'
+  window.scrollTo(0, 0)
+  useEffect(() => {
+    toast.dismiss()
+  }, [props.history])
 
-	const { isAuthenticated } = useContext(authContext)
+  const { isAuthenticated } = useContext(authContext)
 
-	if (isAuthenticated || cookies.get('key')) {
-		return <Redirect to='/dashboard' />
-	}
+  if (isAuthenticated || cookies.get('key')) {
+    return <Redirect to="/dashboard" />
+  }
 
-	return (
-		<>
-			<BannerDevelopment />
-			<FormLogin />
-		</>
-	)
+  return (
+    <>
+      <BannerDevelopment />
+      <FormLogin />
+    </>
+  )
 }
 
 export default Login
