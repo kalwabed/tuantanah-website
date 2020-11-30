@@ -12,7 +12,7 @@ const ListProperty = () => {
   return (
     <>
       <Row>
-        <Fade className="col-6 col-md-3 mb-3" triggerOnce cascade duration={800}>
+        <Fade className="col-6 col-md-3 mb-3" triggerOnce cascade duration={300}>
           {properties.map((el, i) => (
             <LazyLoad once height={30} key={i} placeholder={<Spinner animation="border" />}>
               {el.status.soldOut && <CardProperty {...el} />}
