@@ -105,10 +105,6 @@ export const fetchProvinsi = async () => {
   return await (await fetch('https://dev.farizdotid.com/api/daerahindonesia/provinsi')).json()
 }
 
-export const fetchProvinsiById = async (key: string, id: number) => {
-  return await (await fetch(`https://dev.farizdotid.com/api/daerahindonesia/provinsi/${id}`)).json()
-}
-
 export const fetchKotaByProv = async (key: string, id: number) => {
   return await (await fetch(`https://dev.farizdotid.com/api/daerahindonesia/kota?id_provinsi=${id}`)).json()
 }
