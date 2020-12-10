@@ -105,7 +105,7 @@ export const fetchProvinsi = async () => {
   return await (await fetch('https://dev.farizdotid.com/api/daerahindonesia/provinsi')).json()
 }
 
-export const fetchKotaByProv = async (key: string, id: number) => {
+export const fetchKotaByProv = async (_: string, id: number) => {
   return await (await fetch(`https://dev.farizdotid.com/api/daerahindonesia/kota?id_provinsi=${id}`)).json()
 }
 
@@ -123,7 +123,7 @@ export const fetchAddProperty = async (formData: FormData) => {
   }
 }
 
-export const fetchPropertyByUserID = async (key: string, userId: string) => {
+export const fetchPropertyByUserID = async (_: string, userId: string) => {
   try {
     return await (await fetch(`${process.env.ENDPOINT}/d/property/u/${userId}`)).json()
   } catch (err) {
@@ -131,7 +131,7 @@ export const fetchPropertyByUserID = async (key: string, userId: string) => {
   }
 }
 
-export const fetchPropertyById = async (key: string, propertyId: string) => {
+export const fetchPropertyById = async (_: string, propertyId: string) => {
   try {
     return await (await fetch(`${process.env.ENDPOINT}/d/property/${propertyId}`)).json()
   } catch (err) {
