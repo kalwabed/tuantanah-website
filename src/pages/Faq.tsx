@@ -7,9 +7,11 @@ const Faq = () => {
   return (
     <>
       <Header navlink="faq" />
-      <main>
+      <main className="my-3">
         <Jumbotron fluid>
-          Anda sampai pada halaman <b>Faq</b>
+          <div className="text-center">
+            Anda sampai pada halaman <b>Faq</b>
+          </div>
         </Jumbotron>
       </main>
       <Footer />
