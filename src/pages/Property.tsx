@@ -9,37 +9,35 @@ import { fetchAllProperty } from '../utils/fetchAPI'
 import { propertiesContext } from '../contexts/Properties'
 
 const Property = () => {
-	document.title = 'Property | tuantanah'
-	window.scrollTo(0, 0)
-	const { isLoading, setIsLoading, setProperties } = useContext(
-		propertiesContext,
-	)
+  document.title = 'Property | tuantanah'
+  window.scrollTo(0, 0)
+  const { isLoading, setIsLoading, setProperties } = useContext(propertiesContext)
 
-	useEffect(() => {
-		;(async () => {
-			setIsLoading(true)
-			setProperties(await fetchAllProperty())
-			setIsLoading(false)
-		})()
-	}, [])
+  useEffect(() => {
+    ;(async () => {
+      setIsLoading(true)
+      setProperties(await fetchAllProperty())
+      setIsLoading(false)
+    })()
+  }, [])
 
-	return (
-		<>
-			<Header navlink='property' />
-			<main className='mb-3'>
-				<Container>
-					<SearchBarProperty />
-					{isLoading && (
-						<div className='text-center p-4 h5'>
-							Tunggu sebentar <Spinner animation='grow' variant='success' />
-						</div>
-					)}
-					{!isLoading && <ListProperty />}
-				</Container>
-			</main>
-			<Footer />
-		</>
-	)
+  return (
+    <>
+      <Header navlink="property" />
+      <main className="mb-3">
+        <Container>
+          <SearchBarProperty />
+          {isLoading && (
+            <div className="text-center p-4 h5">
+              Tunggu sebentar <Spinner animation="grow" variant="success" />
+            </div>
+          )}
+          {!isLoading && <ListProperty />}
+        </Container>
+      </main>
+      <Footer />
+    </>
+  )
 }
 
 export default Property
