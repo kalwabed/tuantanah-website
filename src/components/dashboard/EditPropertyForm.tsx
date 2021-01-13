@@ -445,7 +445,7 @@ const EditPropertyForm = ({
                     name="kontak1"
                     ref={register()}
                     disabled={watch('checkKontak1') == 0 ? true : false}
-                    defaultValue={contact[0].url ? contact[0].url : ''}
+                    defaultValue={contact[0] ? contact[0].url : ''}
                     placeholder={
                       watch('checkKontak1') == 1
                         ? '628xxxxxxxxx'
@@ -460,7 +460,7 @@ const EditPropertyForm = ({
                     className="mt-1"
                     name="userKontak1"
                     ref={register()}
-                    defaultValue={contact[0].name ? contact[0].name : ''}
+                    defaultValue={contact[0] ? contact[0].name : ''}
                     placeholder="Nama tampilan"
                     disabled={watch('checkKontak1') == 0 ? true : false}
                   />
